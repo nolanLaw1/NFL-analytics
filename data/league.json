@@ -3186,7 +3186,7 @@
         "player_id": "00-0039603",
         "name": "B.Brooks",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "carries": 17
       },
       {
@@ -3270,7 +3270,7 @@
         "player_id": "00-0035628",
         "name": "D.Johnson",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "carries": 14
       },
       {
@@ -3396,7 +3396,7 @@
         "player_id": "00-0037557",
         "name": "R.Rivers",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "carries": 9
       },
       {
@@ -3564,14 +3564,14 @@
         "player_id": "00-0037745",
         "name": "V.Jones",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "carries": 4
       },
       {
         "player_id": "00-0037745",
         "name": "V.Jones",
         "position": "WR",
-        "team": NaN,
+        "team": "",
         "carries": 4
       },
       {
@@ -3606,7 +3606,7 @@
         "player_id": "00-0035567",
         "name": "C.Reynolds",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "carries": 3
       },
       {
@@ -3655,7 +3655,7 @@
         "player_id": "00-0035311",
         "name": "M.Gaskin",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "carries": 3
       },
       {
@@ -3697,7 +3697,7 @@
         "player_id": "00-0036825",
         "name": "F.Franks",
         "position": "TE",
-        "team": NaN,
+        "team": "",
         "carries": 2
       },
       {
@@ -3760,7 +3760,7 @@
         "player_id": "00-0034367",
         "name": "N.Miller-Hines",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "carries": 2
       },
       {
@@ -3774,7 +3774,7 @@
         "player_id": "00-0039021",
         "name": "R.Johnson",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "carries": 2
       },
       {
@@ -3921,7 +3921,7 @@
         "player_id": "00-0038911",
         "name": "M.Cunningham",
         "position": "WR",
-        "team": NaN,
+        "team": "",
         "carries": 1
       },
       {
@@ -3949,7 +3949,7 @@
         "player_id": "00-0039364",
         "name": "S.Vaki",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "carries": 1
       },
       {
@@ -3970,7 +3970,7 @@
         "player_id": "00-0035594",
         "name": "T.Homer",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "carries": 1
       },
       {
@@ -9870,7 +9870,7 @@
         "player_id": "00-0039603",
         "name": "B.Brooks",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "rushing_yards": 78
       },
       {
@@ -10017,7 +10017,7 @@
         "player_id": "00-0037557",
         "name": "R.Rivers",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "rushing_yards": 46
       },
       {
@@ -10087,14 +10087,14 @@
         "player_id": "00-0037745",
         "name": "V.Jones",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "rushing_yards": 32
       },
       {
         "player_id": "00-0037745",
         "name": "V.Jones",
         "position": "WR",
-        "team": NaN,
+        "team": "",
         "rushing_yards": 32
       },
       {
@@ -10129,7 +10129,7 @@
         "player_id": "00-0035628",
         "name": "D.Johnson",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "rushing_yards": 25
       },
       {
@@ -10248,7 +10248,7 @@
         "player_id": "00-0039021",
         "name": "R.Johnson",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "rushing_yards": 17
       },
       {
@@ -10423,7 +10423,7 @@
         "player_id": "00-0035311",
         "name": "M.Gaskin",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "rushing_yards": 6
       },
       {
@@ -10465,7 +10465,7 @@
         "player_id": "00-0035567",
         "name": "C.Reynolds",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "rushing_yards": 4
       },
       {
@@ -10479,7 +10479,7 @@
         "player_id": "00-0036825",
         "name": "F.Franks",
         "position": "TE",
-        "team": NaN,
+        "team": "",
         "rushing_yards": 4
       },
       {
@@ -10493,7 +10493,7 @@
         "player_id": "00-0039364",
         "name": "S.Vaki",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "rushing_yards": 4
       },
       {
@@ -10570,7 +10570,7 @@
         "player_id": "00-0038911",
         "name": "M.Cunningham",
         "position": "WR",
-        "team": NaN,
+        "team": "",
         "rushing_yards": 1
       },
       {
@@ -10612,7 +10612,7 @@
         "player_id": "00-0034367",
         "name": "N.Miller-Hines",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "rushing_yards": -2
       },
       {
@@ -10626,7 +10626,7 @@
         "player_id": "00-0035594",
         "name": "T.Homer",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "rushing_yards": -2
       },
       {
@@ -13983,7 +13983,7 @@
         "player_id": "00-0039603",
         "name": "B.Brooks",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "rushing_tds": 0
       },
       {
@@ -14039,7 +14039,7 @@
         "player_id": "00-0035567",
         "name": "C.Reynolds",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "rushing_tds": 0
       },
       {
@@ -14088,7 +14088,7 @@
         "player_id": "00-0035628",
         "name": "D.Johnson",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "rushing_tds": 0
       },
       {
@@ -14172,7 +14172,7 @@
         "player_id": "00-0036825",
         "name": "F.Franks",
         "position": "TE",
-        "team": NaN,
+        "team": "",
         "rushing_tds": 0
       },
       {
@@ -14368,14 +14368,14 @@
         "player_id": "00-0038911",
         "name": "M.Cunningham",
         "position": "WR",
-        "team": NaN,
+        "team": "",
         "rushing_tds": 0
       },
       {
         "player_id": "00-0035311",
         "name": "M.Gaskin",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "rushing_tds": 0
       },
       {
@@ -14403,7 +14403,7 @@
         "player_id": "00-0034367",
         "name": "N.Miller-Hines",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "rushing_tds": 0
       },
       {
@@ -14459,7 +14459,7 @@
         "player_id": "00-0039021",
         "name": "R.Johnson",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "rushing_tds": 0
       },
       {
@@ -14480,7 +14480,7 @@
         "player_id": "00-0037557",
         "name": "R.Rivers",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "rushing_tds": 0
       },
       {
@@ -14515,7 +14515,7 @@
         "player_id": "00-0039364",
         "name": "S.Vaki",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "rushing_tds": 0
       },
       {
@@ -14571,7 +14571,7 @@
         "player_id": "00-0035594",
         "name": "T.Homer",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "rushing_tds": 0
       },
       {
@@ -14606,14 +14606,14 @@
         "player_id": "00-0037745",
         "name": "V.Jones",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "rushing_tds": 0
       },
       {
         "player_id": "00-0037745",
         "name": "V.Jones",
         "position": "WR",
-        "team": NaN,
+        "team": "",
         "rushing_tds": 0
       },
       {
@@ -18038,7 +18038,7 @@
         "player_id": "00-0039603",
         "name": "B.Brooks",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "red_zone_carries": 2
       },
       {
@@ -18143,7 +18143,7 @@
         "player_id": "00-0035628",
         "name": "D.Johnson",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "red_zone_carries": 1
       },
       {
@@ -23154,7 +23154,7 @@
         "player_id": "00-0039603",
         "name": "B.Brooks",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "red_zone_rushing_tds": 0
       },
       {
@@ -23203,7 +23203,7 @@
         "player_id": "00-0035628",
         "name": "D.Johnson",
         "position": "RB",
-        "team": NaN,
+        "team": "",
         "red_zone_rushing_tds": 0
       },
       {

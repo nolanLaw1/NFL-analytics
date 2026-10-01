@@ -407,26 +407,26 @@ def main():
         },
     }
 
-    out = Path("data")
-out.mkdir(exist_ok=True)
+        out = Path("data")
+    out.mkdir(exist_ok=True)
 
-def clean_nan(obj):
-    if isinstance(obj, dict):
-        return {k: clean_nan(v) for k, v in obj.items()}
-    if isinstance(obj, list):
-        return [clean_nan(v) for v in obj]
-    if isinstance(obj, float) and pd.isna(obj):
-        return None
-    return obj
+    def clean_nan(obj):
+        if isinstance(obj, dict):
+            return {k: clean_nan(v) for k, v in obj.items()}
+        if isinstance(obj, list):
+            return [clean_nan(v) for v in obj]
+        if isinstance(obj, float) and pd.isna(obj):
+            return None
+        return obj
 
-data = clean_nan(data)
+    data = clean_nan(data)
 
-output_file = out / "league.json"
-output_file.write_text(
-    json.dumps(data, indent=2, allow_nan=False)
-)
+    output_file = out / "league.json"
+    output_file.write_text(
+        json.dumps(data, indent=2, allow_nan=False)
+    )
 
-print(f"Wrote {output_file}")
+    print(f"Wrote {output_file}")
 
 
 if __name__ == "__main__":

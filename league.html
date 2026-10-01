@@ -99,17 +99,22 @@ fetch("data/league.json")
 
     const content = document.getElementById("content");
 
+    // The league JSON stores the leader categories inside "normal"
+    const league = data.normal || {};
+
     const sections = [
-        ["Targets", data.targets],
-        ["Receptions", data.receptions],
-        ["Receiving Yards", data.receiving_yards],
-        ["Receiving Touchdowns", data.receiving_tds],
-        ["Carries", data.carries],
-        ["Rushing Yards", data.rushing_yards],
-        ["Rushing Touchdowns", data.rushing_tds]
+        ["Targets", "targets"],
+        ["Receptions", "receptions"],
+        ["Receiving Yards", "receiving_yards"],
+        ["Receiving Touchdowns", "receiving_tds"],
+        ["Carries", "carries"],
+        ["Rushing Yards", "rushing_yards"],
+        ["Rushing Touchdowns", "rushing_tds"]
     ];
 
-    sections.forEach(([title, rows]) => {
+    sections.forEach(([title, key]) => {
+
+        const rows = league[key];
 
         if (!Array.isArray(rows) || rows.length === 0) {
             return;
@@ -126,6 +131,7 @@ fetch("data/league.json")
                 <tr>
                     <th>Rank</th>
                     <th>Player</th>
+                    <th>Position</th>
                     <th>Team</th>
                     <th>Total</th>
                 </tr>
@@ -138,9 +144,10 @@ fetch("data/league.json")
             html += `
                 <tr>
                     <td>${index + 1}</td>
-                    <td>${player.name || player.player_name || ""}</td>
+                    <td>${player.name || ""}</td>
+                    <td>${player.position || ""}</td>
                     <td>${player.team || ""}</td>
-                    <td>${player.value ?? player.total ?? player.targets ?? ""}</td>
+                    <td>${player[key] ?? ""}</td>
                 </tr>
             `;
         });
@@ -156,7 +163,7 @@ fetch("data/league.json")
 
     if (!content.innerHTML) {
         content.innerHTML =
-            '<div class="error">League data loaded, but no leader categories were found.</div>';
+            '<div class="error">No league leader data found.</div>';
     }
 
 })

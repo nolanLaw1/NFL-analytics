@@ -260,7 +260,7 @@ def main():
                 "player_id": r["player_id"],
                 "name": r["name"],
                 "position": r["position"],
-                "team": r.get("team"),
+                "team": "" if pd.isna(r.get("team")) else str(r.get("team")),
             }
 
             for f in fields:

@@ -3,9 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>NFL Analytics - League</title>
 
 <style>
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -14,54 +19,166 @@ body {
 }
 
 nav {
-    padding: 15px;
     background: #171a21;
+    padding: 16px 20px;
     display: flex;
-    gap: 20px;
+    gap: 24px;
+    border-bottom: 1px solid #2b3038;
 }
 
 nav a {
-    color: white;
+    color: #d1d5db;
     text-decoration: none;
+    font-weight: 600;
+}
+
+nav a:hover {
+    color: white;
 }
 
 .container {
     max-width: 1100px;
-    margin: 30px auto;
-    padding: 20px;
+    margin: 0 auto;
+    padding: 35px 20px 60px;
+}
+
+.header {
+    margin-bottom: 25px;
 }
 
 h1 {
-    margin-bottom: 5px;
+    margin: 0 0 6px;
+    font-size: 32px;
 }
 
 .muted {
     color: #9ca3af;
 }
 
-.metric {
-    margin-top: 30px;
+.controls {
+    background: #171a21;
+    border: 1px solid #2b3038;
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 20px;
+}
+
+.controls label {
+    display: block;
+    margin-bottom: 8px;
+    color: #9ca3af;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+select {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px 14px;
+    background: #0f1115;
+    color: white;
+    border: 1px solid #3a414c;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.leaderboard {
+    background: #171a21;
+    border: 1px solid #2b3038;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.leaderboard-header {
+    padding: 20px;
+    border-bottom: 1px solid #2b3038;
+}
+
+.leaderboard-header h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
 }
 
-th, td {
-    padding: 10px;
+th,
+td {
+    padding: 13px 16px;
     border-bottom: 1px solid #2b3038;
     text-align: left;
 }
 
 th {
-    background: #171a21;
+    background: #1d2129;
+    color: #9ca3af;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+tbody tr:hover {
+    background: #1d2129;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.rank {
+    width: 70px;
+    color: #9ca3af;
+}
+
+.total {
+    font-weight: bold;
+    text-align: right;
+}
+
+th:last-child {
+    text-align: right;
 }
 
 .error {
     color: #ff6b6b;
     padding: 20px;
+}
+
+@media (max-width: 600px) {
+    nav {
+        gap: 15px;
+        padding: 14px;
+        overflow-x: auto;
+    }
+
+    nav a {
+        white-space: nowrap;
+        font-size: 14px;
+    }
+
+    .container {
+        padding: 25px 12px 40px;
+    }
+
+    h1 {
+        font-size: 27px;
+    }
+
+    th,
+    td {
+        padding: 11px 10px;
+        font-size: 14px;
+    }
+
+    .rank {
+        width: 50px;
+    }
 }
 </style>
 </head>
@@ -77,103 +194,143 @@ th {
 
 <div class="container">
 
-<h1>League Leaders</h1>
-<div id="season" class="muted">Loading...</div>
+    <div class="header">
+        <h1>League Leaders</h1>
+        <div id="season" class="muted">Loading...</div>
+    </div>
 
-<div id="content"></div>
+    <div class="controls">
+        <label for="statSelect">Statistic</label>
+
+        <select id="statSelect">
+            <option value="targets">Targets</option>
+            <option value="receptions">Receptions</option>
+            <option value="receiving_yards">Receiving Yards</option>
+            <option value="receiving_tds">Receiving Touchdowns</option>
+            <option value="carries">Carries</option>
+            <option value="rushing_yards">Rushing Yards</option>
+            <option value="rushing_tds">Rushing Touchdowns</option>
+        </select>
+    </div>
+
+    <div class="leaderboard">
+
+        <div class="leaderboard-header">
+            <h2 id="statTitle">Targets</h2>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Player</th>
+                        <th>Position</th>
+                        <th>Team</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+
+                <tbody id="leaderboardBody"></tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div id="error" class="error"></div>
 
 </div>
 
 <script>
+
+let leagueData = null;
+
+const stats = {
+    targets: "Targets",
+    receptions: "Receptions",
+    receiving_yards: "Receiving Yards",
+    receiving_tds: "Receiving Touchdowns",
+    carries: "Carries",
+    rushing_yards: "Rushing Yards",
+    rushing_tds: "Rushing Touchdowns"
+};
+
+const select = document.getElementById("statSelect");
+const title = document.getElementById("statTitle");
+const body = document.getElementById("leaderboardBody");
+const error = document.getElementById("error");
+
+function renderLeaderboard(stat) {
+
+    if (!leagueData || !leagueData.normal) {
+        return;
+    }
+
+    const rows = leagueData.normal[stat];
+
+    title.textContent = stats[stat];
+    body.innerHTML = "";
+    error.textContent = "";
+
+    if (!Array.isArray(rows) || rows.length === 0) {
+        error.textContent = "No data available for this statistic.";
+        return;
+    }
+
+    rows.slice(0, 25).forEach((player, index) => {
+
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td class="rank">${index + 1}</td>
+            <td>${player.name || ""}</td>
+            <td>${player.position || ""}</td>
+            <td>${player.team || ""}</td>
+            <td class="total">${player[stat] ?? ""}</td>
+        `;
+
+        body.appendChild(row);
+    });
+}
+
+select.addEventListener("change", function() {
+    renderLeaderboard(this.value);
+});
+
 fetch("https://nolanlaw1.github.io/NFL-analytics/data/league.json")
+
 .then(response => {
+
     if (!response.ok) {
         throw new Error("HTTP " + response.status);
     }
+
     return response.json();
 })
+
 .then(data => {
+
+    leagueData = data;
 
     document.getElementById("season").textContent =
         data.season + " Season";
 
-    const content = document.getElementById("content");
-    const league = data.normal || {};
-
-    const sections = [
-        ["Targets", "targets"],
-        ["Receptions", "receptions"],
-        ["Receiving Yards", "receiving_yards"],
-        ["Receiving Touchdowns", "receiving_tds"],
-        ["Carries", "carries"],
-        ["Rushing Yards", "rushing_yards"],
-        ["Rushing Touchdowns", "rushing_tds"]
-    ];
-
-    sections.forEach(([title, key]) => {
-
-        const rows = league[key];
-
-        if (!Array.isArray(rows) || rows.length === 0) {
-            return;
-        }
-
-        const section = document.createElement("div");
-        section.className = "metric";
-
-        let html = `<h2>${title}</h2>`;
-
-        html += `
-        <table>
-            <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Player</th>
-                    <th>Position</th>
-                    <th>Team</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-        `;
-
-        rows.slice(0, 25).forEach((player, index) => {
-
-            html += `
-                <tr>
-                    <td>${index + 1}</td>
-                    <td>${player.name || ""}</td>
-                    <td>${player.position || ""}</td>
-                    <td>${player.team || ""}</td>
-                    <td>${player[key] ?? ""}</td>
-                </tr>
-            `;
-        });
-
-        html += `
-            </tbody>
-        </table>
-        `;
-
-        section.innerHTML = html;
-        content.appendChild(section);
-    });
-
-    if (!content.innerHTML) {
-        content.innerHTML =
-            '<div class="error">No league leader data found.</div>';
-    }
+    renderLeaderboard("targets");
 
 })
-.catch(error => {
 
-    console.error(error);
+.catch(err => {
+
+    console.error(err);
 
     document.getElementById("season").textContent = "";
 
-    document.getElementById("content").innerHTML =
-        '<div class="error">Unable to load league data: ' +
-        error.message +
-        '</div>';
+    error.textContent =
+        "Unable to load league data: " + err.message;
+
 });
+
 </script>
+
+</body>
+</html>

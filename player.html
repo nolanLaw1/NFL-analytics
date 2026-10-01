@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NFL Analytics — Player</title>
+<link rel="stylesheet" href="styles.css"></head>
+<body><div class="site">
+<div class="top"><h1>NFL Analytics</h1><div class="season" id="season"></div></div>
+<nav><a href="league.html">LEAGUE</a><a class="active" href="players.html">PLAYERS</a><a href="teams.html">TEAMS</a></nav>
+<div id="content"></div>
+</div>
+<script>
+const id=new URLSearchParams(location.search).get("id");
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
+fetch("data/players.json").then(r=>r.json()).then(d=>{
+ const arr=Array.isArray(d)?d:(d.players||[]), p=arr.find(x=>String(x.player_id)===String(id));
+ document.getElementById("season").textContent=(d.season||"")+" Season";
+ if(!p){document.getElementById("content").innerHTML="<div class='card empty'>Player not found.</div>";return;}
+ document.getElementById("content").innerHTML=`
+ <div class="card"><div class="name">${esc(p.name)}</div><div class="meta">${esc(p.position)} · ${esc(p.team||"")}</div>
+ <div class="stats">
+ <div class="stat"><b>${p.targets??0}</b><span>Targets</span></div>
+ <div class="stat"><b>${p.carries??0}</b><span>Carries</span></div>
+ <div class="stat"><b>${p.receptions??0}</b><span>Receptions</span></div>
+ <div class="stat"><b>${p.red_zone_targets??0}</b><span>RZ Targets</span></div>
+ <div class="stat"><b>${p.red_zone_carries??0}</b><span>RZ Carries</span></div>
+ </div></div>
+ <div class="card"><h2>Weekly Usage</h2><div id="weekly"></div></div>`;
+ const weekly=p.weekly||p.weekly_usage||[];
+ document.getElementById("weekly").innerHTML=weekly.length?`<table><thead><tr><th>Week</th><th>Targets</th><th>Carries</th><th>RZ Targets</th><th>RZ Carries</th></tr></thead><tbody>${weekly.map(w=>`<tr><td>${w.week}</td><td>${w.targets??0}</td><td>${w.carries??0}</td><td>${w.red_zone_targets??0}</td><td>${w.red_zone_carries??0}</td></tr>`).join("")}</tbody></table>`:"<div class='empty'>Weekly detail will appear once the player data pipeline includes weekly usage.</div>";
+}).catch(()=>document.getElementById("content").innerHTML="<div class='card empty'>No player data found.</div>");
+</script><div class="footer">NFL offensive usage • player detail</div></div></body></html>

@@ -1,0 +1,13 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NFL Analytics — Teams</title><link rel="stylesheet" href="styles.css"></head><body>
+<div class="site"><div class="brand"><h1>NFL Analytics</h1><div class="season" id="season"></div></div>
+<nav class="mainnav"><a href="league.html">LEAGUE</a><a href="players.html">PLAYERS</a><a class="active" href="teams.html">TEAMS</a></nav>
+<div class="panel"><div class="panelhead"><h2>Teams</h2><div class="note">Team offensive tendencies</div></div><div id="teams"></div></div>
+<div class="footer">NFL offensive tendencies • regular season</div></div>
+<script>
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
+fetch("data/teams.json").then(r=>r.json()).then(d=>{let a=Array.isArray(d)?d:(d.teams||[]);season.textContent=(d.season||"")+" Season";
+teams.innerHTML="<div class='grid' style='padding:18px'>"+a.map(t=>`<div class='card'><a class='link' href='team.html?id=${encodeURIComponent(t.team)}'><b>${esc(t.team)}</b></a><p class='muted'>${(t.pass_rate*100).toFixed(1)}% pass rate</p><div class='bar'><i style='width:${t.pass_rate*100}%'></i></div></div>`).join("")+"</div>"
+}).catch(()=>teams.innerHTML="<div style='padding:20px' class='muted'>Run <code>python build_team_data.py 2025</code> to create team data.</div>");
+</script></body></html>

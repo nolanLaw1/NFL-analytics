@@ -1,0 +1,29 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NFL Analytics — League</title><link rel="stylesheet" href="styles.css"></head><body>
+<div class="site">
+<div class="brand"><h1>NFL Analytics</h1><div class="season" id="season">Season</div></div>
+<nav class="mainnav"><a class="active" href="league.html">LEAGUE</a><a href="players.html">PLAYERS</a><a href="teams.html">TEAMS</a></nav>
+<div class="subnav"><button class="active" data-section="normal">NORMAL</button><button data-section="red_zone">RED ZONE</button></div>
+<div class="metricbar" id="metrics"></div>
+<section class="panel"><div class="panelhead"><h2 id="title">Targets</h2><div class="note" id="note">League leaders</div></div><div id="table"></div></section>
+<div class="footer">NFL offensive usage • regular season</div>
+</div>
+<script>
+let DATA; let section="normal",metric="targets";
+const configs={normal:[["targets","Targets","targets"],["carries","Carries","carries"],["receptions","Receptions","receptions"],["receiving_yards","Receiving Yards","receiving_yards"],["rushing_yards","Rushing Yards","rushing_yards"],["receiving_tds","Receiving TDs","receiving_tds"],["rushing_tds","Rushing TDs","rushing_tds"]],
+red_zone:[["targets","RZ Targets","red_zone_targets"],["carries","RZ Carries","red_zone_carries"],["receptions","RZ Receptions","red_zone_receptions"],["receiving_tds","RZ Receiving TDs","red_zone_receiving_tds"],["rushing_tds","RZ Rushing TDs","red_zone_rushing_tds"]]};
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
+function renderMetrics(){metrics.innerHTML="";configs[section].forEach(([key,label])=>{let b=document.createElement("button");b.textContent=label;b.className=key===metric?"active":"";b.onclick=()=>{metric=key;renderMetrics();renderTable()};metrics.appendChild(b)})}
+function renderTable(){
+ const cfg=configs[section].find(x=>x[0]===metric),label=cfg[1],field=cfg[2],rows=DATA[section][metric]||[];
+ title.textContent=label;note.textContent=section==="red_zone"&&metric==="targets"?"Ranked by RZ targets":"League leaders";
+ let h="<table><thead><tr><th>Rank</th><th>Player</th><th>"+esc(label)+"</th>"+(section==="red_zone"&&metric==="targets"?"<th>RZ Target Share</th>":"")+"</tr></thead><tbody>";
+ rows.forEach((r,i)=>{let extra="";
+ if(section==="red_zone"&&metric==="targets"){let pct=(r.rz_target_share*100).toFixed(1);extra=`<td class="share">${r.red_zone_targets}/${r.team_rz_targets} (${pct}%)<div class="bar"><i style="width:${Math.min(r.rz_target_share*100,100)}%"></i></div></td>`}
+ h+=`<tr><td class="rank">${i+1}</td><td><a class="link player" href="player.html?id=${encodeURIComponent(r.player_id||"")}">${esc(r.name)}</a><span class="meta">${esc(r.position)} · ${esc(r.team||"")}</span></td><td>${r[field]??0}</td>${extra}</tr>`});
+ h+="</tbody></table>";table.innerHTML=h;
+}
+document.querySelectorAll(".subnav button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".subnav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");section=b.dataset.section;metric=configs[section][0][0];renderMetrics();renderTable()});
+fetch("data/league.json").then(r=>r.json()).then(d=>{DATA=d;season.textContent=d.season+" Season";renderMetrics();renderTable()}).catch(()=>table.innerHTML="<div style='padding:20px' class='muted'>No league data found. Run <code>python build_league_data.py 2025</code>.</div>");
+</script></body></html>

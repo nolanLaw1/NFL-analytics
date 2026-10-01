@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NFL Analytics — Players</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="site">
+<div class="brand"><h1>NFL Analytics</h1><div class="season" id="season"></div></div>
+<nav class="mainnav">
+<a href="league.html">LEAGUE</a><a class="active" href="players.html">PLAYERS</a><a href="teams.html">TEAMS</a>
+</nav>
+
+<div class="controls">
+<input id="search" class="search" placeholder="Search players..." autocomplete="off">
+<select id="position" class="filter">
+<option value="ALL">All positions</option><option>QB</option><option>WR</option><option>RB</option><option>TE</option>
+</select>
+</div>
+
+<section class="panel">
+<div class="panelhead"><h2>Players</h2><div class="note">Open a player for weekly usage and red-zone detail.</div></div>
+<div id="table"></div>
+</section>
+</div>
+
+<script>
+let DATA=[];
+const search=document.getElementById("search"), position=document.getElementById("position");
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
+function render(){
+ const q=search.value.trim().toLowerCase(), pos=position.value;
+ const rows=DATA.filter(p=>(pos==="ALL"||p.position===pos)&&(!q||p.name.toLowerCase().includes(q)));
+ let h="<table><thead><tr><th>Player</th><th>Position</th><th class='hide-mobile'>Team</th><th>Targets</th><th>Carries</th><th class='hide-mobile'>RZ Targets</th></tr></thead><tbody>";
+ rows.forEach(p=>{
+  h+=`<tr><td><a class="link player" href="player.html?id=${encodeURIComponent(p.player_id)}">${esc(p.name)}</a><span class="meta">${esc(p.position)} · ${esc(p.team||"")}</span></td><td>${esc(p.position)}</td><td class="hide-mobile">${esc(p.team||"")}</td><td>${p.targets}</td><td>${p.carries}</td><td class="hide-mobile">${p.red_zone_targets}</td></tr>`;
+ });
+ h+=rows.length?"</tbody></table>":"</tbody></table><div style='padding:20px;color:#8f9baa'>No players match your search.</div>";
+ document.getElementById("table").innerHTML=h;
+}
+search.oninput=render; position.onchange=render;
+fetch("data/players.json").then(r=>r.json()).then(d=>{
+ DATA=Array.isArray(d)?d:(d.players||[]);
+ document.getElementById("season").textContent=(d.season||"")+" Season";
+ render();
+}).catch(()=>document.getElementById("table").innerHTML="<div style='padding:20px;color:#8f9baa'>No player data found. Run the player data build script first.</div>");
+</script>
+<div class="footer">Search by name or position • open a player for detail</div></div></body></html>

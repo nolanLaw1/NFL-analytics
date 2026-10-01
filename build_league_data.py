@@ -407,7 +407,7 @@ def main():
         },
     }
 
-        out = Path("data")
+    out = Path("data")
     out.mkdir(exist_ok=True)
 
     def clean_nan(obj):

@@ -88,7 +88,7 @@ th {
 fetch("https://nolanlaw1.github.io/NFL-analytics/data/league.json")
 .then(response => {
     if (!response.ok) {
-        throw new Error("Could not load league.json");
+        throw new Error("HTTP " + response.status);
     }
     return response.json();
 })
@@ -98,8 +98,6 @@ fetch("https://nolanlaw1.github.io/NFL-analytics/data/league.json")
         data.season + " Season";
 
     const content = document.getElementById("content");
-
-    // The league JSON stores the leader categories inside "normal"
     const league = data.normal || {};
 
     const sections = [
@@ -168,12 +166,14 @@ fetch("https://nolanlaw1.github.io/NFL-analytics/data/league.json")
 
 })
 .catch(error => {
+
     console.error(error);
 
+    document.getElementById("season").textContent = "";
+
     document.getElementById("content").innerHTML =
-        '<div class="error">Unable to load league data.</div>';
+        '<div class="error">Unable to load league data: ' +
+        error.message +
+        '</div>';
 });
 </script>
-
-</body>
-</html>

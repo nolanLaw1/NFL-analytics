@@ -33,13 +33,18 @@ def first_existing(df, names, default=None):
 def clean_number(value):
     if pd.isna(value):
         return 0
+
     if isinstance(value, float) and value.is_integer():
         return int(value)
+
     return value
 
 
 def load_player_stats():
-    df = pd.read_csv(PLAYER_STATS_URL, low_memory=False)
+    df = pd.read_csv(
+        PLAYER_STATS_URL,
+        low_memory=False
+    )
 
     if "season" in df.columns:
         df = df[df["season"] == SEASON].copy()
@@ -118,19 +123,23 @@ def build_player_totals(stats):
         if column not in stats.columns:
             stats[column] = 0
 
-    group_columns = [
-        "player_id",
-        "player_name",
-        "position",
-    ]
-
     players = (
-        stats.groupby(group_columns, dropna=False)
+        stats.groupby(
+            [
+                "player_id",
+                "player_name",
+                "position",
+            ],
+            dropna=False
+        )
         .agg(
-            team=("team", lambda x: next(
-                (v for v in reversed(x.tolist()) if v),
-                ""
-            )),
+            team=(
+                "team",
+                lambda x: next(
+                    (v for v in reversed(x.tolist()) if v),
+                    ""
+                )
+            ),
             **{
                 column: (column, "sum")
                 for column in numeric_columns
@@ -168,31 +177,30 @@ def calculate_red_zone_rushes(pbp):
     rz["player_id"] = rz["rusher_player_id"].astype(str)
     rz["team"] = rz["posteam"].astype(str)
 
-    # Individual player red-zone rush attempts
+    # Individual player red-zone rushes by team
     player_rushes = (
-        rz.groupby(["player_id", "team"])
+        rz.groupby(
+            ["player_id", "team"],
+            as_index=False
+        )
         .size()
-        .reset_index(name="red_zone_rushes")
+        .rename(columns={"size": "red_zone_rushes"})
     )
 
-    # Total team red-zone rush attempts
+    # Actual red-zone rushing attempts by team
     team_rushes = (
-        rz.groupby("team")
+        rz.groupby(
+            "team",
+            as_index=False
+        )
         .size()
-        .reset_index(name="team_red_zone_rushes")
+        .rename(columns={"size": "team_red_zone_rushes"})
     )
 
     result = player_rushes.merge(
         team_rushes,
         on="team",
         how="left"
-    )
-
-    # Player's percentage of his team's red-zone rush attempts
-    result["red_zone_rush_share"] = (
-        result["red_zone_rushes"]
-        / result["team_red_zone_rushes"].replace(0, pd.NA)
-        * 100
     )
 
     return result
@@ -228,15 +236,21 @@ def calculate_red_zone_targets(pbp):
     rz["team"] = rz["posteam"].astype(str)
 
     player_targets = (
-        rz.groupby(["player_id", "team"])
+        rz.groupby(
+            ["player_id", "team"],
+            as_index=False
+        )
         .size()
-        .reset_index(name="red_zone_targets")
+        .rename(columns={"size": "red_zone_targets"})
     )
 
     team_targets = (
-        rz.groupby("team")
+        rz.groupby(
+            "team",
+            as_index=False
+        )
         .size()
-        .reset_index(name="team_red_zone_targets")
+        .rename(columns={"size": "team_red_zone_targets"})
     )
 
     result = player_targets.merge(
@@ -245,21 +259,26 @@ def calculate_red_zone_targets(pbp):
         how="left"
     )
 
-    result["red_zone_target_share"] = (
-        result["red_zone_targets"]
-        / result["team_red_zone_targets"].replace(0, pd.NA)
-        * 100
-    )
-
     return result
 
 
 def add_red_zone_data(players, pbp):
+    # ---------------------------------------------------------
+    # RED-ZONE RUSHING
+    # ---------------------------------------------------------
+
     red_zone_rushes = calculate_red_zone_rushes(pbp)
 
     if not red_zone_rushes.empty:
 
-        # Aggregate across teams for players who changed teams.
+        # Keep player/team rows separate so the team denominator
+        # is not accidentally multiplied by the number of players.
+        red_zone_rushes["red_zone_rush_share"] = (
+            red_zone_rushes["red_zone_rushes"]
+            / red_zone_rushes["team_red_zone_rushes"]
+            * 100
+        )
+
         rush_totals = (
             red_zone_rushes
             .groupby("player_id", as_index=False)
@@ -269,17 +288,30 @@ def add_red_zone_data(players, pbp):
             )
         )
 
+        # Calculate the final season share from the actual
+        # player total and actual team total.
         rush_totals["red_zone_rush_share"] = (
             rush_totals["red_zone_rushes"]
-            / rush_totals["team_red_zone_rushes"].replace(0, pd.NA)
+            / rush_totals["team_red_zone_rushes"]
             * 100
         )
 
         players = players.merge(
-            rush_totals,
+            rush_totals[
+                [
+                    "player_id",
+                    "red_zone_rushes",
+                    "team_red_zone_rushes",
+                    "red_zone_rush_share",
+                ]
+            ],
             on="player_id",
             how="left"
         )
+
+    # ---------------------------------------------------------
+    # RED-ZONE TARGETS
+    # ---------------------------------------------------------
 
     red_zone_targets = calculate_red_zone_targets(pbp)
 
@@ -296,17 +328,27 @@ def add_red_zone_data(players, pbp):
 
         target_totals["red_zone_target_share"] = (
             target_totals["red_zone_targets"]
-            / target_totals["team_red_zone_targets"].replace(0, pd.NA)
+            / target_totals["team_red_zone_targets"]
             * 100
         )
 
         players = players.merge(
-            target_totals,
+            target_totals[
+                [
+                    "player_id",
+                    "red_zone_targets",
+                    "team_red_zone_targets",
+                    "red_zone_target_share",
+                ]
+            ],
             on="player_id",
             how="left"
         )
 
-    # Make sure every player has the fields expected by the site.
+    # ---------------------------------------------------------
+    # DEFAULT VALUES
+    # ---------------------------------------------------------
+
     default_columns = {
         "red_zone_rushes": 0,
         "team_red_zone_rushes": 0,
@@ -317,10 +359,17 @@ def add_red_zone_data(players, pbp):
     }
 
     for column, default in default_columns.items():
+
         if column not in players.columns:
             players[column] = default
 
-        players[column] = players[column].fillna(default)
+        players[column] = (
+            pd.to_numeric(
+                players[column],
+                errors="coerce"
+            )
+            .fillna(default)
+        )
 
     return players
 
@@ -329,9 +378,11 @@ def convert_records(players):
     records = []
 
     for _, row in players.iterrows():
+
         record = {}
 
         for column in players.columns:
+
             value = row[column]
 
             if pd.isna(value):
@@ -359,11 +410,19 @@ def main():
     pbp = load_pbp()
 
     print("Calculating red-zone data...")
-    players = add_red_zone_data(players, pbp)
+    players = add_red_zone_data(
+        players,
+        pbp
+    )
 
     records = convert_records(players)
 
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+    with open(
+        OUTPUT_FILE,
+        "w",
+        encoding="utf-8"
+    ) as f:
+
         json.dump(
             records,
             f,

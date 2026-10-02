@@ -30,6 +30,7 @@
             class="search"
             placeholder="Search players..."
             autocomplete="off"
+            style="flex:1;min-width:180px;"
         >
 
         <select id="position" class="filter">
@@ -38,6 +39,10 @@
             <option value="RB">RB</option>
             <option value="WR">WR</option>
             <option value="TE">TE</option>
+        </select>
+
+        <select id="team" class="filter">
+            <option value="ALL">All teams</option>
         </select>
 
     </div>
@@ -79,6 +84,9 @@ const search =
 
 const position =
     document.getElementById("position");
+
+const team =
+    document.getElementById("team");
 
 const table =
     document.getElementById("table");
@@ -220,10 +228,14 @@ function displayValue(player, column) {
 
 function getSortValue(player, column) {
 
-    if (column.type === "number" ||
-        column.type === "percent") {
+    if (
+        column.type === "number" ||
+        column.type === "percent"
+    ) {
 
-        return numberValue(player[column.key]);
+        return numberValue(
+            player[column.key]
+        );
 
     }
 
@@ -302,6 +314,33 @@ function sortArrow(key) {
 }
 
 
+function populateTeams() {
+
+    const teams =
+        [...new Set(
+            DATA
+                .map(player => player.team)
+                .filter(Boolean)
+        )]
+        .sort();
+
+
+    teams.forEach(teamCode => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = teamCode;
+
+        option.textContent = teamCode;
+
+        team.appendChild(option);
+
+    });
+
+}
+
+
 function render() {
 
     const q =
@@ -310,6 +349,9 @@ function render() {
     const pos =
         position.value;
 
+    const selectedTeam =
+        team.value;
+
 
     let rows = DATA.filter(player => {
 
@@ -317,16 +359,27 @@ function render() {
             String(player.name || "")
                 .toLowerCase();
 
+
         const matchesSearch =
             !q ||
             name.includes(q);
+
 
         const matchesPosition =
             pos === "ALL" ||
             player.position === pos;
 
-        return matchesSearch &&
-               matchesPosition;
+
+        const matchesTeam =
+            selectedTeam === "ALL" ||
+            player.team === selectedTeam;
+
+
+        return (
+            matchesSearch &&
+            matchesPosition &&
+            matchesTeam
+        );
 
     });
 
@@ -341,7 +394,7 @@ function render() {
                 padding:20px;
                 color:#9aa6b2
             ">
-                No players match your search.
+                No players match your filters.
             </div>
         `;
 
@@ -512,14 +565,6 @@ function render() {
 
                         currentSort = key;
 
-                        /*
-                         * Numbers:
-                         * highest first
-                         *
-                         * Text:
-                         * A-Z first
-                         */
-
                         const column =
                             COLUMNS.find(
                                 c => c.key === key
@@ -555,14 +600,22 @@ position.addEventListener(
 );
 
 
+team.addEventListener(
+    "change",
+    render
+);
+
+
 fetch("data/players.json")
 
 .then(response => {
 
     if (!response.ok) {
+
         throw new Error(
             "HTTP " + response.status
         );
+
     }
 
     return response.json();
@@ -577,9 +630,14 @@ fetch("data/players.json")
             : (data.players || []);
 
 
-    document.getElementById("season").textContent =
-        (data.season || "") + " Season";
+    document.getElementById(
+        "season"
+    ).textContent =
+        (data.season || "") +
+        " Season";
 
+
+    populateTeams();
 
     render();
 

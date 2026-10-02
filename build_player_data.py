@@ -77,9 +77,12 @@ def ensure(pid, name="", position="", team=""):
             "red_zone_rushing_tds": 0,
             "red_zone_pass_attempts": 0,
 
-            # Calculated passing stats
+            # Calculated stats
             "completion_pct": 0.0,
             "yards_per_attempt": 0.0,
+            "target_share": 0.0,
+            "red_zone_target_share": 0.0,
+            "red_zone_rush_share": 0.0,
 
             "weekly": {},
 
@@ -206,7 +209,6 @@ for pid, g in rec.groupby("receiver_player_id"):
                 "red_zone_targets": 0,
                 "red_zone_carries": 0,
 
-                # Passing fields
                 "pass_attempts": 0,
                 "completions": 0,
                 "passing_yards": 0,
@@ -321,7 +323,6 @@ for pid, g in rush.groupby("rusher_player_id"):
                 "red_zone_targets": 0,
                 "red_zone_carries": 0,
 
-                # Passing fields
                 "pass_attempts": 0,
                 "completions": 0,
                 "passing_yards": 0,
@@ -339,6 +340,25 @@ for pid, g in rush.groupby("rusher_player_id"):
                 errors="coerce"
             ).le(20).sum()
         )
+
+
+# =========================================================
+# TEAM RED-ZONE RUSH TOTALS
+# =========================================================
+
+print("Calculating team red-zone rushing totals...")
+
+team_rz_rushes = (
+    rush[
+        pd.to_numeric(
+            rush["yardline_100"],
+            errors="coerce"
+        ).le(20)
+    ]
+    .groupby("posteam")
+    .size()
+    .to_dict()
+)
 
 
 # =========================================================
@@ -436,8 +456,6 @@ for pid, g in passers.groupby("passer_player_id"):
             },
         )
 
-        # Make absolutely sure older weekly entries
-        # have all passing fields.
         e.setdefault("pass_attempts", 0)
         e.setdefault("completions", 0)
         e.setdefault("passing_yards", 0)
@@ -483,7 +501,7 @@ for pid, g in passers.groupby("passer_player_id"):
 
 
 # =========================================================
-# TARGET SHARE + RED-ZONE TARGET SHARE
+# TARGET SHARE
 # =========================================================
 
 print("Calculating target share percentages...")
@@ -548,6 +566,23 @@ for p in players.values():
         )
     else:
         p["red_zone_target_share"] = 0.0
+
+    # Red-zone rush share
+    rz_rush_denominator = sum(
+        team_rz_rushes.get(team, 0)
+        for team in teams
+    )
+
+    if rz_rush_denominator > 0:
+        p["red_zone_rush_share"] = round(
+            (
+                p["red_zone_rushes"]
+                / rz_rush_denominator
+            ) * 100,
+            1
+        )
+    else:
+        p["red_zone_rush_share"] = 0.0
 
     # Completion percentage
     if p["pass_attempts"] > 0:

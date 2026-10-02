@@ -175,6 +175,89 @@ const COLUMNS = [
 ];
 
 
+/*
+ * Which columns should be visible for each position.
+ *
+ * ALL = everything
+ *
+ * QB = passing/usage + rushing
+ *
+ * RB = rushing + receiving
+ *
+ * WR/TE = receiving + red zone receiving
+ */
+
+const POSITION_COLUMNS = {
+
+    ALL: [
+        "name",
+        "position",
+        "team",
+        "targets",
+        "receptions",
+        "receiving_yards",
+        "receiving_tds",
+        "carries",
+        "rushing_yards",
+        "rushing_tds",
+        "target_share",
+        "red_zone_target_share",
+        "red_zone_rushes"
+    ],
+
+    QB: [
+        "name",
+        "position",
+        "team",
+        "carries",
+        "rushing_yards",
+        "rushing_tds",
+        "red_zone_rushes"
+    ],
+
+    RB: [
+        "name",
+        "position",
+        "team",
+        "targets",
+        "receptions",
+        "receiving_yards",
+        "receiving_tds",
+        "carries",
+        "rushing_yards",
+        "rushing_tds",
+        "target_share",
+        "red_zone_target_share",
+        "red_zone_rushes"
+    ],
+
+    WR: [
+        "name",
+        "position",
+        "team",
+        "targets",
+        "receptions",
+        "receiving_yards",
+        "receiving_tds",
+        "target_share",
+        "red_zone_target_share"
+    ],
+
+    TE: [
+        "name",
+        "position",
+        "team",
+        "targets",
+        "receptions",
+        "receiving_yards",
+        "receiving_tds",
+        "target_share",
+        "red_zone_target_share"
+    ]
+
+};
+
+
 function esc(value) {
 
     return String(value ?? "").replace(
@@ -211,14 +294,19 @@ function formatPercent(value) {
 
 function displayValue(player, column) {
 
-    const value = player[column.key];
+    const value =
+        player[column.key];
 
     if (column.type === "percent") {
+
         return formatPercent(value);
+
     }
 
     if (column.type === "number") {
+
         return numberValue(value);
+
     }
 
     return esc(value || "");
@@ -341,6 +429,24 @@ function populateTeams() {
 }
 
 
+function getVisibleColumns() {
+
+    const pos =
+        position.value;
+
+    const keys =
+        POSITION_COLUMNS[pos] ||
+        POSITION_COLUMNS.ALL;
+
+
+    return COLUMNS.filter(
+        column =>
+            keys.includes(column.key)
+    );
+
+}
+
+
 function render() {
 
     const q =
@@ -384,6 +490,52 @@ function render() {
     });
 
 
+    const visibleColumns =
+        getVisibleColumns();
+
+
+    /*
+     * If the currently selected sort column
+     * is hidden for this position, default
+     * to the first useful numeric column.
+     */
+
+    const sortStillVisible =
+        visibleColumns.some(
+            column =>
+                column.key === currentSort
+        );
+
+
+    if (!sortStillVisible) {
+
+        const firstNumeric =
+            visibleColumns.find(
+                column =>
+                    column.type === "number" ||
+                    column.type === "percent"
+            );
+
+
+        if (firstNumeric) {
+
+            currentSort =
+                firstNumeric.key;
+
+            sortDirection = "desc";
+
+        } else {
+
+            currentSort =
+                "name";
+
+            sortDirection = "asc";
+
+        }
+
+    }
+
+
     sortRows(rows);
 
 
@@ -414,10 +566,11 @@ function render() {
                     <th class="rank">
                         #
                     </th>
+
     `;
 
 
-    COLUMNS.forEach(column => {
+    visibleColumns.forEach(column => {
 
         html += `
 
@@ -458,70 +611,53 @@ function render() {
                     ${index + 1}
                 </td>
 
-                <td>
+        `;
 
-                    <a
-                        class="link"
-                        href="player.html?id=${encodeURIComponent(player.player_id)}"
-                    >
-                        ${esc(player.name)}
-                    </a>
 
-                    <span class="meta">
-                        ${esc(player.position)}
-                        ·
-                        ${esc(player.team || "")}
-                    </span>
+        visibleColumns.forEach(column => {
 
-                </td>
+            if (column.key === "name") {
 
-                <td>
-                    ${esc(player.position)}
-                </td>
+                html += `
 
-                <td>
-                    ${esc(player.team || "")}
-                </td>
+                    <td>
 
-                <td>
-                    ${displayValue(player, COLUMNS[3])}
-                </td>
+                        <a
+                            class="link"
+                            href="player.html?id=${encodeURIComponent(player.player_id)}"
+                        >
+                            ${esc(player.name)}
+                        </a>
 
-                <td>
-                    ${displayValue(player, COLUMNS[4])}
-                </td>
+                        <span class="meta">
+                            ${esc(player.position)}
+                            ·
+                            ${esc(player.team || "")}
+                        </span>
 
-                <td>
-                    ${displayValue(player, COLUMNS[5])}
-                </td>
+                    </td>
 
-                <td>
-                    ${displayValue(player, COLUMNS[6])}
-                </td>
+                `;
 
-                <td>
-                    ${displayValue(player, COLUMNS[7])}
-                </td>
+            } else {
 
-                <td>
-                    ${displayValue(player, COLUMNS[8])}
-                </td>
+                html += `
 
-                <td>
-                    ${displayValue(player, COLUMNS[9])}
-                </td>
+                    <td>
+                        ${displayValue(
+                            player,
+                            column
+                        )}
+                    </td>
 
-                <td>
-                    ${displayValue(player, COLUMNS[10])}
-                </td>
+                `;
 
-                <td>
-                    ${displayValue(player, COLUMNS[11])}
-                </td>
+            }
 
-                <td>
-                    ${displayValue(player, COLUMNS[12])}
-                </td>
+        });
+
+
+        html += `
 
             </tr>
 

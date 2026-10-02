@@ -15,7 +15,7 @@ PLAYERS_URL = (
     "players/players.csv"
 )
 
-SKILL = {"WR", "RB", "TE"}
+SKILL = {"QB", "WR", "RB", "TE"}
 
 print(f"Loading nflverse play-by-play for {season}...")
 df = pd.read_parquet(PBP_URL)
@@ -25,7 +25,6 @@ df = df[df["season_type"].eq("REG")].copy()
 print("Loading nflverse player positions...")
 players_df = pd.read_csv(PLAYERS_URL)
 
-# nflverse uses gsis_id as the primary player ID.
 players_df = players_df[
     ["gsis_id", "display_name", "position"]
 ].copy()
@@ -65,16 +64,16 @@ def ensure(pid, name="", position="", team=""):
             "red_zone_targets": 0,
             "red_zone_receptions": 0,
             "red_zone_carries": 0,
+            "red_zone_rushes": 0,
             "red_zone_receiving_tds": 0,
             "red_zone_rushing_tds": 0,
 
             "pass_attempts": 0,
             "red_zone_pass_attempts": 0,
 
-            # Used internally to calculate target share.
-            "_share_teams": set(),
-
             "weekly": {},
+
+            "_teams": set(),
         }
 
     return players[pid]
@@ -115,7 +114,7 @@ for pid, g in rec.groupby("receiver_player_id"):
 
     position = position_map.get(pid, "")
 
-    if position not in SKILL:
+    if position not in {"WR", "RB", "TE"}:
         continue
 
     row = g.iloc[0]
@@ -135,13 +134,8 @@ for pid, g in rec.groupby("receiver_player_id"):
         player_team,
     )
 
-    # Track every team the player received targets for.
     for team in g["posteam"].dropna().astype(str).unique():
-        p["_share_teams"].add(team)
-
-    # -------------------------
-    # Overall receiving
-    # -------------------------
+        p["_teams"].add(team)
 
     p["targets"] += len(g)
 
@@ -165,10 +159,6 @@ for pid, g in rec.groupby("receiver_player_id"):
         .sum()
     )
 
-    # -------------------------
-    # Red zone receiving
-    # -------------------------
-
     rz = g[
         pd.to_numeric(
             g["yardline_100"],
@@ -191,10 +181,6 @@ for pid, g in rec.groupby("receiver_player_id"):
         .eq(1)
         .sum()
     )
-
-    # -------------------------
-    # Weekly receiving
-    # -------------------------
 
     for week, w in g.groupby("week"):
 
@@ -245,7 +231,7 @@ for pid, g in rush.groupby("rusher_player_id"):
 
     position = position_map.get(pid, "")
 
-    if position not in SKILL:
+    if position not in {"QB", "RB"}:
         continue
 
     row = g.iloc[0]
@@ -265,13 +251,8 @@ for pid, g in rush.groupby("rusher_player_id"):
         player_team,
     )
 
-    # Track teams for consistency.
     for team in g["posteam"].dropna().astype(str).unique():
-        p["_share_teams"].add(team)
-
-    # -------------------------
-    # Overall rushing
-    # -------------------------
+        p["_teams"].add(team)
 
     p["carries"] += len(g)
 
@@ -288,16 +269,15 @@ for pid, g in rush.groupby("rusher_player_id"):
         .sum()
     )
 
-    # -------------------------
-    # Red zone rushing
-    # -------------------------
-
     rz = g[
         pd.to_numeric(
             g["yardline_100"],
             errors="coerce"
         ).le(20)
     ]
+
+    # RZ rushes are only tracked for QB and RB.
+    p["red_zone_rushes"] += len(rz)
 
     p["red_zone_carries"] += len(rz)
 
@@ -307,10 +287,6 @@ for pid, g in rush.groupby("rusher_player_id"):
         .eq(1)
         .sum()
     )
-
-    # -------------------------
-    # Weekly rushing
-    # -------------------------
 
     for week, w in g.groupby("week"):
 
@@ -369,9 +345,8 @@ for pid, g in passers.groupby("passer_player_id"):
         player_team,
     )
 
-    # Track teams for consistency.
     for team in g["posteam"].dropna().astype(str).unique():
-        p["_share_teams"].add(team)
+        p["_teams"].add(team)
 
     p["pass_attempts"] += len(g)
 
@@ -381,10 +356,6 @@ for pid, g in passers.groupby("passer_player_id"):
             errors="coerce"
         ).le(20).sum()
     )
-
-    # -------------------------
-    # Weekly passing
-    # -------------------------
 
     for week, w in g.groupby("week"):
 
@@ -419,54 +390,61 @@ for pid, g in passers.groupby("passer_player_id"):
 
 
 # =========================================================
-# TARGET SHARE
+# TARGET SHARE + RZ TARGET SHARE
 # =========================================================
 
-print("Calculating target share...")
+print("Calculating target share percentages...")
+
+# All team targets by team.
+team_targets = (
+    rec.groupby("posteam")
+    .size()
+    .to_dict()
+)
+
+# Red-zone targets by team.
+team_rz_targets = (
+    rec[
+        pd.to_numeric(
+            rec["yardline_100"],
+            errors="coerce"
+        ).le(20)
+    ]
+    .groupby("posteam")
+    .size()
+    .to_dict()
+)
 
 for p in players.values():
 
-    teams = p["_share_teams"]
+    teams = p["_teams"]
 
-    # For traded players, combine the pass attempts
-    # from every team they played for.
-    denominator = sum(
+    # Combined team pass attempts for players
+    # who played for multiple teams.
+    pass_denominator = sum(
         team_pass_attempts.get(team, 0)
         for team in teams
     )
 
-    if denominator > 0:
+    if pass_denominator > 0:
         p["target_share"] = round(
-            (p["targets"] / denominator) * 100,
+            (p["targets"] / pass_denominator) * 100,
             1
         )
     else:
         p["target_share"] = 0.0
 
-    # RZ target share:
-    # player red-zone targets /
-    # team red-zone targets.
-    rz_denominator = 0
+    # RZ target share.
+    rz_target_denominator = sum(
+        team_rz_targets.get(team, 0)
+        for team in teams
+    )
 
-    for team in teams:
-
-        team_rz_targets = len(
-            rec[
-                (rec["posteam"] == team)
-                & pd.to_numeric(
-                    rec["yardline_100"],
-                    errors="coerce"
-                ).le(20)
-            ]
-        )
-
-        rz_denominator += team_rz_targets
-
-    if rz_denominator > 0:
+    if rz_target_denominator > 0:
         p["red_zone_target_share"] = round(
             (
                 p["red_zone_targets"]
-                / rz_denominator
+                / rz_target_denominator
             ) * 100,
             1
         )
@@ -482,7 +460,6 @@ result = []
 
 for p in players.values():
 
-    # Keep meaningful players.
     if (
         p["targets"] < 10
         and p["carries"] < 10
@@ -495,13 +472,11 @@ for p in players.values():
         for week in sorted(p["weekly"])
     ]
 
-    # Remove internal calculation field.
-    p.pop("_share_teams", None)
+    p.pop("_teams", None)
 
     result.append(p)
 
 
-# Default ordering.
 result.sort(
     key=lambda p: (
         -max(
@@ -515,7 +490,7 @@ result.sort(
 
 
 # =========================================================
-# WRITE FILE
+# WRITE JSON
 # =========================================================
 
 out = Path("data/players.json")

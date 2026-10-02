@@ -1,668 +1,380 @@
 import sys
 import json
 from pathlib import Path
+
 import pandas as pd
 
-season = int(sys.argv[1]) if len(sys.argv) > 1 else 2025
+
+SEASON = int(sys.argv[1]) if len(sys.argv) > 1 else 2025
+
+DATA_DIR = Path("data")
+DATA_DIR.mkdir(exist_ok=True)
+
+OUTPUT_FILE = DATA_DIR / "players.json"
+
+PLAYER_STATS_URL = (
+    "https://github.com/nflverse/nflverse-data/releases/download/"
+    "player_stats/player_stats.csv"
+)
 
 PBP_URL = (
-    "https://github.com/nflverse/nflverse-data/releases/download/"
-    f"pbp/play_by_play_{season}.parquet"
-)
-
-PLAYERS_URL = (
-    "https://github.com/nflverse/nflverse-data/releases/download/"
-    "players/players.csv"
-)
-
-print(f"Loading nflverse play-by-play for {season}...")
-df = pd.read_parquet(PBP_URL)
-
-df = df[df["season_type"].eq("REG")].copy()
-
-print("Loading nflverse player positions...")
-players_df = pd.read_csv(PLAYERS_URL)
-
-players_df = players_df[
-    ["gsis_id", "display_name", "position"]
-].copy()
-
-players_df["gsis_id"] = players_df["gsis_id"].astype(str)
-
-position_map = dict(
-    zip(players_df["gsis_id"], players_df["position"])
-)
-
-name_map = dict(
-    zip(players_df["gsis_id"], players_df["display_name"])
-)
-
-players = {}
-
-
-def ensure(pid, name="", position="", team=""):
-    pid = str(pid)
-
-    if pid not in players:
-        players[pid] = {
-            "player_id": pid,
-            "name": name or name_map.get(pid) or pid,
-            "position": position or position_map.get(pid) or "",
-            "team": team or "",
-
-            # Receiving
-            "targets": 0,
-            "receptions": 0,
-            "receiving_yards": 0,
-            "receiving_tds": 0,
-
-            # Rushing
-            "carries": 0,
-            "rushing_yards": 0,
-            "rushing_tds": 0,
-
-            # Passing
-            "pass_attempts": 0,
-            "completions": 0,
-            "passing_yards": 0,
-            "passing_tds": 0,
-            "interceptions": 0,
-
-            # Red zone
-            "red_zone_targets": 0,
-            "red_zone_receptions": 0,
-            "red_zone_carries": 0,
-            "red_zone_rushes": 0,
-            "red_zone_receiving_tds": 0,
-            "red_zone_rushing_tds": 0,
-            "red_zone_pass_attempts": 0,
-
-            # Calculated stats
-            "completion_pct": 0.0,
-            "yards_per_attempt": 0.0,
-            "target_share": 0.0,
-            "red_zone_target_share": 0.0,
-            "red_zone_rush_share": 0.0,
-
-            "weekly": {},
-
-            "_teams": set(),
-        }
-
-    return players[pid]
-
-
-# =========================================================
-# TEAM PASSING TOTALS
-# =========================================================
-
-print("Calculating team passing totals...")
-
-pass_attempts = df[
-    df["pass_attempt"].eq(1)
-    & df["posteam"].notna()
-].copy()
-
-team_pass_attempts = (
-    pass_attempts
-    .groupby("posteam")
-    .size()
-    .to_dict()
+    f"https://github.com/nflverse/nflverse-data/releases/download/"
+    f"pbp/play_by_play_{SEASON}.parquet"
 )
 
 
-# =========================================================
-# RECEIVING
-# =========================================================
+def first_existing(df, names, default=None):
+    for name in names:
+        if name in df.columns:
+            return name
+    return default
 
-rec = df[
-    df["pass_attempt"].eq(1)
-    & df["receiver_player_id"].notna()
-    & df["posteam"].notna()
-].copy()
 
-for pid, g in rec.groupby("receiver_player_id"):
+def clean_number(value):
+    if pd.isna(value):
+        return 0
+    if isinstance(value, float) and value.is_integer():
+        return int(value)
+    return value
 
-    pid = str(pid)
 
-    position = position_map.get(pid, "")
+def load_player_stats():
+    df = pd.read_csv(PLAYER_STATS_URL, low_memory=False)
 
-    if position not in {"WR", "RB", "TE"}:
-        continue
+    if "season" in df.columns:
+        df = df[df["season"] == SEASON].copy()
 
-    row = g.iloc[0]
+    return df
 
-    player_team = (
-        g["posteam"]
-        .value_counts()
-        .index[0]
+
+def load_pbp():
+    return pd.read_parquet(PBP_URL)
+
+
+def build_player_totals(stats):
+    player_id_col = first_existing(
+        stats,
+        ["player_id", "player_player_id"]
     )
 
-    p = ensure(
-        pid,
-        name_map.get(pid)
-        or row.get("receiver_player_name")
-        or pid,
-        position,
-        player_team,
+    name_col = first_existing(
+        stats,
+        ["player_name", "name"]
     )
 
-    for team in g["posteam"].dropna().astype(str).unique():
-        p["_teams"].add(team)
-
-    p["targets"] += len(g)
-
-    p["receptions"] += int(
-        g["complete_pass"]
-        .fillna(0)
-        .eq(1)
-        .sum()
+    position_col = first_existing(
+        stats,
+        ["position"]
     )
 
-    p["receiving_yards"] += int(
-        g["receiving_yards"]
-        .fillna(0)
-        .sum()
+    team_col = first_existing(
+        stats,
+        ["recent_team", "team", "posteam"]
     )
 
-    p["receiving_tds"] += int(
-        g["pass_touchdown"]
-        .fillna(0)
-        .eq(1)
-        .sum()
-    )
+    if not player_id_col or not name_col or not position_col:
+        raise RuntimeError(
+            "Could not find required player columns in nflverse player_stats.csv"
+        )
 
-    rz = g[
-        pd.to_numeric(
-            g["yardline_100"],
-            errors="coerce"
-        ).le(20)
+    stats["player_id"] = stats[player_id_col].astype(str)
+    stats["player_name"] = stats[name_col].fillna("").astype(str)
+    stats["position"] = stats[position_col].fillna("").astype(str)
+
+    if team_col:
+        stats["team"] = stats[team_col].fillna("").astype(str)
+    else:
+        stats["team"] = ""
+
+    numeric_columns = [
+        "completions",
+        "attempts",
+        "passing_yards",
+        "passing_tds",
+        "interceptions",
+        "sacks",
+        "sack_yards",
+        "passing_air_yards",
+        "passing_first_downs",
+        "passing_epa",
+        "carries",
+        "rushing_yards",
+        "rushing_tds",
+        "rushing_first_downs",
+        "rushing_epa",
+        "targets",
+        "receptions",
+        "receiving_yards",
+        "receiving_tds",
+        "receiving_air_yards",
+        "receiving_first_downs",
+        "receiving_epa",
+        "fantasy_points",
+        "fantasy_points_ppr",
+        "special_teams_tds",
     ]
 
-    p["red_zone_targets"] += len(rz)
+    for column in numeric_columns:
+        if column not in stats.columns:
+            stats[column] = 0
 
-    p["red_zone_receptions"] += int(
-        rz["complete_pass"]
-        .fillna(0)
-        .eq(1)
-        .sum()
-    )
-
-    p["red_zone_receiving_tds"] += int(
-        rz["pass_touchdown"]
-        .fillna(0)
-        .eq(1)
-        .sum()
-    )
-
-    for week, w in g.groupby("week"):
-
-        week = int(week)
-
-        e = p["weekly"].setdefault(
-            week,
-            {
-                "week": week,
-                "targets": 0,
-                "carries": 0,
-                "receptions": 0,
-                "red_zone_targets": 0,
-                "red_zone_carries": 0,
-
-                "pass_attempts": 0,
-                "completions": 0,
-                "passing_yards": 0,
-                "passing_tds": 0,
-                "interceptions": 0,
-                "red_zone_pass_attempts": 0,
-            },
-        )
-
-        e["targets"] += len(w)
-
-        e["receptions"] += int(
-            w["complete_pass"]
-            .fillna(0)
-            .eq(1)
-            .sum()
-        )
-
-        e["red_zone_targets"] += int(
-            pd.to_numeric(
-                w["yardline_100"],
-                errors="coerce"
-            ).le(20).sum()
-        )
-
-
-# =========================================================
-# RUSHING
-# =========================================================
-
-print("Calculating rushing stats...")
-
-rush = df[
-    df["rush_attempt"].eq(1)
-    & df["rusher_player_id"].notna()
-    & df["posteam"].notna()
-].copy()
-
-for pid, g in rush.groupby("rusher_player_id"):
-
-    pid = str(pid)
-
-    position = position_map.get(pid, "")
-
-    if position not in {"QB", "RB"}:
-        continue
-
-    row = g.iloc[0]
-
-    player_team = (
-        g["posteam"]
-        .value_counts()
-        .index[0]
-    )
-
-    p = ensure(
-        pid,
-        name_map.get(pid)
-        or row.get("rusher_player_name")
-        or pid,
-        position,
-        player_team,
-    )
-
-    for team in g["posteam"].dropna().astype(str).unique():
-        p["_teams"].add(team)
-
-    p["carries"] += len(g)
-
-    p["rushing_yards"] += int(
-        g["rushing_yards"]
-        .fillna(0)
-        .sum()
-    )
-
-    p["rushing_tds"] += int(
-        g["rush_touchdown"]
-        .fillna(0)
-        .eq(1)
-        .sum()
-    )
-
-    rz = g[
-        pd.to_numeric(
-            g["yardline_100"],
-            errors="coerce"
-        ).le(20)
+    group_columns = [
+        "player_id",
+        "player_name",
+        "position",
     ]
 
-    p["red_zone_rushes"] += len(rz)
-
-    p["red_zone_carries"] += len(rz)
-
-    p["red_zone_rushing_tds"] += int(
-        rz["rush_touchdown"]
-        .fillna(0)
-        .eq(1)
-        .sum()
+    players = (
+        stats.groupby(group_columns, dropna=False)
+        .agg(
+            team=("team", lambda x: next(
+                (v for v in reversed(x.tolist()) if v),
+                ""
+            )),
+            **{
+                column: (column, "sum")
+                for column in numeric_columns
+            }
+        )
+        .reset_index()
     )
 
-    for week, w in g.groupby("week"):
+    return players
 
-        week = int(week)
 
-        e = p["weekly"].setdefault(
-            week,
-            {
-                "week": week,
-                "targets": 0,
-                "carries": 0,
-                "receptions": 0,
-                "red_zone_targets": 0,
-                "red_zone_carries": 0,
+def calculate_red_zone_rushes(pbp):
+    required = {
+        "rush_attempt",
+        "rusher_player_id",
+        "posteam",
+        "yardline_100",
+    }
 
-                "pass_attempts": 0,
-                "completions": 0,
-                "passing_yards": 0,
-                "passing_tds": 0,
-                "interceptions": 0,
-                "red_zone_pass_attempts": 0,
-            },
+    missing = required - set(pbp.columns)
+
+    if missing:
+        raise RuntimeError(
+            f"Play-by-play data is missing columns: {sorted(missing)}"
         )
 
-        e["carries"] += len(w)
+    rz = pbp[
+        (pbp["rush_attempt"] == 1)
+        & (pbp["yardline_100"].notna())
+        & (pbp["yardline_100"] <= 20)
+        & (pbp["rusher_player_id"].notna())
+        & (pbp["posteam"].notna())
+    ].copy()
 
-        e["red_zone_carries"] += int(
-            pd.to_numeric(
-                w["yardline_100"],
-                errors="coerce"
-            ).le(20).sum()
-        )
+    rz["player_id"] = rz["rusher_player_id"].astype(str)
+    rz["team"] = rz["posteam"].astype(str)
 
-
-# =========================================================
-# TEAM RED-ZONE RUSH TOTALS
-# =========================================================
-
-print("Calculating team red-zone rushing totals...")
-
-team_rz_rushes = (
-    rush[
-        pd.to_numeric(
-            rush["yardline_100"],
-            errors="coerce"
-        ).le(20)
-    ]
-    .groupby("posteam")
-    .size()
-    .to_dict()
-)
-
-
-# =========================================================
-# PASSING
-# =========================================================
-
-print("Calculating QB passing stats...")
-
-passers = df[
-    df["pass_attempt"].eq(1)
-    & df["passer_player_id"].notna()
-    & df["posteam"].notna()
-].copy()
-
-for pid, g in passers.groupby("passer_player_id"):
-
-    pid = str(pid)
-
-    row = g.iloc[0]
-
-    player_team = (
-        g["posteam"]
-        .value_counts()
-        .index[0]
+    # Individual player red-zone rush attempts
+    player_rushes = (
+        rz.groupby(["player_id", "team"])
+        .size()
+        .reset_index(name="red_zone_rushes")
     )
 
-    p = ensure(
-        pid,
-        name_map.get(pid)
-        or row.get("passer_player_name")
-        or pid,
-        "QB",
-        player_team,
+    # Total team red-zone rush attempts
+    team_rushes = (
+        rz.groupby("team")
+        .size()
+        .reset_index(name="team_red_zone_rushes")
     )
 
-    for team in g["posteam"].dropna().astype(str).unique():
-        p["_teams"].add(team)
-
-    p["pass_attempts"] += len(g)
-
-    p["completions"] += int(
-        g["complete_pass"]
-        .fillna(0)
-        .eq(1)
-        .sum()
+    result = player_rushes.merge(
+        team_rushes,
+        on="team",
+        how="left"
     )
 
-    p["passing_yards"] += int(
-        g["passing_yards"]
-        .fillna(0)
-        .sum()
+    # Player's percentage of his team's red-zone rush attempts
+    result["red_zone_rush_share"] = (
+        result["red_zone_rushes"]
+        / result["team_red_zone_rushes"].replace(0, pd.NA)
+        * 100
     )
 
-    p["passing_tds"] += int(
-        g["pass_touchdown"]
-        .fillna(0)
-        .eq(1)
-        .sum()
+    return result
+
+
+def calculate_red_zone_targets(pbp):
+    required = {
+        "pass_attempt",
+        "receiver_player_id",
+        "posteam",
+        "yardline_100",
+    }
+
+    if not required.issubset(pbp.columns):
+        return pd.DataFrame(
+            columns=[
+                "player_id",
+                "red_zone_targets",
+                "team_red_zone_targets",
+                "red_zone_target_share",
+            ]
+        )
+
+    rz = pbp[
+        (pbp["pass_attempt"] == 1)
+        & (pbp["yardline_100"].notna())
+        & (pbp["yardline_100"] <= 20)
+        & (pbp["receiver_player_id"].notna())
+        & (pbp["posteam"].notna())
+    ].copy()
+
+    rz["player_id"] = rz["receiver_player_id"].astype(str)
+    rz["team"] = rz["posteam"].astype(str)
+
+    player_targets = (
+        rz.groupby(["player_id", "team"])
+        .size()
+        .reset_index(name="red_zone_targets")
     )
 
-    p["interceptions"] += int(
-        g["interception"]
-        .fillna(0)
-        .eq(1)
-        .sum()
+    team_targets = (
+        rz.groupby("team")
+        .size()
+        .reset_index(name="team_red_zone_targets")
     )
 
-    p["red_zone_pass_attempts"] += int(
-        pd.to_numeric(
-            g["yardline_100"],
-            errors="coerce"
-        ).le(20).sum()
+    result = player_targets.merge(
+        team_targets,
+        on="team",
+        how="left"
     )
 
-    for week, w in g.groupby("week"):
-
-        week = int(week)
-
-        e = p["weekly"].setdefault(
-            week,
-            {
-                "week": week,
-                "targets": 0,
-                "carries": 0,
-                "receptions": 0,
-                "red_zone_targets": 0,
-                "red_zone_carries": 0,
-
-                "pass_attempts": 0,
-                "completions": 0,
-                "passing_yards": 0,
-                "passing_tds": 0,
-                "interceptions": 0,
-                "red_zone_pass_attempts": 0,
-            },
-        )
-
-        e.setdefault("pass_attempts", 0)
-        e.setdefault("completions", 0)
-        e.setdefault("passing_yards", 0)
-        e.setdefault("passing_tds", 0)
-        e.setdefault("interceptions", 0)
-        e.setdefault("red_zone_pass_attempts", 0)
-
-        e["pass_attempts"] += len(w)
-
-        e["completions"] += int(
-            w["complete_pass"]
-            .fillna(0)
-            .eq(1)
-            .sum()
-        )
-
-        e["passing_yards"] += int(
-            w["passing_yards"]
-            .fillna(0)
-            .sum()
-        )
-
-        e["passing_tds"] += int(
-            w["pass_touchdown"]
-            .fillna(0)
-            .eq(1)
-            .sum()
-        )
-
-        e["interceptions"] += int(
-            w["interception"]
-            .fillna(0)
-            .eq(1)
-            .sum()
-        )
-
-        e["red_zone_pass_attempts"] += int(
-            pd.to_numeric(
-                w["yardline_100"],
-                errors="coerce"
-            ).le(20).sum()
-        )
-
-
-# =========================================================
-# TARGET SHARE
-# =========================================================
-
-print("Calculating target share percentages...")
-
-team_targets = (
-    rec.groupby("posteam")
-    .size()
-    .to_dict()
-)
-
-team_rz_targets = (
-    rec[
-        pd.to_numeric(
-            rec["yardline_100"],
-            errors="coerce"
-        ).le(20)
-    ]
-    .groupby("posteam")
-    .size()
-    .to_dict()
-)
-
-
-# =========================================================
-# CALCULATED PLAYER STATS
-# =========================================================
-
-for p in players.values():
-
-    teams = p["_teams"]
-
-    # Target share
-    pass_denominator = sum(
-        team_pass_attempts.get(team, 0)
-        for team in teams
+    result["red_zone_target_share"] = (
+        result["red_zone_targets"]
+        / result["team_red_zone_targets"].replace(0, pd.NA)
+        * 100
     )
 
-    if pass_denominator > 0:
-        p["target_share"] = round(
-            (
-                p["targets"]
-                / pass_denominator
-            ) * 100,
-            1
-        )
-    else:
-        p["target_share"] = 0.0
+    return result
 
-    # Red-zone target share
-    rz_target_denominator = sum(
-        team_rz_targets.get(team, 0)
-        for team in teams
+
+def add_red_zone_data(players, pbp):
+    red_zone_rushes = calculate_red_zone_rushes(pbp)
+
+    if not red_zone_rushes.empty:
+
+        # Aggregate across teams for players who changed teams.
+        rush_totals = (
+            red_zone_rushes
+            .groupby("player_id", as_index=False)
+            .agg(
+                red_zone_rushes=("red_zone_rushes", "sum"),
+                team_red_zone_rushes=("team_red_zone_rushes", "sum"),
+            )
+        )
+
+        rush_totals["red_zone_rush_share"] = (
+            rush_totals["red_zone_rushes"]
+            / rush_totals["team_red_zone_rushes"].replace(0, pd.NA)
+            * 100
+        )
+
+        players = players.merge(
+            rush_totals,
+            on="player_id",
+            how="left"
+        )
+
+    red_zone_targets = calculate_red_zone_targets(pbp)
+
+    if not red_zone_targets.empty:
+
+        target_totals = (
+            red_zone_targets
+            .groupby("player_id", as_index=False)
+            .agg(
+                red_zone_targets=("red_zone_targets", "sum"),
+                team_red_zone_targets=("team_red_zone_targets", "sum"),
+            )
+        )
+
+        target_totals["red_zone_target_share"] = (
+            target_totals["red_zone_targets"]
+            / target_totals["team_red_zone_targets"].replace(0, pd.NA)
+            * 100
+        )
+
+        players = players.merge(
+            target_totals,
+            on="player_id",
+            how="left"
+        )
+
+    # Make sure every player has the fields expected by the site.
+    default_columns = {
+        "red_zone_rushes": 0,
+        "team_red_zone_rushes": 0,
+        "red_zone_rush_share": 0,
+        "red_zone_targets": 0,
+        "team_red_zone_targets": 0,
+        "red_zone_target_share": 0,
+    }
+
+    for column, default in default_columns.items():
+        if column not in players.columns:
+            players[column] = default
+
+        players[column] = players[column].fillna(default)
+
+    return players
+
+
+def convert_records(players):
+    records = []
+
+    for _, row in players.iterrows():
+        record = {}
+
+        for column in players.columns:
+            value = row[column]
+
+            if pd.isna(value):
+                value = 0
+
+            value = clean_number(value)
+
+            record[column] = value
+
+        records.append(record)
+
+    return records
+
+
+def main():
+    print(f"Building player data for {SEASON}...")
+
+    print("Downloading player statistics...")
+    player_stats = load_player_stats()
+
+    print("Building player totals...")
+    players = build_player_totals(player_stats)
+
+    print("Downloading play-by-play data...")
+    pbp = load_pbp()
+
+    print("Calculating red-zone data...")
+    players = add_red_zone_data(players, pbp)
+
+    records = convert_records(players)
+
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        json.dump(
+            records,
+            f,
+            indent=2,
+            ensure_ascii=False
+        )
+
+    print(
+        f"Done. Wrote {len(records)} players to {OUTPUT_FILE}"
     )
 
-    if rz_target_denominator > 0:
-        p["red_zone_target_share"] = round(
-            (
-                p["red_zone_targets"]
-                / rz_target_denominator
-            ) * 100,
-            1
-        )
-    else:
-        p["red_zone_target_share"] = 0.0
 
-    # Red-zone rush share
-    rz_rush_denominator = sum(
-        team_rz_rushes.get(team, 0)
-        for team in teams
-    )
-
-    if rz_rush_denominator > 0:
-        p["red_zone_rush_share"] = round(
-            (
-                p["red_zone_rushes"]
-                / rz_rush_denominator
-            ) * 100,
-            1
-        )
-    else:
-        p["red_zone_rush_share"] = 0.0
-
-    # Completion percentage
-    if p["pass_attempts"] > 0:
-        p["completion_pct"] = round(
-            (
-                p["completions"]
-                / p["pass_attempts"]
-            ) * 100,
-            1
-        )
-    else:
-        p["completion_pct"] = 0.0
-
-    # Yards per attempt
-    if p["pass_attempts"] > 0:
-        p["yards_per_attempt"] = round(
-            (
-                p["passing_yards"]
-                / p["pass_attempts"]
-            ),
-            1
-        )
-    else:
-        p["yards_per_attempt"] = 0.0
-
-
-# =========================================================
-# FINALIZE
-# =========================================================
-
-result = []
-
-for p in players.values():
-
-    if (
-        p["targets"] < 10
-        and p["carries"] < 10
-        and p["pass_attempts"] < 10
-    ):
-        continue
-
-    p["weekly"] = [
-        p["weekly"][week]
-        for week in sorted(p["weekly"])
-    ]
-
-    p.pop("_teams", None)
-
-    result.append(p)
-
-
-result.sort(
-    key=lambda p: (
-        -max(
-            p["targets"],
-            p["carries"],
-            p["pass_attempts"],
-        ),
-        p["name"],
-    )
-)
-
-
-# =========================================================
-# WRITE JSON
-# =========================================================
-
-out = Path("data/players.json")
-out.parent.mkdir(parents=True, exist_ok=True)
-
-out.write_text(
-    json.dumps(
-        {
-            "season": season,
-            "players": result,
-        },
-        indent=2,
-    )
-)
-
-print(
-    f"Wrote {out} with {len(result)} players."
-)
+if __name__ == "__main__":
+    main()

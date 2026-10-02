@@ -52,24 +52,36 @@ def ensure(pid, name="", position="", team=""):
             "position": position or position_map.get(pid) or "",
             "team": team or "",
 
+            # Receiving
             "targets": 0,
             "receptions": 0,
             "receiving_yards": 0,
             "receiving_tds": 0,
 
+            # Rushing
             "carries": 0,
             "rushing_yards": 0,
             "rushing_tds": 0,
 
+            # Passing
+            "pass_attempts": 0,
+            "completions": 0,
+            "passing_yards": 0,
+            "passing_tds": 0,
+            "interceptions": 0,
+
+            # Red zone
             "red_zone_targets": 0,
             "red_zone_receptions": 0,
             "red_zone_carries": 0,
             "red_zone_rushes": 0,
             "red_zone_receiving_tds": 0,
             "red_zone_rushing_tds": 0,
-
-            "pass_attempts": 0,
             "red_zone_pass_attempts": 0,
+
+            # Calculated passing stats
+            "completion_pct": 0.0,
+            "yards_per_attempt": 0.0,
 
             "weekly": {},
 
@@ -276,7 +288,6 @@ for pid, g in rush.groupby("rusher_player_id"):
         ).le(20)
     ]
 
-    # RZ rushes are only tracked for QB and RB.
     p["red_zone_rushes"] += len(rz)
 
     p["red_zone_carries"] += len(rz)
@@ -318,6 +329,8 @@ for pid, g in rush.groupby("rusher_player_id"):
 # PASSING
 # =========================================================
 
+print("Calculating QB passing stats...")
+
 passers = df[
     df["pass_attempt"].eq(1)
     & df["passer_player_id"].notna()
@@ -348,8 +361,37 @@ for pid, g in passers.groupby("passer_player_id"):
     for team in g["posteam"].dropna().astype(str).unique():
         p["_teams"].add(team)
 
+    # Passing totals
     p["pass_attempts"] += len(g)
 
+    p["completions"] += int(
+        g["complete_pass"]
+        .fillna(0)
+        .eq(1)
+        .sum()
+    )
+
+    p["passing_yards"] += int(
+        g["passing_yards"]
+        .fillna(0)
+        .sum()
+    )
+
+    p["passing_tds"] += int(
+        g["pass_touchdown"]
+        .fillna(0)
+        .eq(1)
+        .sum()
+    )
+
+    p["interceptions"] += int(
+        g["interception"]
+        .fillna(0)
+        .eq(1)
+        .sum()
+    )
+
+    # Red zone passing
     p["red_zone_pass_attempts"] += int(
         pd.to_numeric(
             g["yardline_100"],
@@ -357,6 +399,7 @@ for pid, g in passers.groupby("passer_player_id"):
         ).le(20).sum()
     )
 
+    # Weekly passing stats
     for week, w in g.groupby("week"):
 
         week = int(week)
@@ -370,22 +413,49 @@ for pid, g in passers.groupby("passer_player_id"):
                 "receptions": 0,
                 "red_zone_targets": 0,
                 "red_zone_carries": 0,
+                "pass_attempts": 0,
+                "completions": 0,
+                "passing_yards": 0,
+                "passing_tds": 0,
+                "interceptions": 0,
+                "red_zone_pass_attempts": 0,
             },
         )
 
-        e["pass_attempts"] = (
-            e.get("pass_attempts", 0)
-            + len(w)
+        e["pass_attempts"] += len(w)
+
+        e["completions"] += int(
+            w["complete_pass"]
+            .fillna(0)
+            .eq(1)
+            .sum()
         )
 
-        e["red_zone_pass_attempts"] = (
-            e.get("red_zone_pass_attempts", 0)
-            + int(
-                pd.to_numeric(
-                    w["yardline_100"],
-                    errors="coerce"
-                ).le(20).sum()
-            )
+        e["passing_yards"] += int(
+            w["passing_yards"]
+            .fillna(0)
+            .sum()
+        )
+
+        e["passing_tds"] += int(
+            w["pass_touchdown"]
+            .fillna(0)
+            .eq(1)
+            .sum()
+        )
+
+        e["interceptions"] += int(
+            w["interception"]
+            .fillna(0)
+            .eq(1)
+            .sum()
+        )
+
+        e["red_zone_pass_attempts"] += int(
+            pd.to_numeric(
+                w["yardline_100"],
+                errors="coerce"
+            ).le(20).sum()
         )
 
 
@@ -395,14 +465,12 @@ for pid, g in passers.groupby("passer_player_id"):
 
 print("Calculating target share percentages...")
 
-# All team targets by team.
 team_targets = (
     rec.groupby("posteam")
     .size()
     .to_dict()
 )
 
-# Red-zone targets by team.
 team_rz_targets = (
     rec[
         pd.to_numeric(
@@ -415,32 +483,50 @@ team_rz_targets = (
     .to_dict()
 )
 
+
+# =========================================================
+# CALCULATED PLAYER STATS
+# =========================================================
+
 for p in players.values():
 
     teams = p["_teams"]
 
-    # Combined team pass attempts for players
-    # who played for multiple teams.
+    # -----------------------------------------------------
+    # Target share
+    # -----------------------------------------------------
+
     pass_denominator = sum(
         team_pass_attempts.get(team, 0)
         for team in teams
     )
 
     if pass_denominator > 0:
+
         p["target_share"] = round(
-            (p["targets"] / pass_denominator) * 100,
+            (
+                p["targets"]
+                / pass_denominator
+            ) * 100,
             1
         )
+
     else:
+
         p["target_share"] = 0.0
 
-    # RZ target share.
+
+    # -----------------------------------------------------
+    # Red-zone target share
+    # -----------------------------------------------------
+
     rz_target_denominator = sum(
         team_rz_targets.get(team, 0)
         for team in teams
     )
 
     if rz_target_denominator > 0:
+
         p["red_zone_target_share"] = round(
             (
                 p["red_zone_targets"]
@@ -448,8 +534,48 @@ for p in players.values():
             ) * 100,
             1
         )
+
     else:
+
         p["red_zone_target_share"] = 0.0
+
+
+    # -----------------------------------------------------
+    # QB completion percentage
+    # -----------------------------------------------------
+
+    if p["pass_attempts"] > 0:
+
+        p["completion_pct"] = round(
+            (
+                p["completions"]
+                / p["pass_attempts"]
+            ) * 100,
+            1
+        )
+
+    else:
+
+        p["completion_pct"] = 0.0
+
+
+    # -----------------------------------------------------
+    # QB yards per attempt
+    # -----------------------------------------------------
+
+    if p["pass_attempts"] > 0:
+
+        p["yards_per_attempt"] = round(
+            (
+                p["passing_yards"]
+                / p["pass_attempts"]
+            ),
+            1
+        )
+
+    else:
+
+        p["yards_per_attempt"] = 0.0
 
 
 # =========================================================

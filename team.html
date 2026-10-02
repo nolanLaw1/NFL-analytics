@@ -1,22 +1,465 @@
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NFL Analytics — Team</title><link rel="stylesheet" href="styles.css"></head><body>
-<div class="site"><div class="brand"><h1 id="title">TEAM</h1><div class="season" id="season"></div></div>
-<nav class="mainnav"><a href="league.html">LEAGUE</a><a href="players.html">PLAYERS</a><a class="active" href="teams.html">TEAMS</a></nav>
-<div id="app"></div><div class="footer">NFL offensive tendencies • regular season</div></div>
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NFL Analytics — Team</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="site">
+
+    <div class="brand">
+
+        <h1 id="title">
+            TEAM
+        </h1>
+
+        <div
+            class="season"
+            id="season">
+        </div>
+
+    </div>
+
+
+    <nav class="mainnav">
+
+        <a href="league.html">
+            LEAGUE
+        </a>
+
+        <a href="players.html">
+            PLAYERS
+        </a>
+
+        <a
+            class="active"
+            href="teams.html">
+            TEAMS
+        </a>
+
+    </nav>
+
+
+    <div id="app"></div>
+
+
+    <div class="footer">
+        NFL offensive tendencies • regular season
+    </div>
+
+</div>
+
+
 <script>
-const id=new URLSearchParams(location.search).get("id");
-const pct=x=>(Number(x||0)*100).toFixed(1)+"%";
-function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
-fetch("data/teams.json").then(r=>r.json()).then(d=>{let a=Array.isArray(d)?d:(d.teams||[]),t=a.find(x=>x.team===id)||a[0];season.textContent=(d.season||"")+" Season";
-if(!t){app.innerHTML="<div class='panel'><div style='padding:20px'>Team not found.</div></div>";return}
-title.textContent=t.team;
-app.innerHTML=`<div class="grid">
-${card("Overall Pass Rate",t.pass_rate)}${card("Red Zone Pass Rate",t.rz_pass_rate)}
-${card("Trailing Pass Rate",t.trailing_pass_rate)}${card("Leading Pass Rate",t.leading_pass_rate)}
-${card("2-Minute Pass Rate",t.two_minute_pass_rate)}</div>
-<h2 style="margin:28px 0 10px">Pass Rate by Down</h2><div class="panel"><table><tr><th>Down</th><th>Pass Rate</th><th>Pass / Run</th></tr>${t.down_splits.map(x=>`<tr><td>${x.down}</td><td>${pct(x.pass_rate)}</td><td>${x.pass}/${x.runs}</td></tr>`).join("")}</table></div>
-<h2 style="margin:28px 0 10px">Weekly Pass Rate</h2><div class="panel"><table><tr><th>Week</th><th>Pass Rate</th><th>Pass / Run</th></tr>${t.weekly.map(x=>`<tr><td>${x.week}</td><td>${pct(x.pass_rate)}</td><td>${x.pass}/${x.runs}</td></tr>`).join("")}</table></div>`;
-}).catch(()=>app.innerHTML="<div class='panel'><div style='padding:20px' class='muted'>Run <code>python build_team_data.py 2025</code> first.</div></div>");
-function card(label,v){return `<div class='card'><b>${label}</b><h2>${pct(v)}</h2><div class='bar'><i style='width:${Number(v||0)*100}%'></i></div></div>`}
-</script></body></html>
+
+const id =
+    new URLSearchParams(
+        location.search
+    ).get("id");
+
+
+const app =
+    document.getElementById("app");
+
+
+const title =
+    document.getElementById("title");
+
+
+const season =
+    document.getElementById("season");
+
+
+function esc(value) {
+
+    return String(value ?? "").replace(
+        /[&<>"']/g,
+        m => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        }[m])
+    );
+
+}
+
+
+function numberValue(value) {
+
+    const n = Number(value);
+
+    return Number.isFinite(n)
+        ? n
+        : 0;
+
+}
+
+
+function pct(value) {
+
+    return (
+        numberValue(value) * 100
+    ).toFixed(1) + "%";
+
+}
+
+
+function rateBar(value) {
+
+    const width =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                numberValue(value) * 100
+            )
+        );
+
+    return `
+        <div class="bar">
+            <i style="width:${width}%"></i>
+        </div>
+    `;
+
+}
+
+
+function card(label, value) {
+
+    return `
+
+        <div class="card">
+
+            <div class="muted">
+                ${esc(label)}
+            </div>
+
+            <h2>
+                ${pct(value)}
+            </h2>
+
+            ${rateBar(value)}
+
+        </div>
+
+    `;
+
+}
+
+
+function passRun(pass, runs) {
+
+    return `
+        ${numberValue(pass)}
+        /
+        ${numberValue(runs)}
+    `;
+
+}
+
+
+fetch("data/teams.json")
+
+.then(response => {
+
+    if (!response.ok) {
+
+        throw new Error(
+            "HTTP " + response.status
+        );
+
+    }
+
+    return response.json();
+
+})
+
+.then(data => {
+
+    const teams =
+        Array.isArray(data)
+            ? data
+            : (data.teams || []);
+
+
+    const team =
+        teams.find(
+            t => t.team === id
+        );
+
+
+    season.textContent =
+        (data.season || "") +
+        " Season";
+
+
+    if (!team) {
+
+        title.textContent =
+            "TEAM NOT FOUND";
+
+        app.innerHTML = `
+
+            <div class="panel">
+
+                <div style="padding:20px">
+
+                    Team not found.
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    title.textContent =
+        team.team;
+
+
+    app.innerHTML = `
+
+        <section>
+
+            <div class="panelhead">
+
+                <h2>
+                    Offensive Tendencies
+                </h2>
+
+                <div class="note">
+                    Regular season
+                </div>
+
+            </div>
+
+
+            <div
+                class="grid"
+                style="margin-bottom:28px"
+            >
+
+                ${card(
+                    "Overall Pass Rate",
+                    team.pass_rate
+                )}
+
+                ${card(
+                    "Red Zone Pass Rate",
+                    team.rz_pass_rate
+                )}
+
+                ${card(
+                    "Trailing Pass Rate",
+                    team.trailing_pass_rate
+                )}
+
+                ${card(
+                    "Leading Pass Rate",
+                    team.leading_pass_rate
+                )}
+
+                ${card(
+                    "2-Minute Pass Rate",
+                    team.two_minute_pass_rate
+                )}
+
+            </div>
+
+        </section>
+
+
+        <section>
+
+            <div class="panel">
+
+                <div class="panelhead">
+
+                    <h2>
+                        Pass Rate by Down
+                    </h2>
+
+                </div>
+
+
+                <div style="overflow-x:auto">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Down
+                                </th>
+
+                                <th>
+                                    Pass Rate
+                                </th>
+
+                                <th>
+                                    Pass / Run
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            ${(team.down_splits || [])
+                                .map(x => `
+
+                                <tr>
+
+                                    <td>
+                                        ${esc(x.down)}
+                                    </td>
+
+                                    <td>
+                                        ${pct(x.pass_rate)}
+                                    </td>
+
+                                    <td>
+                                        ${passRun(
+                                            x.pass,
+                                            x.runs
+                                        )}
+                                    </td>
+
+                                </tr>
+
+                            `)
+                            .join("")}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section style="margin-top:28px">
+
+            <div class="panel">
+
+                <div class="panelhead">
+
+                    <h2>
+                        Weekly Pass Rate
+                    </h2>
+
+                </div>
+
+
+                <div style="overflow-x:auto">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Week
+                                </th>
+
+                                <th>
+                                    Pass Rate
+                                </th>
+
+                                <th>
+                                    Pass / Run
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            ${(team.weekly || [])
+                                .map(x => `
+
+                                <tr>
+
+                                    <td>
+                                        ${esc(x.week)}
+                                    </td>
+
+                                    <td>
+                                        ${pct(x.pass_rate)}
+                                    </td>
+
+                                    <td>
+                                        ${passRun(
+                                            x.pass,
+                                            x.runs
+                                        )}
+                                    </td>
+
+                                </tr>
+
+                            `)
+                            .join("")}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    `;
+
+})
+
+.catch(error => {
+
+    console.error(error);
+
+    app.innerHTML = `
+
+        <div class="panel">
+
+            <div
+                style="
+                    padding:20px;
+                    color:#ff6b6b
+                "
+            >
+
+                Unable to load team data:
+                ${esc(error.message)}
+
+            </div>
+
+        </div>
+
+    `;
+
+});
+
+</script>
+
+</body>
+</html>

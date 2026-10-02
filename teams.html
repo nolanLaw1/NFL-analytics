@@ -1,13 +1,496 @@
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NFL Analytics — Teams</title><link rel="stylesheet" href="styles.css"></head><body>
-<div class="site"><div class="brand"><h1>NFL Analytics</h1><div class="season" id="season"></div></div>
-<nav class="mainnav"><a href="league.html">LEAGUE</a><a href="players.html">PLAYERS</a><a class="active" href="teams.html">TEAMS</a></nav>
-<div class="panel"><div class="panelhead"><h2>Teams</h2><div class="note">Team offensive tendencies</div></div><div id="teams"></div></div>
-<div class="footer">NFL offensive tendencies • regular season</div></div>
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NFL Analytics — Teams</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="site">
+
+    <div class="brand">
+        <h1>NFL Analytics</h1>
+        <div class="season" id="season"></div>
+    </div>
+
+    <nav class="mainnav">
+        <a href="league.html">LEAGUE</a>
+        <a href="players.html">PLAYERS</a>
+        <a class="active" href="teams.html">TEAMS</a>
+    </nav>
+
+    <div class="controls">
+
+        <input
+            id="search"
+            class="search"
+            placeholder="Search teams..."
+            autocomplete="off"
+        >
+
+    </div>
+
+    <section class="panel">
+
+        <div class="panelhead">
+            <h2>Teams</h2>
+
+            <div class="note">
+                Click a column to sort
+            </div>
+        </div>
+
+        <div id="table"></div>
+
+    </section>
+
+    <div class="footer">
+        NFL offensive tendencies • regular season
+    </div>
+
+</div>
+
+
 <script>
-function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
-fetch("data/teams.json").then(r=>r.json()).then(d=>{let a=Array.isArray(d)?d:(d.teams||[]);season.textContent=(d.season||"")+" Season";
-teams.innerHTML="<div class='grid' style='padding:18px'>"+a.map(t=>`<div class='card'><a class='link' href='team.html?id=${encodeURIComponent(t.team)}'><b>${esc(t.team)}</b></a><p class='muted'>${(t.pass_rate*100).toFixed(1)}% pass rate</p><div class='bar'><i style='width:${t.pass_rate*100}%'></i></div></div>`).join("")+"</div>"
-}).catch(()=>teams.innerHTML="<div style='padding:20px' class='muted'>Run <code>python build_team_data.py 2025</code> to create team data.</div>");
-</script></body></html>
+
+let DATA = [];
+
+let currentSort = "pass_rate";
+
+let sortDirection = "desc";
+
+
+const search =
+    document.getElementById("search");
+
+const table =
+    document.getElementById("table");
+
+
+const COLUMNS = [
+
+    {
+        key: "team",
+        label: "Team",
+        type: "text"
+    },
+
+    {
+        key: "pass_rate",
+        label: "Pass Rate",
+        type: "percent"
+    },
+
+    {
+        key: "rz_pass_rate",
+        label: "RZ Pass Rate",
+        type: "percent"
+    },
+
+    {
+        key: "trailing_pass_rate",
+        label: "Trailing",
+        type: "percent"
+    },
+
+    {
+        key: "leading_pass_rate",
+        label: "Leading",
+        type: "percent"
+    },
+
+    {
+        key: "two_minute_pass_rate",
+        label: "2-Minute",
+        type: "percent"
+    }
+
+];
+
+
+function esc(value) {
+
+    return String(value ?? "").replace(
+        /[&<>"']/g,
+        m => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        }[m])
+    );
+
+}
+
+
+function numberValue(value) {
+
+    const n = Number(value);
+
+    return Number.isFinite(n) ? n : 0;
+
+}
+
+
+function percent(value) {
+
+    return (
+        numberValue(value) * 100
+    ).toFixed(1) + "%";
+
+}
+
+
+function sortValue(team, column) {
+
+    if (column.type === "text") {
+
+        return String(
+            team[column.key] || ""
+        ).toLowerCase();
+
+    }
+
+    return numberValue(
+        team[column.key]
+    );
+
+}
+
+
+function sortRows(rows) {
+
+    const column =
+        COLUMNS.find(
+            c => c.key === currentSort
+        );
+
+    if (!column) return rows;
+
+
+    rows.sort((a, b) => {
+
+        const aValue =
+            sortValue(a, column);
+
+        const bValue =
+            sortValue(b, column);
+
+
+        if (column.type === "text") {
+
+            const result =
+                aValue.localeCompare(bValue);
+
+            return sortDirection === "asc"
+                ? result
+                : -result;
+
+        }
+
+
+        return sortDirection === "desc"
+            ? bValue - aValue
+            : aValue - bValue;
+
+    });
+
+
+    return rows;
+
+}
+
+
+function arrow(key) {
+
+    if (key !== currentSort) {
+        return "";
+    }
+
+    return sortDirection === "desc"
+        ? " ↓"
+        : " ↑";
+
+}
+
+
+function render() {
+
+    const q =
+        search.value
+            .trim()
+            .toLowerCase();
+
+
+    let rows =
+        DATA.filter(team => {
+
+            const name =
+                String(
+                    team.team || ""
+                ).toLowerCase();
+
+            return !q ||
+                name.includes(q);
+
+        });
+
+
+    sortRows(rows);
+
+
+    if (!rows.length) {
+
+        table.innerHTML = `
+            <div style="
+                padding:20px;
+                color:#9aa6b2
+            ">
+                No teams match your search.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    let html = `
+
+        <div style="overflow-x:auto">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th class="rank">
+                        #
+                    </th>
+    `;
+
+
+    COLUMNS.forEach(column => {
+
+        html += `
+
+            <th>
+
+                <button
+                    class="sort-button"
+                    data-sort="${column.key}"
+                >
+                    ${column.label}${arrow(column.key)}
+                </button>
+
+            </th>
+
+        `;
+
+    });
+
+
+    html += `
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+    `;
+
+
+    rows.forEach((team, index) => {
+
+        html += `
+
+            <tr>
+
+                <td class="rank">
+                    ${index + 1}
+                </td>
+
+                <td>
+
+                    <a
+                        class="link"
+                        href="team.html?id=${encodeURIComponent(
+                            team.team
+                        )}"
+                    >
+                        ${esc(team.team)}
+                    </a>
+
+                </td>
+
+                <td>
+                    ${percent(
+                        team.pass_rate
+                    )}
+                </td>
+
+                <td>
+                    ${percent(
+                        team.rz_pass_rate
+                    )}
+                </td>
+
+                <td>
+                    ${percent(
+                        team.trailing_pass_rate
+                    )}
+                </td>
+
+                <td>
+                    ${percent(
+                        team.leading_pass_rate
+                    )}
+                </td>
+
+                <td>
+                    ${percent(
+                        team.two_minute_pass_rate
+                    )}
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+
+    html += `
+
+            </tbody>
+
+        </table>
+
+        </div>
+
+    `;
+
+
+    table.innerHTML = html;
+
+
+    document
+        .querySelectorAll(".sort-button")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const key =
+                        button.dataset.sort;
+
+
+                    if (
+                        currentSort === key
+                    ) {
+
+                        sortDirection =
+                            sortDirection === "desc"
+                                ? "asc"
+                                : "desc";
+
+                    } else {
+
+                        currentSort = key;
+
+                        const column =
+                            COLUMNS.find(
+                                c => c.key === key
+                            );
+
+                        sortDirection =
+                            column.type === "text"
+                                ? "asc"
+                                : "desc";
+
+                    }
+
+
+                    render();
+
+                }
+            );
+
+        });
+
+}
+
+
+search.addEventListener(
+    "input",
+    render
+);
+
+
+fetch("data/teams.json")
+
+.then(response => {
+
+    if (!response.ok) {
+
+        throw new Error(
+            "HTTP " + response.status
+        );
+
+    }
+
+    return response.json();
+
+})
+
+.then(data => {
+
+    DATA =
+        Array.isArray(data)
+            ? data
+            : (data.teams || []);
+
+
+    document.getElementById(
+        "season"
+    ).textContent =
+        (data.season || "") +
+        " Season";
+
+
+    render();
+
+})
+
+.catch(error => {
+
+    console.error(error);
+
+    table.innerHTML = `
+
+        <div style="
+            padding:20px;
+            color:#ff6b6b
+        ">
+
+            Unable to load team data:
+            ${esc(error.message)}
+
+        </div>
+
+    `;
+
+});
+
+</script>
+
+</body>
+</html>

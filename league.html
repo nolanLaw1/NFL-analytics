@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -11,67 +12,121 @@
 
 <div class="site">
 
-<div class="brand">
-<h1>NFL Analytics</h1>
-<div class="season" id="season"></div>
+    <div class="brand">
+        <h1>NFL Analytics</h1>
+        <div class="season" id="season"></div>
+    </div>
+
+    <nav class="mainnav">
+        <a class="active" href="league.html">LEAGUE</a>
+        <a href="players.html">PLAYERS</a>
+        <a href="teams.html">TEAMS</a>
+    </nav>
+
+    <div class="controls">
+
+        <select id="stat" class="filter">
+
+            <option value="targets">
+                Targets
+            </option>
+
+            <option value="receptions">
+                Receptions
+            </option>
+
+            <option value="receiving_yards">
+                Receiving Yards
+            </option>
+
+            <option value="receiving_tds">
+                Receiving TDs
+            </option>
+
+            <option value="carries">
+                Carries
+            </option>
+
+            <option value="rushing_yards">
+                Rushing Yards
+            </option>
+
+            <option value="rushing_tds">
+                Rushing TDs
+            </option>
+
+        </select>
+
+    </div>
+
+    <section class="panel">
+
+        <div class="panelhead">
+
+            <h2 id="title">
+                Targets
+            </h2>
+
+            <div class="note">
+                League Leaders
+            </div>
+
+        </div>
+
+        <div id="table"></div>
+
+    </section>
+
+    <div class="footer">
+        NFL Analytics
+    </div>
+
 </div>
 
-<nav class="mainnav">
-<a class="active" href="league.html">LEAGUE</a>
-<a href="players.html">PLAYERS</a>
-<a href="teams.html">TEAMS</a>
-</nav>
-
-<div class="controls">
-
-<select id="statSelect" class="filter">
-<option value="targets">Targets</option>
-<option value="receptions">Receptions</option>
-<option value="receiving_yards">Receiving Yards</option>
-<option value="receiving_tds">Receiving Touchdowns</option>
-<option value="carries">Carries</option>
-<option value="rushing_yards">Rushing Yards</option>
-<option value="rushing_tds">Rushing Touchdowns</option>
-</select>
-
-</div>
-
-<section class="panel">
-
-<div class="panelhead">
-<h2 id="statTitle">Targets</h2>
-<div class="note">Top 25 league leaders</div>
-</div>
-
-<div id="table"></div>
-
-</section>
-
-<div class="footer">
-League leaders • Select a statistic above
-</div>
-
-</div>
 
 <script>
 
 let DATA = {};
 
-const statSelect = document.getElementById("statSelect");
-const statTitle = document.getElementById("statTitle");
-const table = document.getElementById("table");
 
-const STAT_NAMES = {
-    targets: "Targets",
-    receptions: "Receptions",
-    receiving_yards: "Receiving Yards",
-    receiving_tds: "Receiving Touchdowns",
-    carries: "Carries",
-    rushing_yards: "Rushing Yards",
-    rushing_tds: "Rushing Touchdowns"
+const statSelect =
+    document.getElementById("stat");
+
+const table =
+    document.getElementById("table");
+
+const title =
+    document.getElementById("title");
+
+
+const LABELS = {
+
+    targets:
+        "Targets",
+
+    receptions:
+        "Receptions",
+
+    receiving_yards:
+        "Receiving Yards",
+
+    receiving_tds:
+        "Receiving TDs",
+
+    carries:
+        "Carries",
+
+    rushing_yards:
+        "Rushing Yards",
+
+    rushing_tds:
+        "Rushing TDs"
+
 };
 
+
 function esc(value) {
+
     return String(value ?? "").replace(
         /[&<>"']/g,
         m => ({
@@ -82,67 +137,174 @@ function esc(value) {
             "'": "&#39;"
         }[m])
     );
+
 }
+
+
+function numberValue(value) {
+
+    const n = Number(value);
+
+    return Number.isFinite(n)
+        ? n
+        : 0;
+
+}
+
 
 function render() {
 
-    const stat = statSelect.value;
-    const rows = DATA[stat];
+    const stat =
+        statSelect.value;
 
-    statTitle.textContent = STAT_NAMES[stat];
+    const rows =
+        Array.isArray(DATA[stat])
+            ? [...DATA[stat]]
+            : [];
 
-    if (!Array.isArray(rows) || rows.length === 0) {
-        table.innerHTML =
-            "<div style='padding:20px;color:#9aa6b2'>No data available.</div>";
+
+    rows.sort(
+        (a, b) =>
+            numberValue(b.value) -
+            numberValue(a.value)
+    );
+
+
+    title.textContent =
+        LABELS[stat] || stat;
+
+
+    if (!rows.length) {
+
+        table.innerHTML = `
+            <div style="
+                padding:20px;
+                color:#9aa6b2
+            ">
+                No data available.
+            </div>
+        `;
+
         return;
+
     }
 
+
+    const top25 =
+        rows.slice(0, 25);
+
+
     let html = `
+
         <table>
+
             <thead>
+
                 <tr>
-                    <th class="rank">Rank</th>
-                    <th>Player</th>
-                    <th>Position</th>
-                    <th>Team</th>
-                    <th>Total</th>
+
+                    <th class="rank">
+                        #
+                    </th>
+
+                    <th>
+                        Player
+                    </th>
+
+                    <th>
+                        Position
+                    </th>
+
+                    <th>
+                        Team
+                    </th>
+
+                    <th>
+                        ${esc(
+                            LABELS[stat] || stat
+                        )}
+                    </th>
+
                 </tr>
+
             </thead>
+
             <tbody>
+
     `;
 
-    rows.slice(0, 25).forEach((player, index) => {
+
+    top25.forEach((player, index) => {
 
         html += `
+
             <tr>
-                <td class="rank">${index + 1}</td>
-                <td>
-                    <span class="link">${esc(player.name)}</span>
+
+                <td class="rank">
+                    ${index + 1}
                 </td>
-                <td>${esc(player.position)}</td>
-                <td>${esc(player.team)}</td>
-                <td>${player[stat] ?? ""}</td>
+
+                <td>
+
+                    <a
+                        class="link"
+                        href="player.html?id=${encodeURIComponent(
+                            player.player_id || ""
+                        )}"
+                    >
+                        ${esc(player.name)}
+                    </a>
+
+                </td>
+
+                <td>
+                    ${esc(player.position || "")}
+                </td>
+
+                <td>
+                    ${esc(player.team || "")}
+                </td>
+
+                <td>
+                    ${numberValue(player.value)}
+                </td>
+
             </tr>
+
         `;
 
     });
 
+
     html += `
+
             </tbody>
+
         </table>
+
     `;
 
+
     table.innerHTML = html;
+
 }
 
-statSelect.addEventListener("change", render);
+
+statSelect.addEventListener(
+    "change",
+    render
+);
+
 
 fetch("data/league.json")
 
 .then(response => {
 
     if (!response.ok) {
-        throw new Error("HTTP " + response.status);
+
+        throw new Error(
+            "HTTP " + response.status
+        );
+
     }
 
     return response.json();
@@ -151,10 +313,16 @@ fetch("data/league.json")
 
 .then(data => {
 
-    document.getElementById("season").textContent =
-        (data.season || "") + " Season";
+    DATA =
+        data.normal || {};
 
-    DATA = data.normal || {};
+
+    document.getElementById(
+        "season"
+    ).textContent =
+        (data.season || "") +
+        " Season";
+
 
     render();
 
@@ -164,11 +332,19 @@ fetch("data/league.json")
 
     console.error(error);
 
-    table.innerHTML =
-        "<div style='padding:20px;color:#ff6b6b'>" +
-        "Unable to load league data: " +
-        esc(error.message) +
-        "</div>";
+    table.innerHTML = `
+
+        <div style="
+            padding:20px;
+            color:#ff6b6b
+        ">
+
+            Unable to load league data:
+            ${esc(error.message)}
+
+        </div>
+
+    `;
 
 });
 

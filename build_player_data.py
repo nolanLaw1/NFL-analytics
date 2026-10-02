@@ -15,8 +15,6 @@ PLAYERS_URL = (
     "players/players.csv"
 )
 
-SKILL = {"QB", "WR", "RB", "TE"}
-
 print(f"Loading nflverse play-by-play for {season}...")
 df = pd.read_parquet(PBP_URL)
 
@@ -207,6 +205,14 @@ for pid, g in rec.groupby("receiver_player_id"):
                 "receptions": 0,
                 "red_zone_targets": 0,
                 "red_zone_carries": 0,
+
+                # Passing fields
+                "pass_attempts": 0,
+                "completions": 0,
+                "passing_yards": 0,
+                "passing_tds": 0,
+                "interceptions": 0,
+                "red_zone_pass_attempts": 0,
             },
         )
 
@@ -230,6 +236,8 @@ for pid, g in rec.groupby("receiver_player_id"):
 # =========================================================
 # RUSHING
 # =========================================================
+
+print("Calculating rushing stats...")
 
 rush = df[
     df["rush_attempt"].eq(1)
@@ -312,6 +320,14 @@ for pid, g in rush.groupby("rusher_player_id"):
                 "receptions": 0,
                 "red_zone_targets": 0,
                 "red_zone_carries": 0,
+
+                # Passing fields
+                "pass_attempts": 0,
+                "completions": 0,
+                "passing_yards": 0,
+                "passing_tds": 0,
+                "interceptions": 0,
+                "red_zone_pass_attempts": 0,
             },
         )
 
@@ -361,7 +377,6 @@ for pid, g in passers.groupby("passer_player_id"):
     for team in g["posteam"].dropna().astype(str).unique():
         p["_teams"].add(team)
 
-    # Passing totals
     p["pass_attempts"] += len(g)
 
     p["completions"] += int(
@@ -391,7 +406,6 @@ for pid, g in passers.groupby("passer_player_id"):
         .sum()
     )
 
-    # Red zone passing
     p["red_zone_pass_attempts"] += int(
         pd.to_numeric(
             g["yardline_100"],
@@ -399,7 +413,6 @@ for pid, g in passers.groupby("passer_player_id"):
         ).le(20).sum()
     )
 
-    # Weekly passing stats
     for week, w in g.groupby("week"):
 
         week = int(week)
@@ -413,6 +426,7 @@ for pid, g in passers.groupby("passer_player_id"):
                 "receptions": 0,
                 "red_zone_targets": 0,
                 "red_zone_carries": 0,
+
                 "pass_attempts": 0,
                 "completions": 0,
                 "passing_yards": 0,
@@ -421,6 +435,15 @@ for pid, g in passers.groupby("passer_player_id"):
                 "red_zone_pass_attempts": 0,
             },
         )
+
+        # Make absolutely sure older weekly entries
+        # have all passing fields.
+        e.setdefault("pass_attempts", 0)
+        e.setdefault("completions", 0)
+        e.setdefault("passing_yards", 0)
+        e.setdefault("passing_tds", 0)
+        e.setdefault("interceptions", 0)
+        e.setdefault("red_zone_pass_attempts", 0)
 
         e["pass_attempts"] += len(w)
 
@@ -460,7 +483,7 @@ for pid, g in passers.groupby("passer_player_id"):
 
 
 # =========================================================
-# TARGET SHARE + RZ TARGET SHARE
+# TARGET SHARE + RED-ZONE TARGET SHARE
 # =========================================================
 
 print("Calculating target share percentages...")
@@ -492,17 +515,13 @@ for p in players.values():
 
     teams = p["_teams"]
 
-    # -----------------------------------------------------
     # Target share
-    # -----------------------------------------------------
-
     pass_denominator = sum(
         team_pass_attempts.get(team, 0)
         for team in teams
     )
 
     if pass_denominator > 0:
-
         p["target_share"] = round(
             (
                 p["targets"]
@@ -510,23 +529,16 @@ for p in players.values():
             ) * 100,
             1
         )
-
     else:
-
         p["target_share"] = 0.0
 
-
-    # -----------------------------------------------------
     # Red-zone target share
-    # -----------------------------------------------------
-
     rz_target_denominator = sum(
         team_rz_targets.get(team, 0)
         for team in teams
     )
 
     if rz_target_denominator > 0:
-
         p["red_zone_target_share"] = round(
             (
                 p["red_zone_targets"]
@@ -534,18 +546,11 @@ for p in players.values():
             ) * 100,
             1
         )
-
     else:
-
         p["red_zone_target_share"] = 0.0
 
-
-    # -----------------------------------------------------
-    # QB completion percentage
-    # -----------------------------------------------------
-
+    # Completion percentage
     if p["pass_attempts"] > 0:
-
         p["completion_pct"] = round(
             (
                 p["completions"]
@@ -553,18 +558,11 @@ for p in players.values():
             ) * 100,
             1
         )
-
     else:
-
         p["completion_pct"] = 0.0
 
-
-    # -----------------------------------------------------
-    # QB yards per attempt
-    # -----------------------------------------------------
-
+    # Yards per attempt
     if p["pass_attempts"] > 0:
-
         p["yards_per_attempt"] = round(
             (
                 p["passing_yards"]
@@ -572,9 +570,7 @@ for p in players.values():
             ),
             1
         )
-
     else:
-
         p["yards_per_attempt"] = 0.0
 
 

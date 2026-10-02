@@ -50,13 +50,11 @@
     <section class="panel">
 
         <div class="panelhead">
-
             <h2>Players</h2>
 
             <div class="note">
                 Click a column header to sort
             </div>
-
         </div>
 
         <div id="table"></div>
@@ -75,25 +73,16 @@
 let DATA = [];
 
 let currentSort = "targets";
-
 let sortDirection = "desc";
 
-
-const search =
-    document.getElementById("search");
-
-const position =
-    document.getElementById("position");
-
-const team =
-    document.getElementById("team");
-
-const table =
-    document.getElementById("table");
+const search = document.getElementById("search");
+const position = document.getElementById("position");
+const team = document.getElementById("team");
+const table = document.getElementById("table");
 
 
 /* =========================================================
-   ALL AVAILABLE COLUMNS
+   COLUMNS
    ========================================================= */
 
 const COLUMNS = [
@@ -116,7 +105,7 @@ const COLUMNS = [
         type: "text"
     },
 
-    /* Passing */
+    /* QB PASSING */
 
     {
         key: "pass_attempts",
@@ -166,7 +155,7 @@ const COLUMNS = [
         type: "number"
     },
 
-    /* Receiving */
+    /* RECEIVING */
 
     {
         key: "targets",
@@ -192,7 +181,7 @@ const COLUMNS = [
         type: "number"
     },
 
-    /* Rushing */
+    /* RUSHING */
 
     {
         key: "carries",
@@ -212,7 +201,7 @@ const COLUMNS = [
         type: "number"
     },
 
-    /* Usage */
+    /* USAGE */
 
     {
         key: "target_share",
@@ -236,7 +225,7 @@ const COLUMNS = [
 
 
 /* =========================================================
-   POSITION-SPECIFIC COLUMNS
+   POSITION COLUMNS
    ========================================================= */
 
 const POSITION_COLUMNS = {
@@ -245,16 +234,13 @@ const POSITION_COLUMNS = {
         "name",
         "position",
         "team",
-
         "targets",
         "receptions",
         "receiving_yards",
         "receiving_tds",
-
         "carries",
         "rushing_yards",
         "rushing_tds",
-
         "target_share",
         "red_zone_target_share",
         "red_zone_rushes"
@@ -284,16 +270,13 @@ const POSITION_COLUMNS = {
         "name",
         "position",
         "team",
-
         "targets",
         "receptions",
         "receiving_yards",
         "receiving_tds",
-
         "carries",
         "rushing_yards",
         "rushing_tds",
-
         "target_share",
         "red_zone_target_share",
         "red_zone_rushes"
@@ -303,12 +286,10 @@ const POSITION_COLUMNS = {
         "name",
         "position",
         "team",
-
         "targets",
         "receptions",
         "receiving_yards",
         "receiving_tds",
-
         "target_share",
         "red_zone_target_share"
     ],
@@ -317,12 +298,10 @@ const POSITION_COLUMNS = {
         "name",
         "position",
         "team",
-
         "targets",
         "receptions",
         "receiving_yards",
         "receiving_tds",
-
         "target_share",
         "red_zone_target_share"
     ]
@@ -338,13 +317,15 @@ function esc(value) {
 
     return String(value ?? "").replace(
         /[&<>"']/g,
-        m => ({
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            '"': "&quot;",
-            "'": "&#39;"
-        }[m])
+        function(m) {
+            return {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            }[m];
+        }
     );
 
 }
@@ -361,31 +342,32 @@ function numberValue(value) {
 
 function formatPercent(value) {
 
-    const n = numberValue(value);
-
-    return n.toFixed(1) + "%";
+    return numberValue(value).toFixed(1) + "%";
 
 }
 
 
 function displayValue(player, column) {
 
-    const value =
-        player[column.key];
-
     if (column.type === "percent") {
 
-        return formatPercent(value);
+        return formatPercent(
+            player[column.key]
+        );
 
     }
 
     if (column.type === "number") {
 
-        return numberValue(value);
+        return numberValue(
+            player[column.key]
+        );
 
     }
 
-    return esc(value || "");
+    return esc(
+        player[column.key] || ""
+    );
 
 }
 
@@ -410,26 +392,26 @@ function getSortValue(player, column) {
 }
 
 
+/* =========================================================
+   SORT
+   ========================================================= */
+
 function sortRows(rows) {
 
-    const column =
-        COLUMNS.find(
-            c => c.key === currentSort
-        );
+    const column = COLUMNS.find(
+        function(c) {
+            return c.key === currentSort;
+        }
+    );
 
     if (!column) {
         return rows;
     }
 
+    rows.sort(function(a, b) {
 
-    rows.sort((a, b) => {
-
-        const aValue =
-            getSortValue(a, column);
-
-        const bValue =
-            getSortValue(b, column);
-
+        const aValue = getSortValue(a, column);
+        const bValue = getSortValue(b, column);
 
         if (column.type === "text") {
 
@@ -439,9 +421,7 @@ function sortRows(rows) {
             return sortDirection === "asc"
                 ? result
                 : -result;
-
         }
-
 
         if (aValue === bValue) {
 
@@ -452,13 +432,11 @@ function sortRows(rows) {
 
         }
 
-
         return sortDirection === "desc"
             ? bValue - aValue
             : aValue - bValue;
 
     });
-
 
     return rows;
 
@@ -479,27 +457,27 @@ function sortArrow(key) {
 
 
 /* =========================================================
-   TEAM FILTER
+   TEAMS
    ========================================================= */
 
 function populateTeams() {
 
-    const teams =
-        [...new Set(
+    const teams = [
+        ...new Set(
             DATA
-                .map(player => player.team)
+                .map(function(player) {
+                    return player.team;
+                })
                 .filter(Boolean)
-        )]
-        .sort();
+        )
+    ].sort();
 
-
-    teams.forEach(teamCode => {
+    teams.forEach(function(teamCode) {
 
         const option =
             document.createElement("option");
 
         option.value = teamCode;
-
         option.textContent = teamCode;
 
         team.appendChild(option);
@@ -515,18 +493,15 @@ function populateTeams() {
 
 function getVisibleColumns() {
 
-    const pos =
-        position.value;
-
     const keys =
-        POSITION_COLUMNS[pos] ||
+        POSITION_COLUMNS[position.value] ||
         POSITION_COLUMNS.ALL;
 
+    return COLUMNS.filter(function(column) {
 
-    return COLUMNS.filter(
-        column =>
-            keys.includes(column.key)
-    );
+        return keys.includes(column.key);
+
+    });
 
 }
 
@@ -540,34 +515,28 @@ function render() {
     const q =
         search.value.trim().toLowerCase();
 
-    const pos =
-        position.value;
+    const pos = position.value;
 
-    const selectedTeam =
-        team.value;
+    const selectedTeam = team.value;
 
 
-    let rows = DATA.filter(player => {
+    let rows = DATA.filter(function(player) {
 
-        const name =
+        const playerName =
             String(player.name || "")
                 .toLowerCase();
 
-
         const matchesSearch =
             !q ||
-            name.includes(q);
-
+            playerName.includes(q);
 
         const matchesPosition =
             pos === "ALL" ||
             player.position === pos;
 
-
         const matchesTeam =
             selectedTeam === "ALL" ||
             player.team === selectedTeam;
-
 
         return (
             matchesSearch &&
@@ -582,41 +551,38 @@ function render() {
         getVisibleColumns();
 
 
-    /*
-     * If the current sort column is hidden
-     * for this position, use the first
-     * numeric column.
-     */
+    /* Make sure sort column is visible */
 
-    const sortStillVisible =
-        visibleColumns.some(
-            column =>
-                column.key === currentSort
-        );
+    const sortVisible =
+        visibleColumns.some(function(column) {
+
+            return column.key === currentSort;
+
+        });
 
 
-    if (!sortStillVisible) {
+    if (!sortVisible) {
 
-        const firstNumeric =
-            visibleColumns.find(
-                column =>
+        const numericColumn =
+            visibleColumns.find(function(column) {
+
+                return (
                     column.type === "number" ||
                     column.type === "percent"
-            );
+                );
 
+            });
 
-        if (firstNumeric) {
+        if (numericColumn) {
 
             currentSort =
-                firstNumeric.key;
+                numericColumn.key;
 
             sortDirection = "desc";
 
         } else {
 
-            currentSort =
-                "name";
-
+            currentSort = "name";
             sortDirection = "asc";
 
         }
@@ -644,70 +610,52 @@ function render() {
 
 
     let html = `
-
         <table>
-
             <thead>
-
                 <tr>
-
-                    <th class="rank">
-                        #
-                    </th>
-
+                    <th class="rank">#</th>
     `;
 
 
-    visibleColumns.forEach(column => {
+    visibleColumns.forEach(function(column) {
 
         html += `
-
             <th>
-
                 <button
                     class="sort-button"
                     data-sort="${column.key}"
                 >
                     ${column.label}${sortArrow(column.key)}
                 </button>
-
             </th>
-
         `;
 
     });
 
 
     html += `
-
                 </tr>
-
             </thead>
-
             <tbody>
-
     `;
 
 
-    rows.forEach((player, index) => {
+    rows.forEach(function(player, index) {
 
         html += `
-
             <tr>
 
                 <td class="rank">
                     ${index + 1}
                 </td>
-
         `;
 
 
-        visibleColumns.forEach(column => {
+        visibleColumns.forEach(function(column) {
 
             if (column.key === "name") {
 
                 html += `
-
                     <td>
 
                         <a
@@ -724,20 +672,14 @@ function render() {
                         </span>
 
                     </td>
-
                 `;
 
             } else {
 
                 html += `
-
                     <td>
-                        ${displayValue(
-                            player,
-                            column
-                        )}
+                        ${displayValue(player, column)}
                     </td>
-
                 `;
 
             }
@@ -746,20 +688,15 @@ function render() {
 
 
         html += `
-
             </tr>
-
         `;
 
     });
 
 
     html += `
-
             </tbody>
-
         </table>
-
     `;
 
 
@@ -768,15 +705,14 @@ function render() {
 
     document
         .querySelectorAll(".sort-button")
-        .forEach(button => {
+        .forEach(function(button) {
 
             button.addEventListener(
                 "click",
-                () => {
+                function() {
 
                     const key =
                         button.dataset.sort;
-
 
                     if (currentSort === key) {
 
@@ -791,7 +727,9 @@ function render() {
 
                         const column =
                             COLUMNS.find(
-                                c => c.key === key
+                                function(c) {
+                                    return c.key === key;
+                                }
                             );
 
                         sortDirection =
@@ -800,7 +738,6 @@ function render() {
                                 : "desc";
 
                     }
-
 
                     render();
 
@@ -813,7 +750,7 @@ function render() {
 
 
 /* =========================================================
-   FILTER EVENTS
+   EVENTS
    ========================================================= */
 
 search.addEventListener(
@@ -821,12 +758,10 @@ search.addEventListener(
     render
 );
 
-
 position.addEventListener(
     "change",
     render
 );
-
 
 team.addEventListener(
     "change",
@@ -840,7 +775,7 @@ team.addEventListener(
 
 fetch("data/players.json")
 
-.then(response => {
+.then(function(response) {
 
     if (!response.ok) {
 
@@ -854,13 +789,12 @@ fetch("data/players.json")
 
 })
 
-.then(data => {
+.then(function(data) {
 
     DATA =
         Array.isArray(data)
             ? data
             : (data.players || []);
-
 
     document.getElementById(
         "season"
@@ -868,25 +802,29 @@ fetch("data/players.json")
         (data.season || "") +
         " Season";
 
-
     populateTeams();
 
     render();
 
 })
 
-.catch(error => {
+.catch(function(error) {
 
     console.error(error);
 
     table.innerHTML = `
-
         <div style="
             padding:20px;
             color:#ff6b6b
         ">
-
             Unable to load player data:
             ${esc(error.message)}
-
         </div>
+    `;
+
+});
+
+</script>
+
+</body>
+</html>

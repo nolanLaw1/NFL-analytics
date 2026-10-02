@@ -92,6 +92,10 @@ const table =
     document.getElementById("table");
 
 
+/* =========================================================
+   ALL AVAILABLE COLUMNS
+   ========================================================= */
+
 const COLUMNS = [
 
     {
@@ -111,6 +115,58 @@ const COLUMNS = [
         label: "Team",
         type: "text"
     },
+
+    /* Passing */
+
+    {
+        key: "pass_attempts",
+        label: "Pass Attempts",
+        type: "number"
+    },
+
+    {
+        key: "completions",
+        label: "Completions",
+        type: "number"
+    },
+
+    {
+        key: "completion_pct",
+        label: "Completion %",
+        type: "percent"
+    },
+
+    {
+        key: "passing_yards",
+        label: "Passing Yards",
+        type: "number"
+    },
+
+    {
+        key: "passing_tds",
+        label: "Passing TDs",
+        type: "number"
+    },
+
+    {
+        key: "interceptions",
+        label: "INT",
+        type: "number"
+    },
+
+    {
+        key: "yards_per_attempt",
+        label: "Yards/Attempt",
+        type: "number"
+    },
+
+    {
+        key: "red_zone_pass_attempts",
+        label: "RZ Pass Attempts",
+        type: "number"
+    },
+
+    /* Receiving */
 
     {
         key: "targets",
@@ -136,6 +192,8 @@ const COLUMNS = [
         type: "number"
     },
 
+    /* Rushing */
+
     {
         key: "carries",
         label: "Carries",
@@ -153,6 +211,8 @@ const COLUMNS = [
         label: "Rushing TDs",
         type: "number"
     },
+
+    /* Usage */
 
     {
         key: "target_share",
@@ -175,17 +235,9 @@ const COLUMNS = [
 ];
 
 
-/*
- * Which columns should be visible for each position.
- *
- * ALL = everything
- *
- * QB = passing/usage + rushing
- *
- * RB = rushing + receiving
- *
- * WR/TE = receiving + red zone receiving
- */
+/* =========================================================
+   POSITION-SPECIFIC COLUMNS
+   ========================================================= */
 
 const POSITION_COLUMNS = {
 
@@ -193,13 +245,16 @@ const POSITION_COLUMNS = {
         "name",
         "position",
         "team",
+
         "targets",
         "receptions",
         "receiving_yards",
         "receiving_tds",
+
         "carries",
         "rushing_yards",
         "rushing_tds",
+
         "target_share",
         "red_zone_target_share",
         "red_zone_rushes"
@@ -209,6 +264,16 @@ const POSITION_COLUMNS = {
         "name",
         "position",
         "team",
+
+        "pass_attempts",
+        "completions",
+        "completion_pct",
+        "passing_yards",
+        "passing_tds",
+        "interceptions",
+        "yards_per_attempt",
+        "red_zone_pass_attempts",
+
         "carries",
         "rushing_yards",
         "rushing_tds",
@@ -219,13 +284,16 @@ const POSITION_COLUMNS = {
         "name",
         "position",
         "team",
+
         "targets",
         "receptions",
         "receiving_yards",
         "receiving_tds",
+
         "carries",
         "rushing_yards",
         "rushing_tds",
+
         "target_share",
         "red_zone_target_share",
         "red_zone_rushes"
@@ -235,10 +303,12 @@ const POSITION_COLUMNS = {
         "name",
         "position",
         "team",
+
         "targets",
         "receptions",
         "receiving_yards",
         "receiving_tds",
+
         "target_share",
         "red_zone_target_share"
     ],
@@ -247,16 +317,22 @@ const POSITION_COLUMNS = {
         "name",
         "position",
         "team",
+
         "targets",
         "receptions",
         "receiving_yards",
         "receiving_tds",
+
         "target_share",
         "red_zone_target_share"
     ]
 
 };
 
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
 
 function esc(value) {
 
@@ -402,6 +478,10 @@ function sortArrow(key) {
 }
 
 
+/* =========================================================
+   TEAM FILTER
+   ========================================================= */
+
 function populateTeams() {
 
     const teams =
@@ -429,6 +509,10 @@ function populateTeams() {
 }
 
 
+/* =========================================================
+   VISIBLE COLUMNS
+   ========================================================= */
+
 function getVisibleColumns() {
 
     const pos =
@@ -446,6 +530,10 @@ function getVisibleColumns() {
 
 }
 
+
+/* =========================================================
+   RENDER
+   ========================================================= */
 
 function render() {
 
@@ -495,9 +583,9 @@ function render() {
 
 
     /*
-     * If the currently selected sort column
-     * is hidden for this position, default
-     * to the first useful numeric column.
+     * If the current sort column is hidden
+     * for this position, use the first
+     * numeric column.
      */
 
     const sortStillVisible =
@@ -724,6 +812,10 @@ function render() {
 }
 
 
+/* =========================================================
+   FILTER EVENTS
+   ========================================================= */
+
 search.addEventListener(
     "input",
     render
@@ -741,6 +833,10 @@ team.addEventListener(
     render
 );
 
+
+/* =========================================================
+   LOAD DATA
+   ========================================================= */
 
 fetch("data/players.json")
 
@@ -794,12 +890,3 @@ fetch("data/players.json")
             ${esc(error.message)}
 
         </div>
-
-    `;
-
-});
-
-</script>
-
-</body>
-</html>

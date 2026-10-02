@@ -50,6 +50,14 @@ function esc(value) {
     );
 }
 
+function pct(value) {
+    if (value === null || value === undefined || value === "") {
+        return "0.0%";
+    }
+
+    return Number(value).toFixed(1) + "%";
+}
+
 fetch("data/players.json")
 
 .then(response => {
@@ -113,6 +121,16 @@ fetch("data/players.json")
                 <div class="card">
                     <div class="meta">Targets</div>
                     <h2>${player.targets ?? 0}</h2>
+                </div>
+
+                <div class="card">
+                    <div class="meta">Target Share</div>
+                    <h2>${pct(player.target_share)}</h2>
+                </div>
+
+                <div class="card">
+                    <div class="meta">RZ Target Share</div>
+                    <h2>${pct(player.red_zone_target_share)}</h2>
                 </div>
 
                 <div class="card">

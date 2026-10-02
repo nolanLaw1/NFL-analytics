@@ -5,22 +5,12 @@ from pathlib import Path
 import pandas as pd
 
 
-SEASON = int(sys.argv[1]) if len(sys.argv) > 1 else 2025
+SEASON = int(sys.argv[1]) if len(sys.argv) > 1 else 2026
 
 DATA_DIR = Path("data")
 DATA_DIR.mkdir(exist_ok=True)
 
 OUTPUT_FILE = DATA_DIR / "players.json"
-
-PLAYER_STATS_URL = (
-    "https://github.com/nflverse/nflverse-data/releases/download/"
-    "player_stats/player_stats.csv"
-)
-
-PBP_URL = (
-    f"https://github.com/nflverse/nflverse-data/releases/download/"
-    f"pbp/play_by_play_{SEASON}.parquet"
-)
 
 
 def first_existing(df, names, default=None):
@@ -41,45 +31,81 @@ def clean_number(value):
 
 
 def load_player_stats():
+    url = (
+        "https://github.com/nflverse/nflverse-data/releases/download/"
+        f"stats_player/stats_player_week_{SEASON}.csv"
+    )
+
+    print(f"Downloading player statistics from {url}")
+
     df = pd.read_csv(
-        PLAYER_STATS_URL,
+        url,
         low_memory=False
     )
 
-    if "season" in df.columns:
-        df = df[df["season"] == SEASON].copy()
+    print(f"Loaded {len(df)} player-stat rows.")
 
     return df
 
 
 def load_pbp():
-    return pd.read_parquet(PBP_URL)
+    url = (
+        "https://github.com/nflverse/nflverse-data/releases/download/"
+        f"pbp/play_by_play_{SEASON}.parquet"
+    )
+
+    print(f"Downloading play-by-play data from {url}")
+
+    return pd.read_parquet(url)
 
 
 def build_player_totals(stats):
     player_id_col = first_existing(
         stats,
-        ["player_id", "player_player_id"]
+        [
+            "player_id",
+            "player_player_id",
+            "gsis_id"
+        ]
     )
 
     name_col = first_existing(
         stats,
-        ["player_name", "name"]
+        [
+            "player_name",
+            "name"
+        ]
     )
 
     position_col = first_existing(
         stats,
-        ["position"]
+        [
+            "position"
+        ]
     )
 
     team_col = first_existing(
         stats,
-        ["recent_team", "team", "posteam"]
+        [
+            "recent_team",
+            "team",
+            "posteam"
+        ]
     )
 
-    if not player_id_col or not name_col or not position_col:
+    if not player_id_col:
         raise RuntimeError(
-            "Could not find required player columns in nflverse player_stats.csv"
+            f"Could not find player ID column. Available columns: {list(stats.columns)}"
+        )
+
+    if not name_col:
+        raise RuntimeError(
+            f"Could not find player name column. Available columns: {list(stats.columns)}"
+        )
+
+    if not position_col:
+        raise RuntimeError(
+            f"Could not find position column. Available columns: {list(stats.columns)}"
         )
 
     stats["player_id"] = stats[player_id_col].astype(str)
@@ -177,33 +203,37 @@ def calculate_red_zone_rushes(pbp):
     rz["player_id"] = rz["rusher_player_id"].astype(str)
     rz["team"] = rz["posteam"].astype(str)
 
-    # Individual player red-zone rushes by team
     player_rushes = (
         rz.groupby(
             ["player_id", "team"],
             as_index=False
         )
         .size()
-        .rename(columns={"size": "red_zone_rushes"})
+        .rename(
+            columns={
+                "size": "red_zone_rushes"
+            }
+        )
     )
 
-    # Actual red-zone rushing attempts by team
     team_rushes = (
         rz.groupby(
             "team",
             as_index=False
         )
         .size()
-        .rename(columns={"size": "team_red_zone_rushes"})
+        .rename(
+            columns={
+                "size": "team_red_zone_rushes"
+            }
+        )
     )
 
-    result = player_rushes.merge(
+    return player_rushes.merge(
         team_rushes,
         on="team",
         how="left"
     )
-
-    return result
 
 
 def calculate_red_zone_targets(pbp):
@@ -220,7 +250,6 @@ def calculate_red_zone_targets(pbp):
                 "player_id",
                 "red_zone_targets",
                 "team_red_zone_targets",
-                "red_zone_target_share",
             ]
         )
 
@@ -241,7 +270,11 @@ def calculate_red_zone_targets(pbp):
             as_index=False
         )
         .size()
-        .rename(columns={"size": "red_zone_targets"})
+        .rename(
+            columns={
+                "size": "red_zone_targets"
+            }
+        )
     )
 
     team_targets = (
@@ -250,46 +283,46 @@ def calculate_red_zone_targets(pbp):
             as_index=False
         )
         .size()
-        .rename(columns={"size": "team_red_zone_targets"})
+        .rename(
+            columns={
+                "size": "team_red_zone_targets"
+            }
+        )
     )
 
-    result = player_targets.merge(
+    return player_targets.merge(
         team_targets,
         on="team",
         how="left"
     )
 
-    return result
-
 
 def add_red_zone_data(players, pbp):
-    # ---------------------------------------------------------
-    # RED-ZONE RUSHING
-    # ---------------------------------------------------------
+
+    # RED-ZONE RUSHES
 
     red_zone_rushes = calculate_red_zone_rushes(pbp)
 
     if not red_zone_rushes.empty:
 
-        # Keep player/team rows separate so the team denominator
-        # is not accidentally multiplied by the number of players.
-        red_zone_rushes["red_zone_rush_share"] = (
-            red_zone_rushes["red_zone_rushes"]
-            / red_zone_rushes["team_red_zone_rushes"]
-            * 100
-        )
-
         rush_totals = (
             red_zone_rushes
-            .groupby("player_id", as_index=False)
+            .groupby(
+                "player_id",
+                as_index=False
+            )
             .agg(
-                red_zone_rushes=("red_zone_rushes", "sum"),
-                team_red_zone_rushes=("team_red_zone_rushes", "sum"),
+                red_zone_rushes=(
+                    "red_zone_rushes",
+                    "sum"
+                ),
+                team_red_zone_rushes=(
+                    "team_red_zone_rushes",
+                    "sum"
+                ),
             )
         )
 
-        # Calculate the final season share from the actual
-        # player total and actual team total.
         rush_totals["red_zone_rush_share"] = (
             rush_totals["red_zone_rushes"]
             / rush_totals["team_red_zone_rushes"]
@@ -309,9 +342,7 @@ def add_red_zone_data(players, pbp):
             how="left"
         )
 
-    # ---------------------------------------------------------
     # RED-ZONE TARGETS
-    # ---------------------------------------------------------
 
     red_zone_targets = calculate_red_zone_targets(pbp)
 
@@ -319,10 +350,19 @@ def add_red_zone_data(players, pbp):
 
         target_totals = (
             red_zone_targets
-            .groupby("player_id", as_index=False)
+            .groupby(
+                "player_id",
+                as_index=False
+            )
             .agg(
-                red_zone_targets=("red_zone_targets", "sum"),
-                team_red_zone_targets=("team_red_zone_targets", "sum"),
+                red_zone_targets=(
+                    "red_zone_targets",
+                    "sum"
+                ),
+                team_red_zone_targets=(
+                    "team_red_zone_targets",
+                    "sum"
+                ),
             )
         )
 
@@ -345,11 +385,9 @@ def add_red_zone_data(players, pbp):
             how="left"
         )
 
-    # ---------------------------------------------------------
     # DEFAULT VALUES
-    # ---------------------------------------------------------
 
-    default_columns = {
+    defaults = {
         "red_zone_rushes": 0,
         "team_red_zone_rushes": 0,
         "red_zone_rush_share": 0,
@@ -358,7 +396,7 @@ def add_red_zone_data(players, pbp):
         "red_zone_target_share": 0,
     }
 
-    for column, default in default_columns.items():
+    for column, default in defaults.items():
 
         if column not in players.columns:
             players[column] = default
@@ -375,6 +413,7 @@ def add_red_zone_data(players, pbp):
 
 
 def convert_records(players):
+
     records = []
 
     for _, row in players.iterrows():
@@ -388,9 +427,7 @@ def convert_records(players):
             if pd.isna(value):
                 value = 0
 
-            value = clean_number(value)
-
-            record[column] = value
+            record[column] = clean_number(value)
 
         records.append(record)
 
@@ -398,24 +435,47 @@ def convert_records(players):
 
 
 def main():
-    print(f"Building player data for {SEASON}...")
 
-    print("Downloading player statistics...")
+    print(
+        f"Building player data for {SEASON}..."
+    )
+
+    print(
+        "Downloading player statistics..."
+    )
+
     player_stats = load_player_stats()
 
-    print("Building player totals...")
-    players = build_player_totals(player_stats)
+    print(
+        "Building player totals..."
+    )
 
-    print("Downloading play-by-play data...")
+    players = build_player_totals(
+        player_stats
+    )
+
+    print(
+        f"Built {len(players)} players."
+    )
+
+    print(
+        "Downloading play-by-play data..."
+    )
+
     pbp = load_pbp()
 
-    print("Calculating red-zone data...")
+    print(
+        "Calculating red-zone data..."
+    )
+
     players = add_red_zone_data(
         players,
         pbp
     )
 
-    records = convert_records(players)
+    records = convert_records(
+        players
+    )
 
     with open(
         OUTPUT_FILE,

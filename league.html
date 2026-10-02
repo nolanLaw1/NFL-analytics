@@ -27,33 +27,13 @@
 
         <select id="stat" class="filter">
 
-            <option value="targets">
-                Targets
-            </option>
-
-            <option value="receptions">
-                Receptions
-            </option>
-
-            <option value="receiving_yards">
-                Receiving Yards
-            </option>
-
-            <option value="receiving_tds">
-                Receiving TDs
-            </option>
-
-            <option value="carries">
-                Carries
-            </option>
-
-            <option value="rushing_yards">
-                Rushing Yards
-            </option>
-
-            <option value="rushing_tds">
-                Rushing TDs
-            </option>
+            <option value="targets">Targets</option>
+            <option value="receptions">Receptions</option>
+            <option value="receiving_yards">Receiving Yards</option>
+            <option value="receiving_tds">Receiving TDs</option>
+            <option value="carries">Carries</option>
+            <option value="rushing_yards">Rushing Yards</option>
+            <option value="rushing_tds">Rushing TDs</option>
 
         </select>
 
@@ -63,9 +43,7 @@
 
         <div class="panelhead">
 
-            <h2 id="title">
-                Targets
-            </h2>
+            <h2 id="title">Targets</h2>
 
             <div class="note">
                 League Leaders
@@ -88,7 +66,6 @@
 
 let DATA = {};
 
-
 const statSelect =
     document.getElementById("stat");
 
@@ -101,26 +78,13 @@ const title =
 
 const LABELS = {
 
-    targets:
-        "Targets",
-
-    receptions:
-        "Receptions",
-
-    receiving_yards:
-        "Receiving Yards",
-
-    receiving_tds:
-        "Receiving TDs",
-
-    carries:
-        "Carries",
-
-    rushing_yards:
-        "Rushing Yards",
-
-    rushing_tds:
-        "Rushing TDs"
+    targets: "Targets",
+    receptions: "Receptions",
+    receiving_yards: "Receiving Yards",
+    receiving_tds: "Receiving TDs",
+    carries: "Carries",
+    rushing_yards: "Rushing Yards",
+    rushing_tds: "Rushing TDs"
 
 };
 
@@ -165,7 +129,7 @@ function render() {
 
     rows.sort(
         (a, b) =>
-            numberValue(b.[stat]) -
+            numberValue(b[stat]) -
             numberValue(a[stat])
     );
 

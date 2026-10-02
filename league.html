@@ -165,8 +165,8 @@ function render() {
 
     rows.sort(
         (a, b) =>
-            numberValue(b.value) -
-            numberValue(a.value)
+            numberValue(b.[stat]) -
+            numberValue(a[stat])
     );
 
 
@@ -265,7 +265,7 @@ function render() {
                 </td>
 
                 <td>
-                    ${numberValue(player.value)}
+                    ${numberValue(player[stat])}
                 </td>
 
             </tr>

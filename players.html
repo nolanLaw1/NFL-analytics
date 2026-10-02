@@ -1,50 +1,725 @@
 <!doctype html>
 <html lang="en">
+
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>NFL Analytics — Players</title>
 <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
+
 <div class="site">
-<div class="brand"><h1>NFL Analytics</h1><div class="season" id="season"></div></div>
-<nav class="mainnav">
-<a href="league.html">LEAGUE</a><a class="active" href="players.html">PLAYERS</a><a href="teams.html">TEAMS</a>
-</nav>
 
-<div class="controls">
-<input id="search" class="search" placeholder="Search players..." autocomplete="off">
-<select id="position" class="filter">
-<option value="ALL">All positions</option><option>QB</option><option>WR</option><option>RB</option><option>TE</option>
-</select>
+    <div class="brand">
+        <h1>NFL Analytics</h1>
+        <div class="season" id="season"></div>
+    </div>
+
+    <nav class="mainnav">
+        <a href="league.html">LEAGUE</a>
+        <a class="active" href="players.html">PLAYERS</a>
+        <a href="teams.html">TEAMS</a>
+    </nav>
+
+    <div class="controls">
+
+        <input
+            id="search"
+            class="search"
+            placeholder="Search players..."
+            autocomplete="off"
+        >
+
+        <select id="position" class="filter">
+            <option value="ALL">All positions</option>
+            <option value="QB">QB</option>
+            <option value="RB">RB</option>
+            <option value="WR">WR</option>
+            <option value="TE">TE</option>
+        </select>
+
+    </div>
+
+    <div class="metricbar">
+
+        <button data-stat="targets" class="active">
+            Targets
+        </button>
+
+        <button data-stat="receptions">
+            Receptions
+        </button>
+
+        <button data-stat="receiving_yards">
+            Receiving Yards
+        </button>
+
+        <button data-stat="receiving_tds">
+            Receiving TDs
+        </button>
+
+        <button data-stat="carries">
+            Carries
+        </button>
+
+        <button data-stat="rushing_yards">
+            Rushing Yards
+        </button>
+
+        <button data-stat="rushing_tds">
+            Rushing TDs
+        </button>
+
+        <button data-stat="target_share">
+            Target Share
+        </button>
+
+        <button data-stat="red_zone_target_share">
+            RZ Target Share
+        </button>
+
+        <button data-stat="red_zone_rushes">
+            RZ Rushes
+        </button>
+
+    </div>
+
+    <section class="panel">
+
+        <div class="panelhead">
+
+            <h2 id="tableTitle">
+                Players
+            </h2>
+
+            <div class="note" id="sortNote">
+                Targets • Highest to lowest
+            </div>
+
+        </div>
+
+        <div id="table"></div>
+
+    </section>
+
+    <div class="footer">
+        Click a statistic to sort • Click Team to sort by team • Click a player for detail
+    </div>
+
 </div>
 
-<section class="panel">
-<div class="panelhead"><h2>Players</h2><div class="note">Open a player for weekly usage and red-zone detail.</div></div>
-<div id="table"></div>
-</section>
-</div>
 
 <script>
-let DATA=[];
-const search=document.getElementById("search"), position=document.getElementById("position");
-function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
-function render(){
- const q=search.value.trim().toLowerCase(), pos=position.value;
- const rows=DATA.filter(p=>(pos==="ALL"||p.position===pos)&&(!q||p.name.toLowerCase().includes(q)));
- let h="<table><thead><tr><th>Player</th><th>Position</th><th class='hide-mobile'>Team</th><th>Targets</th><th>Carries</th><th class='hide-mobile'>RZ Targets</th></tr></thead><tbody>";
- rows.forEach(p=>{
-  h+=`<tr><td><a class="link player" href="player.html?id=${encodeURIComponent(p.player_id)}">${esc(p.name)}</a><span class="meta">${esc(p.position)} · ${esc(p.team||"")}</span></td><td>${esc(p.position)}</td><td class="hide-mobile">${esc(p.team||"")}</td><td>${p.targets}</td><td>${p.carries}</td><td class="hide-mobile">${p.red_zone_targets}</td></tr>`;
- });
- h+=rows.length?"</tbody></table>":"</tbody></table><div style='padding:20px;color:#8f9baa'>No players match your search.</div>";
- document.getElementById("table").innerHTML=h;
+
+let DATA = [];
+
+let currentStat = "targets";
+
+let sortDirection = "desc";
+
+let teamDirection = "asc";
+
+const search =
+    document.getElementById("search");
+
+const position =
+    document.getElementById("position");
+
+const table =
+    document.getElementById("table");
+
+const sortNote =
+    document.getElementById("sortNote");
+
+
+function esc(value) {
+
+    return String(value ?? "").replace(
+        /[&<>"']/g,
+        m => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        }[m])
+    );
+
 }
-search.oninput=render; position.onchange=render;
-fetch("data/players.json").then(r=>r.json()).then(d=>{
- DATA=Array.isArray(d)?d:(d.players||[]);
- document.getElementById("season").textContent=(d.season||"")+" Season";
- render();
-}).catch(()=>document.getElementById("table").innerHTML="<div style='padding:20px;color:#8f9baa'>No player data found. Run the player data build script first.</div>");
+
+
+function formatPercent(value) {
+
+    const n = Number(value);
+
+    if (!Number.isFinite(n)) {
+        return "0.0%";
+    }
+
+    return n.toFixed(1) + "%";
+
+}
+
+
+function statLabel(stat) {
+
+    const labels = {
+
+        targets: "Targets",
+
+        receptions: "Receptions",
+
+        receiving_yards: "Receiving Yards",
+
+        receiving_tds: "Receiving TDs",
+
+        carries: "Carries",
+
+        rushing_yards: "Rushing Yards",
+
+        rushing_tds: "Rushing TDs",
+
+        target_share: "Target Share",
+
+        red_zone_target_share: "RZ Target Share",
+
+        red_zone_rushes: "RZ Rushes"
+
+    };
+
+    return labels[stat] || stat;
+
+}
+
+
+function statValue(player, stat) {
+
+    const value = player[stat];
+
+    if (
+        stat === "target_share" ||
+        stat === "red_zone_target_share"
+    ) {
+
+        return Number(value) || 0;
+
+    }
+
+    return Number(value) || 0;
+
+}
+
+
+function render() {
+
+    const q =
+        search.value.trim().toLowerCase();
+
+    const pos =
+        position.value;
+
+
+    let rows = DATA.filter(player => {
+
+        const matchesPosition =
+            pos === "ALL" ||
+            player.position === pos;
+
+        const name =
+            String(player.name || "").toLowerCase();
+
+        const matchesSearch =
+            !q ||
+            name.includes(q);
+
+        return matchesPosition &&
+               matchesSearch;
+
+    });
+
+
+    rows.sort((a, b) => {
+
+        const aValue =
+            statValue(a, currentStat);
+
+        const bValue =
+            statValue(b, currentStat);
+
+        if (aValue !== bValue) {
+
+            return sortDirection === "desc"
+                ? bValue - aValue
+                : aValue - bValue;
+
+        }
+
+        return String(a.name || "")
+            .localeCompare(String(b.name || ""));
+
+    });
+
+
+    sortNote.textContent =
+        statLabel(currentStat) +
+        " • " +
+        (sortDirection === "desc"
+            ? "Highest to lowest"
+            : "Lowest to highest");
+
+
+    if (!rows.length) {
+
+        table.innerHTML = `
+            <div style="padding:20px;color:#9aa6b2">
+                No players match your search.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    let html = `
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th class="rank">
+                        #
+                    </th>
+
+                    <th>
+                        Player
+                    </th>
+
+                    <th>
+                        Position
+                    </th>
+
+                    <th>
+                        <button
+                            id="teamSort"
+                            style="
+                                background:none;
+                                border:0;
+                                color:inherit;
+                                font:inherit;
+                                font-weight:700;
+                                padding:0;
+                                cursor:pointer;
+                            "
+                        >
+                            Team
+                            ${teamDirection === "asc" ? "↑" : "↓"}
+                        </button>
+                    </th>
+
+                    <th>
+                        ${statLabel(currentStat)}
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+    `;
+
+
+    rows.forEach((player, index) => {
+
+        let displayValue =
+            statValue(player, currentStat);
+
+
+        if (
+            currentStat === "target_share" ||
+            currentStat === "red_zone_target_share"
+        ) {
+
+            displayValue =
+                formatPercent(displayValue);
+
+        }
+
+
+        html += `
+
+            <tr>
+
+                <td class="rank">
+                    ${index + 1}
+                </td>
+
+                <td>
+
+                    <a
+                        class="link"
+                        href="player.html?id=${encodeURIComponent(player.player_id)}"
+                    >
+                        ${esc(player.name)}
+                    </a>
+
+                    <span class="meta">
+                        ${esc(player.position)}
+                        ·
+                        ${esc(player.team || "")}
+                    </span>
+
+                </td>
+
+                <td>
+                    ${esc(player.position)}
+                </td>
+
+                <td class="team-cell">
+                    ${esc(player.team || "")}
+                </td>
+
+                <td>
+                    ${displayValue}
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+
+    html += `
+
+            </tbody>
+
+        </table>
+
+    `;
+
+
+    table.innerHTML = html;
+
+
+    document
+        .getElementById("teamSort")
+        .addEventListener("click", () => {
+
+            teamDirection =
+                teamDirection === "asc"
+                    ? "desc"
+                    : "asc";
+
+            sortByTeam();
+
+        });
+
+}
+
+
+function sortByTeam() {
+
+    const q =
+        search.value.trim().toLowerCase();
+
+    const pos =
+        position.value;
+
+
+    let rows = DATA.filter(player => {
+
+        const matchesPosition =
+            pos === "ALL" ||
+            player.position === pos;
+
+        const name =
+            String(player.name || "").toLowerCase();
+
+        const matchesSearch =
+            !q ||
+            name.includes(q);
+
+        return matchesPosition &&
+               matchesSearch;
+
+    });
+
+
+    rows.sort((a, b) => {
+
+        const teamCompare =
+            String(a.team || "")
+                .localeCompare(
+                    String(b.team || "")
+                );
+
+        if (teamCompare !== 0) {
+
+            return teamDirection === "asc"
+                ? teamCompare
+                : -teamCompare;
+
+        }
+
+        return String(a.name || "")
+            .localeCompare(
+                String(b.name || "")
+            );
+
+    });
+
+
+    let html = `
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th class="rank">#</th>
+
+                    <th>Player</th>
+
+                    <th>Position</th>
+
+                    <th>
+
+                        <button
+                            id="teamSort"
+                            style="
+                                background:none;
+                                border:0;
+                                color:inherit;
+                                font:inherit;
+                                font-weight:700;
+                                padding:0;
+                                cursor:pointer;
+                            "
+                        >
+                            Team
+                            ${teamDirection === "asc"
+                                ? "↑"
+                                : "↓"}
+                        </button>
+
+                    </th>
+
+                    <th>
+                        ${statLabel(currentStat)}
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+    `;
+
+
+    rows.forEach((player, index) => {
+
+        let value =
+            statValue(player, currentStat);
+
+
+        if (
+            currentStat === "target_share" ||
+            currentStat === "red_zone_target_share"
+        ) {
+
+            value =
+                formatPercent(value);
+
+        }
+
+
+        html += `
+
+            <tr>
+
+                <td class="rank">
+                    ${index + 1}
+                </td>
+
+                <td>
+
+                    <a
+                        class="link"
+                        href="player.html?id=${encodeURIComponent(player.player_id)}"
+                    >
+                        ${esc(player.name)}
+                    </a>
+
+                    <span class="meta">
+                        ${esc(player.position)}
+                        ·
+                        ${esc(player.team || "")}
+                    </span>
+
+                </td>
+
+                <td>
+                    ${esc(player.position)}
+                </td>
+
+                <td>
+                    ${esc(player.team || "")}
+                </td>
+
+                <td>
+                    ${value}
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+
+    html += `
+            </tbody>
+        </table>
+    `;
+
+
+    table.innerHTML = html;
+
+
+    document
+        .getElementById("teamSort")
+        .addEventListener("click", () => {
+
+            teamDirection =
+                teamDirection === "asc"
+                    ? "desc"
+                    : "asc";
+
+            sortByTeam();
+
+        });
+
+
+    sortNote.textContent =
+        "Team • " +
+        (teamDirection === "asc"
+            ? "A–Z"
+            : "Z–A");
+
+}
+
+
+document
+    .querySelectorAll(".metricbar button")
+    .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const stat =
+                button.dataset.stat;
+
+
+            if (currentStat === stat) {
+
+                sortDirection =
+                    sortDirection === "desc"
+                        ? "asc"
+                        : "desc";
+
+            } else {
+
+                currentStat = stat;
+
+                sortDirection = "desc";
+
+            }
+
+
+            document
+                .querySelectorAll(".metricbar button")
+                .forEach(btn =>
+                    btn.classList.remove("active")
+                );
+
+
+            button.classList.add("active");
+
+
+            render();
+
+        });
+
+    });
+
+
+search.addEventListener(
+    "input",
+    render
+);
+
+
+position.addEventListener(
+    "change",
+    render
+);
+
+
+fetch("data/players.json")
+
+.then(response => {
+
+    if (!response.ok) {
+        throw new Error(
+            "HTTP " + response.status
+        );
+    }
+
+    return response.json();
+
+})
+
+.then(data => {
+
+    DATA =
+        Array.isArray(data)
+            ? data
+            : (data.players || []);
+
+
+    document.getElementById("season").textContent =
+        (data.season || "") + " Season";
+
+
+    render();
+
+})
+
+.catch(error => {
+
+    console.error(error);
+
+    table.innerHTML = `
+
+        <div style="padding:20px;color:#ff6b6b">
+
+            Unable to load player data:
+            ${esc(error.message)}
+
+        </div>
+
+    `;
+
+});
+
 </script>
-<div class="footer">Search by name or position • open a player for detail</div></div></body></html>
+
+</body>
+</html>

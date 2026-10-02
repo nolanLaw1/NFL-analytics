@@ -42,60 +42,14 @@
 
     </div>
 
-    <div class="metricbar">
-
-        <button data-stat="targets" class="active">
-            Targets
-        </button>
-
-        <button data-stat="receptions">
-            Receptions
-        </button>
-
-        <button data-stat="receiving_yards">
-            Receiving Yards
-        </button>
-
-        <button data-stat="receiving_tds">
-            Receiving TDs
-        </button>
-
-        <button data-stat="carries">
-            Carries
-        </button>
-
-        <button data-stat="rushing_yards">
-            Rushing Yards
-        </button>
-
-        <button data-stat="rushing_tds">
-            Rushing TDs
-        </button>
-
-        <button data-stat="target_share">
-            Target Share
-        </button>
-
-        <button data-stat="red_zone_target_share">
-            RZ Target Share
-        </button>
-
-        <button data-stat="red_zone_rushes">
-            RZ Rushes
-        </button>
-
-    </div>
-
     <section class="panel">
 
         <div class="panelhead">
 
-            <h2 id="tableTitle">
-                Players
-            </h2>
+            <h2>Players</h2>
 
-            <div class="note" id="sortNote">
-                Targets • Highest to lowest
+            <div class="note">
+                Click a column header to sort
             </div>
 
         </div>
@@ -105,7 +59,7 @@
     </section>
 
     <div class="footer">
-        Click a statistic to sort • Click Team to sort by team • Click a player for detail
+        Click a player for detail • Click column headers to sort
     </div>
 
 </div>
@@ -115,11 +69,10 @@
 
 let DATA = [];
 
-let currentStat = "targets";
+let currentSort = "targets";
 
 let sortDirection = "desc";
 
-let teamDirection = "asc";
 
 const search =
     document.getElementById("search");
@@ -130,8 +83,88 @@ const position =
 const table =
     document.getElementById("table");
 
-const sortNote =
-    document.getElementById("sortNote");
+
+const COLUMNS = [
+
+    {
+        key: "name",
+        label: "Player",
+        type: "text"
+    },
+
+    {
+        key: "position",
+        label: "Position",
+        type: "text"
+    },
+
+    {
+        key: "team",
+        label: "Team",
+        type: "text"
+    },
+
+    {
+        key: "targets",
+        label: "Targets",
+        type: "number"
+    },
+
+    {
+        key: "receptions",
+        label: "Receptions",
+        type: "number"
+    },
+
+    {
+        key: "receiving_yards",
+        label: "Receiving Yards",
+        type: "number"
+    },
+
+    {
+        key: "receiving_tds",
+        label: "Receiving TDs",
+        type: "number"
+    },
+
+    {
+        key: "carries",
+        label: "Carries",
+        type: "number"
+    },
+
+    {
+        key: "rushing_yards",
+        label: "Rushing Yards",
+        type: "number"
+    },
+
+    {
+        key: "rushing_tds",
+        label: "Rushing TDs",
+        type: "number"
+    },
+
+    {
+        key: "target_share",
+        label: "Target Share",
+        type: "percent"
+    },
+
+    {
+        key: "red_zone_target_share",
+        label: "RZ Target Share",
+        type: "percent"
+    },
+
+    {
+        key: "red_zone_rushes",
+        label: "RZ Rushes",
+        type: "number"
+    }
+
+];
 
 
 function esc(value) {
@@ -150,64 +183,121 @@ function esc(value) {
 }
 
 
-function formatPercent(value) {
+function numberValue(value) {
 
     const n = Number(value);
 
-    if (!Number.isFinite(n)) {
-        return "0.0%";
-    }
+    return Number.isFinite(n) ? n : 0;
+
+}
+
+
+function formatPercent(value) {
+
+    const n = numberValue(value);
 
     return n.toFixed(1) + "%";
 
 }
 
 
-function statLabel(stat) {
+function displayValue(player, column) {
 
-    const labels = {
+    const value = player[column.key];
 
-        targets: "Targets",
+    if (column.type === "percent") {
+        return formatPercent(value);
+    }
 
-        receptions: "Receptions",
+    if (column.type === "number") {
+        return numberValue(value);
+    }
 
-        receiving_yards: "Receiving Yards",
-
-        receiving_tds: "Receiving TDs",
-
-        carries: "Carries",
-
-        rushing_yards: "Rushing Yards",
-
-        rushing_tds: "Rushing TDs",
-
-        target_share: "Target Share",
-
-        red_zone_target_share: "RZ Target Share",
-
-        red_zone_rushes: "RZ Rushes"
-
-    };
-
-    return labels[stat] || stat;
+    return esc(value || "");
 
 }
 
 
-function statValue(player, stat) {
+function getSortValue(player, column) {
 
-    const value = player[stat];
+    if (column.type === "number" ||
+        column.type === "percent") {
 
-    if (
-        stat === "target_share" ||
-        stat === "red_zone_target_share"
-    ) {
-
-        return Number(value) || 0;
+        return numberValue(player[column.key]);
 
     }
 
-    return Number(value) || 0;
+    return String(
+        player[column.key] || ""
+    ).toLowerCase();
+
+}
+
+
+function sortRows(rows) {
+
+    const column =
+        COLUMNS.find(
+            c => c.key === currentSort
+        );
+
+    if (!column) {
+        return rows;
+    }
+
+
+    rows.sort((a, b) => {
+
+        const aValue =
+            getSortValue(a, column);
+
+        const bValue =
+            getSortValue(b, column);
+
+
+        if (column.type === "text") {
+
+            const result =
+                aValue.localeCompare(bValue);
+
+            return sortDirection === "asc"
+                ? result
+                : -result;
+
+        }
+
+
+        if (aValue === bValue) {
+
+            return String(a.name || "")
+                .localeCompare(
+                    String(b.name || "")
+                );
+
+        }
+
+
+        return sortDirection === "desc"
+            ? bValue - aValue
+            : aValue - bValue;
+
+    });
+
+
+    return rows;
+
+}
+
+
+function sortArrow(key) {
+
+    if (currentSort !== key) {
+        return "";
+    }
+
+    return sortDirection === "desc"
+        ? " ↓"
+        : " ↑";
 
 }
 
@@ -223,57 +313,34 @@ function render() {
 
     let rows = DATA.filter(player => {
 
-        const matchesPosition =
-            pos === "ALL" ||
-            player.position === pos;
-
         const name =
-            String(player.name || "").toLowerCase();
+            String(player.name || "")
+                .toLowerCase();
 
         const matchesSearch =
             !q ||
             name.includes(q);
 
-        return matchesPosition &&
-               matchesSearch;
+        const matchesPosition =
+            pos === "ALL" ||
+            player.position === pos;
+
+        return matchesSearch &&
+               matchesPosition;
 
     });
 
 
-    rows.sort((a, b) => {
-
-        const aValue =
-            statValue(a, currentStat);
-
-        const bValue =
-            statValue(b, currentStat);
-
-        if (aValue !== bValue) {
-
-            return sortDirection === "desc"
-                ? bValue - aValue
-                : aValue - bValue;
-
-        }
-
-        return String(a.name || "")
-            .localeCompare(String(b.name || ""));
-
-    });
-
-
-    sortNote.textContent =
-        statLabel(currentStat) +
-        " • " +
-        (sortDirection === "desc"
-            ? "Highest to lowest"
-            : "Lowest to highest");
+    sortRows(rows);
 
 
     if (!rows.length) {
 
         table.innerHTML = `
-            <div style="padding:20px;color:#9aa6b2">
+            <div style="
+                padding:20px;
+                color:#9aa6b2
+            ">
                 No players match your search.
             </div>
         `;
@@ -294,36 +361,30 @@ function render() {
                     <th class="rank">
                         #
                     </th>
+    `;
 
-                    <th>
-                        Player
-                    </th>
 
-                    <th>
-                        Position
-                    </th>
+    COLUMNS.forEach(column => {
 
-                    <th>
-                        <button
-                            id="teamSort"
-                            style="
-                                background:none;
-                                border:0;
-                                color:inherit;
-                                font:inherit;
-                                font-weight:700;
-                                padding:0;
-                                cursor:pointer;
-                            "
-                        >
-                            Team
-                            ${teamDirection === "asc" ? "↑" : "↓"}
-                        </button>
-                    </th>
+        html += `
 
-                    <th>
-                        ${statLabel(currentStat)}
-                    </th>
+            <th>
+
+                <button
+                    class="sort-button"
+                    data-sort="${column.key}"
+                >
+                    ${column.label}${sortArrow(column.key)}
+                </button>
+
+            </th>
+
+        `;
+
+    });
+
+
+    html += `
 
                 </tr>
 
@@ -335,21 +396,6 @@ function render() {
 
 
     rows.forEach((player, index) => {
-
-        let displayValue =
-            statValue(player, currentStat);
-
-
-        if (
-            currentStat === "target_share" ||
-            currentStat === "red_zone_target_share"
-        ) {
-
-            displayValue =
-                formatPercent(displayValue);
-
-        }
-
 
         html += `
 
@@ -380,12 +426,48 @@ function render() {
                     ${esc(player.position)}
                 </td>
 
-                <td class="team-cell">
+                <td>
                     ${esc(player.team || "")}
                 </td>
 
                 <td>
-                    ${displayValue}
+                    ${displayValue(player, COLUMNS[3])}
+                </td>
+
+                <td>
+                    ${displayValue(player, COLUMNS[4])}
+                </td>
+
+                <td>
+                    ${displayValue(player, COLUMNS[5])}
+                </td>
+
+                <td>
+                    ${displayValue(player, COLUMNS[6])}
+                </td>
+
+                <td>
+                    ${displayValue(player, COLUMNS[7])}
+                </td>
+
+                <td>
+                    ${displayValue(player, COLUMNS[8])}
+                </td>
+
+                <td>
+                    ${displayValue(player, COLUMNS[9])}
+                </td>
+
+                <td>
+                    ${displayValue(player, COLUMNS[10])}
+                </td>
+
+                <td>
+                    ${displayValue(player, COLUMNS[11])}
+                </td>
+
+                <td>
+                    ${displayValue(player, COLUMNS[12])}
                 </td>
 
             </tr>
@@ -408,256 +490,57 @@ function render() {
 
 
     document
-        .getElementById("teamSort")
-        .addEventListener("click", () => {
+        .querySelectorAll(".sort-button")
+        .forEach(button => {
 
-            teamDirection =
-                teamDirection === "asc"
-                    ? "desc"
-                    : "asc";
+            button.addEventListener(
+                "click",
+                () => {
 
-            sortByTeam();
-
-        });
-
-}
+                    const key =
+                        button.dataset.sort;
 
 
-function sortByTeam() {
+                    if (currentSort === key) {
 
-    const q =
-        search.value.trim().toLowerCase();
+                        sortDirection =
+                            sortDirection === "desc"
+                                ? "asc"
+                                : "desc";
 
-    const pos =
-        position.value;
+                    } else {
+
+                        currentSort = key;
+
+                        /*
+                         * Numbers:
+                         * highest first
+                         *
+                         * Text:
+                         * A-Z first
+                         */
+
+                        const column =
+                            COLUMNS.find(
+                                c => c.key === key
+                            );
+
+                        sortDirection =
+                            column.type === "text"
+                                ? "asc"
+                                : "desc";
+
+                    }
 
 
-    let rows = DATA.filter(player => {
+                    render();
 
-        const matchesPosition =
-            pos === "ALL" ||
-            player.position === pos;
-
-        const name =
-            String(player.name || "").toLowerCase();
-
-        const matchesSearch =
-            !q ||
-            name.includes(q);
-
-        return matchesPosition &&
-               matchesSearch;
-
-    });
-
-
-    rows.sort((a, b) => {
-
-        const teamCompare =
-            String(a.team || "")
-                .localeCompare(
-                    String(b.team || "")
-                );
-
-        if (teamCompare !== 0) {
-
-            return teamDirection === "asc"
-                ? teamCompare
-                : -teamCompare;
-
-        }
-
-        return String(a.name || "")
-            .localeCompare(
-                String(b.name || "")
+                }
             );
 
-    });
-
-
-    let html = `
-
-        <table>
-
-            <thead>
-
-                <tr>
-
-                    <th class="rank">#</th>
-
-                    <th>Player</th>
-
-                    <th>Position</th>
-
-                    <th>
-
-                        <button
-                            id="teamSort"
-                            style="
-                                background:none;
-                                border:0;
-                                color:inherit;
-                                font:inherit;
-                                font-weight:700;
-                                padding:0;
-                                cursor:pointer;
-                            "
-                        >
-                            Team
-                            ${teamDirection === "asc"
-                                ? "↑"
-                                : "↓"}
-                        </button>
-
-                    </th>
-
-                    <th>
-                        ${statLabel(currentStat)}
-                    </th>
-
-                </tr>
-
-            </thead>
-
-            <tbody>
-
-    `;
-
-
-    rows.forEach((player, index) => {
-
-        let value =
-            statValue(player, currentStat);
-
-
-        if (
-            currentStat === "target_share" ||
-            currentStat === "red_zone_target_share"
-        ) {
-
-            value =
-                formatPercent(value);
-
-        }
-
-
-        html += `
-
-            <tr>
-
-                <td class="rank">
-                    ${index + 1}
-                </td>
-
-                <td>
-
-                    <a
-                        class="link"
-                        href="player.html?id=${encodeURIComponent(player.player_id)}"
-                    >
-                        ${esc(player.name)}
-                    </a>
-
-                    <span class="meta">
-                        ${esc(player.position)}
-                        ·
-                        ${esc(player.team || "")}
-                    </span>
-
-                </td>
-
-                <td>
-                    ${esc(player.position)}
-                </td>
-
-                <td>
-                    ${esc(player.team || "")}
-                </td>
-
-                <td>
-                    ${value}
-                </td>
-
-            </tr>
-
-        `;
-
-    });
-
-
-    html += `
-            </tbody>
-        </table>
-    `;
-
-
-    table.innerHTML = html;
-
-
-    document
-        .getElementById("teamSort")
-        .addEventListener("click", () => {
-
-            teamDirection =
-                teamDirection === "asc"
-                    ? "desc"
-                    : "asc";
-
-            sortByTeam();
-
         });
-
-
-    sortNote.textContent =
-        "Team • " +
-        (teamDirection === "asc"
-            ? "A–Z"
-            : "Z–A");
 
 }
-
-
-document
-    .querySelectorAll(".metricbar button")
-    .forEach(button => {
-
-        button.addEventListener("click", () => {
-
-            const stat =
-                button.dataset.stat;
-
-
-            if (currentStat === stat) {
-
-                sortDirection =
-                    sortDirection === "desc"
-                        ? "asc"
-                        : "desc";
-
-            } else {
-
-                currentStat = stat;
-
-                sortDirection = "desc";
-
-            }
-
-
-            document
-                .querySelectorAll(".metricbar button")
-                .forEach(btn =>
-                    btn.classList.remove("active")
-                );
-
-
-            button.classList.add("active");
-
-
-            render();
-
-        });
-
-    });
 
 
 search.addEventListener(
@@ -708,7 +591,10 @@ fetch("data/players.json")
 
     table.innerHTML = `
 
-        <div style="padding:20px;color:#ff6b6b">
+        <div style="
+            padding:20px;
+            color:#ff6b6b
+        ">
 
             Unable to load player data:
             ${esc(error.message)}

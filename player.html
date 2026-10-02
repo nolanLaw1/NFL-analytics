@@ -1,32 +1,268 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>NFL Analytics — Player</title>
-<link rel="stylesheet" href="styles.css"></head>
-<body><div class="site">
-<div class="top"><h1>NFL Analytics</h1><div class="season" id="season"></div></div>
-<nav><a href="league.html">LEAGUE</a><a class="active" href="players.html">PLAYERS</a><a href="teams.html">TEAMS</a></nav>
-<div id="content"></div>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="site">
+
+<div class="brand">
+<h1>NFL Analytics</h1>
+<div class="season" id="season"></div>
 </div>
+
+<nav class="mainnav">
+<a href="league.html">LEAGUE</a>
+<a class="active" href="players.html">PLAYERS</a>
+<a href="teams.html">TEAMS</a>
+</nav>
+
+<div id="content"></div>
+
+<div class="footer">
+NFL offensive usage • player detail
+</div>
+
+</div>
+
 <script>
-const id=new URLSearchParams(location.search).get("id");
-function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
-fetch("data/players.json").then(r=>r.json()).then(d=>{
- const arr=Array.isArray(d)?d:(d.players||[]), p=arr.find(x=>String(x.player_id)===String(id));
- document.getElementById("season").textContent=(d.season||"")+" Season";
- if(!p){document.getElementById("content").innerHTML="<div class='card empty'>Player not found.</div>";return;}
- document.getElementById("content").innerHTML=`
- <div class="card"><div class="name">${esc(p.name)}</div><div class="meta">${esc(p.position)} · ${esc(p.team||"")}</div>
- <div class="stats">
- <div class="stat"><b>${p.targets??0}</b><span>Targets</span></div>
- <div class="stat"><b>${p.carries??0}</b><span>Carries</span></div>
- <div class="stat"><b>${p.receptions??0}</b><span>Receptions</span></div>
- <div class="stat"><b>${p.red_zone_targets??0}</b><span>RZ Targets</span></div>
- <div class="stat"><b>${p.red_zone_carries??0}</b><span>RZ Carries</span></div>
- </div></div>
- <div class="card"><h2>Weekly Usage</h2><div id="weekly"></div></div>`;
- const weekly=p.weekly||p.weekly_usage||[];
- document.getElementById("weekly").innerHTML=weekly.length?`<table><thead><tr><th>Week</th><th>Targets</th><th>Carries</th><th>RZ Targets</th><th>RZ Carries</th></tr></thead><tbody>${weekly.map(w=>`<tr><td>${w.week}</td><td>${w.targets??0}</td><td>${w.carries??0}</td><td>${w.red_zone_targets??0}</td><td>${w.red_zone_carries??0}</td></tr>`).join("")}</tbody></table>`:"<div class='empty'>Weekly detail will appear once the player data pipeline includes weekly usage.</div>";
-}).catch(()=>document.getElementById("content").innerHTML="<div class='card empty'>No player data found.</div>");
-</script><div class="footer">NFL offensive usage • player detail</div></div></body></html>
+
+const id = new URLSearchParams(location.search).get("id");
+
+function esc(value) {
+    return String(value ?? "").replace(
+        /[&<>"']/g,
+        m => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        }[m])
+    );
+}
+
+fetch("data/players.json")
+
+.then(response => {
+
+    if (!response.ok) {
+        throw new Error("HTTP " + response.status);
+    }
+
+    return response.json();
+
+})
+
+.then(data => {
+
+    const arr = Array.isArray(data)
+        ? data
+        : (data.players || []);
+
+    const player = arr.find(
+        p => String(p.player_id) === String(id)
+    );
+
+    document.getElementById("season").textContent =
+        (data.season || "") + " Season";
+
+    if (!player) {
+
+        document.getElementById("content").innerHTML = `
+            <section class="panel">
+                <div class="panelhead">
+                    <h2>Player Not Found</h2>
+                </div>
+
+                <div style="padding:20px;color:#9aa6b2">
+                    We couldn't find this player.
+                </div>
+            </section>
+        `;
+
+        return;
+    }
+
+    document.getElementById("content").innerHTML = `
+
+        <section class="panel">
+
+            <div class="panelhead">
+
+                <div>
+                    <h2>${esc(player.name)}</h2>
+
+                    <div class="meta">
+                        ${esc(player.position)} · ${esc(player.team || "")}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="grid" style="padding:18px">
+
+                <div class="card">
+                    <div class="meta">Targets</div>
+                    <h2>${player.targets ?? 0}</h2>
+                </div>
+
+                <div class="card">
+                    <div class="meta">Receptions</div>
+                    <h2>${player.receptions ?? 0}</h2>
+                </div>
+
+                <div class="card">
+                    <div class="meta">Carries</div>
+                    <h2>${player.carries ?? 0}</h2>
+                </div>
+
+                <div class="card">
+                    <div class="meta">Receiving Yards</div>
+                    <h2>${player.receiving_yards ?? 0}</h2>
+                </div>
+
+                <div class="card">
+                    <div class="meta">Rushing Yards</div>
+                    <h2>${player.rushing_yards ?? 0}</h2>
+                </div>
+
+                <div class="card">
+                    <div class="meta">Receiving TDs</div>
+                    <h2>${player.receiving_tds ?? 0}</h2>
+                </div>
+
+                <div class="card">
+                    <div class="meta">Rushing TDs</div>
+                    <h2>${player.rushing_tds ?? 0}</h2>
+                </div>
+
+                <div class="card">
+                    <div class="meta">RZ Targets</div>
+                    <h2>${player.red_zone_targets ?? 0}</h2>
+                </div>
+
+                <div class="card">
+                    <div class="meta">RZ Carries</div>
+                    <h2>${player.red_zone_carries ?? 0}</h2>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="panel" style="margin-top:14px">
+
+            <div class="panelhead">
+                <h2>Weekly Usage</h2>
+                <div class="note">Regular season</div>
+            </div>
+
+            <div id="weekly"></div>
+
+        </section>
+    `;
+
+    const weekly =
+        player.weekly ||
+        player.weekly_usage ||
+        [];
+
+    if (!weekly.length) {
+
+        document.getElementById("weekly").innerHTML = `
+            <div style="padding:20px;color:#9aa6b2">
+                Weekly usage data is not available yet.
+            </div>
+        `;
+
+        return;
+    }
+
+    let html = `
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Week</th>
+                    <th>Targets</th>
+                    <th>Carries</th>
+                    <th class="hide-mobile">Receptions</th>
+                    <th class="hide-mobile">RZ Targets</th>
+                    <th class="hide-mobile">RZ Carries</th>
+                </tr>
+            </thead>
+
+            <tbody>
+    `;
+
+    weekly.forEach(week => {
+
+        html += `
+            <tr>
+
+                <td>${week.week ?? ""}</td>
+
+                <td>${week.targets ?? 0}</td>
+
+                <td>${week.carries ?? 0}</td>
+
+                <td class="hide-mobile">
+                    ${week.receptions ?? 0}
+                </td>
+
+                <td class="hide-mobile">
+                    ${week.red_zone_targets ?? 0}
+                </td>
+
+                <td class="hide-mobile">
+                    ${week.red_zone_carries ?? 0}
+                </td>
+
+            </tr>
+        `;
+
+    });
+
+    html += `
+            </tbody>
+
+        </table>
+    `;
+
+    document.getElementById("weekly").innerHTML = html;
+
+})
+
+.catch(error => {
+
+    console.error(error);
+
+    document.getElementById("content").innerHTML = `
+        <section class="panel">
+
+            <div class="panelhead">
+                <h2>Player Data Error</h2>
+            </div>
+
+            <div style="padding:20px;color:#ff6b6b">
+                Unable to load player data.
+            </div>
+
+        </section>
+    `;
+
+});
+
+</script>
+
+</body>
+</html>

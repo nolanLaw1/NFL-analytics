@@ -51,9 +51,9 @@ function esc(value) {
 }
 
 function pct(value) {
-    if (value === null || value === undefined || value === "") {
-        return "0.0%";
-    }
+    const n = Number(value);
+    return Number.isFinite(n) ? n.toFixed(1) + "%" : "0.0%";
+}
 
     return Number(value).toFixed(1) + "%";
 }

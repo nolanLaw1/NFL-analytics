@@ -17,3 +17,23 @@
 .sort-button:hover{
     color:var(--accent);
 }
+.panel{
+    overflow-x:auto;
+}
+
+.panel table{
+    min-width:1200px;
+}
+
+@media(max-width:650px){
+
+    .panel{
+        overflow-x:auto;
+        -webkit-overflow-scrolling:touch;
+    }
+
+    .panel table{
+        min-width:1200px;
+    }
+
+}

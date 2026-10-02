@@ -1,12 +1,12 @@
-<!doctype html>
+function pct(value) {
+    const n = Number(value);
+    return Number.isFinite(n) ? n.toFixed(1) + "%" : "0.0%";
+}<!doctype html>
 <html lang="en">
-
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
 <title>NFL Analytics — Player</title>
-
 <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -14,22 +14,22 @@
 
 <div class="site">
 
-<div class="brand">
-<h1>NFL Analytics</h1>
-<div class="season" id="season"></div>
-</div>
+    <div class="brand">
+        <h1>NFL Analytics</h1>
+        <div class="season" id="season"></div>
+    </div>
 
-<nav class="mainnav">
-<a href="league.html">LEAGUE</a>
-<a class="active" href="players.html">PLAYERS</a>
-<a href="teams.html">TEAMS</a>
-</nav>
+    <nav class="mainnav">
+        <a href="league.html">LEAGUE</a>
+        <a class="active" href="players.html">PLAYERS</a>
+        <a href="teams.html">TEAMS</a>
+    </nav>
 
-<div id="content"></div>
+    <div id="content"></div>
 
-<div class="footer">
-NFL offensive usage • player detail
-</div>
+    <div class="footer">
+        NFL offensive usage • player detail
+    </div>
 
 </div>
 
@@ -55,28 +55,20 @@ function pct(value) {
     return Number.isFinite(n) ? n.toFixed(1) + "%" : "0.0%";
 }
 
-    return Number(value).toFixed(1) + "%";
-}
-
 fetch("data/players.json")
-
 .then(response => {
-
     if (!response.ok) {
         throw new Error("HTTP " + response.status);
     }
-
     return response.json();
-
 })
-
 .then(data => {
 
-    const arr = Array.isArray(data)
+    const players = Array.isArray(data)
         ? data
         : (data.players || []);
 
-    const player = arr.find(
+    const player = players.find(
         p => String(p.player_id) === String(id)
     );
 
@@ -84,7 +76,6 @@ fetch("data/players.json")
         (data.season || "") + " Season";
 
     if (!player) {
-
         document.getElementById("content").innerHTML = `
             <section class="panel">
                 <div class="panelhead">
@@ -96,8 +87,158 @@ fetch("data/players.json")
                 </div>
             </section>
         `;
-
         return;
+    }
+
+    const position = player.position;
+
+    let cards = "";
+
+    /*
+     * QB
+     */
+    if (position === "QB") {
+
+        cards = `
+            <div class="card">
+                <div class="meta">Pass Attempts</div>
+                <h2>${player.pass_attempts ?? 0}</h2>
+            </div>
+
+            <div class="card">
+                <div class="meta">Passing Yards</div>
+                <h2>${player.passing_yards ?? 0}</h2>
+            </div>
+
+            <div class="card">
+                <div class="meta">Passing TDs</div>
+                <h2>${player.passing_tds ?? 0}</h2>
+            </div>
+
+            <div class="card">
+                <div class="meta">RZ Pass Attempts</div>
+                <h2>${player.red_zone_pass_attempts ?? 0}</h2>
+            </div>
+
+            <div class="card">
+                <div class="meta">RZ Rushes</div>
+                <h2>${player.red_zone_rushes ?? 0}</h2>
+            </div>
+
+            <div class="card">
+                <div class="meta">Rushing Yards</div>
+                <h2>${player.rushing_yards ?? 0}</h2>
+            </div>
+
+            <div class="card">
+                <div class="meta">Rushing TDs</div>
+                <h2>${player.rushing_tds ?? 0}</h2>
+            </div>
+        `;
+
+    /*
+     * RB
+     */
+    } else if (position === "RB") {
+
+        cards = `
+            <div class="card">
+                <div class="meta">Carries</div>
+                <h2>${player.carries ?? 0}</h2>
+            </div>
+
+            <div class="card">
+                <div class="meta">Rushing Yards</div>
+                <h2>${player.rushing_yards ?? 0}</h2>
+            </div>
+
+            <div class="card">
+                <div class="meta">Rushing TDs</div>
+                <h2>${player.rushing_tds ?? 0}</h2>
+            </div>
+
+            <div class="card">
+                <div class="meta">Targets</div>
+                <h2>${player.targets ?? 0}</h2>
+            </div>
+
+            <div class="card">
+                <div class="meta">Receptions</div>
+                <h2>${player.receptions ?? 0}</h2>
+            </div>
+
+            <div class="card">
+                <div class="meta">Receiving Yards</div>
+                <h2>${player.receiving_yards ?? 0}</h2>
+            </div>
+
+            <div class="card">
+                <div class="meta">Target Share</div>
+                <h2>${pct(player.target_share)}</h2>
+            </div>
+
+            <div class="card">
+                <div class="meta">RZ Target Share</div>
+                <h2>${pct(player.red_zone_target_share)}</h2>
+            </div>
+
+            <div class="card">
+                <div class="meta">RZ Rushes</div>
+                <h2>${player.red_zone_rushes ?? 0}</h2>
+            </div>
+
+            <div class="card">
+                <div class="meta">RZ Targets</div>
+                <h2>${player.red_zone_targets ?? 0}</h2>
+            </div>
+        `;
+
+    /*
+     * WR / TE
+     */
+    } else {
+
+        cards = `
+            <div class="card">
+                <div class="meta">Targets</div>
+                <h2>${player.targets ?? 0}</h2>
+            </div>
+
+            <div class="card">
+                <div class="meta">Receptions</div>
+                <h2>${player.receptions ?? 0}</h2>
+            </div>
+
+            <div class="card">
+                <div class="meta">Receiving Yards</div>
+                <h2>${player.receiving_yards ?? 0}</h2>
+            </div>
+
+            <div class="card">
+                <div class="meta">Receiving TDs</div>
+                <h2>${player.receiving_tds ?? 0}</h2>
+            </div>
+
+            <div class="card">
+                <div class="meta">Target Share</div>
+                <h2>${pct(player.target_share)}</h2>
+            </div>
+
+            <div class="card">
+                <div class="meta">RZ Target Share</div>
+                <h2>${pct(player.red_zone_target_share)}</h2>
+            </div>
+
+            <div class="card">
+                <div class="meta">RZ Targets</div>
+                <h2>${player.red_zone_targets ?? 0}</h2>
+            </div>
+
+            <div class="card">
+                <div class="meta">RZ Receptions</div>
+                <h2>${player.red_zone_receptions ?? 0}</h2>
+            </div>
+        `;
     }
 
     document.getElementById("content").innerHTML = `
@@ -117,62 +258,7 @@ fetch("data/players.json")
             </div>
 
             <div class="grid" style="padding:18px">
-
-                <div class="card">
-                    <div class="meta">Targets</div>
-                    <h2>${player.targets ?? 0}</h2>
-                </div>
-
-                <div class="card">
-                    <div class="meta">Target Share</div>
-                    <h2>${pct(player.target_share)}</h2>
-                </div>
-
-                <div class="card">
-                    <div class="meta">RZ Target Share</div>
-                    <h2>${pct(player.red_zone_target_share)}</h2>
-                </div>
-
-                <div class="card">
-                    <div class="meta">Receptions</div>
-                    <h2>${player.receptions ?? 0}</h2>
-                </div>
-
-                <div class="card">
-                    <div class="meta">Carries</div>
-                    <h2>${player.carries ?? 0}</h2>
-                </div>
-
-                <div class="card">
-                    <div class="meta">Receiving Yards</div>
-                    <h2>${player.receiving_yards ?? 0}</h2>
-                </div>
-
-                <div class="card">
-                    <div class="meta">Rushing Yards</div>
-                    <h2>${player.rushing_yards ?? 0}</h2>
-                </div>
-
-                <div class="card">
-                    <div class="meta">Receiving TDs</div>
-                    <h2>${player.receiving_tds ?? 0}</h2>
-                </div>
-
-                <div class="card">
-                    <div class="meta">Rushing TDs</div>
-                    <h2>${player.rushing_tds ?? 0}</h2>
-                </div>
-
-                <div class="card">
-                    <div class="meta">RZ Targets</div>
-                    <h2>${player.red_zone_targets ?? 0}</h2>
-                </div>
-
-                <div class="card">
-                    <div class="meta">RZ Carries</div>
-                    <h2>${player.red_zone_carries ?? 0}</h2>
-                </div>
-
+                ${cards}
             </div>
 
         </section>
@@ -180,8 +266,13 @@ fetch("data/players.json")
         <section class="panel" style="margin-top:14px">
 
             <div class="panelhead">
+
                 <h2>Weekly Usage</h2>
-                <div class="note">Regular season</div>
+
+                <div class="note">
+                    Regular season
+                </div>
+
             </div>
 
             <div id="weekly"></div>
@@ -209,6 +300,7 @@ fetch("data/players.json")
         <table>
 
             <thead>
+
                 <tr>
                     <th>Week</th>
                     <th>Targets</th>
@@ -217,6 +309,7 @@ fetch("data/players.json")
                     <th class="hide-mobile">RZ Targets</th>
                     <th class="hide-mobile">RZ Carries</th>
                 </tr>
+
             </thead>
 
             <tbody>
@@ -259,12 +352,12 @@ fetch("data/players.json")
     document.getElementById("weekly").innerHTML = html;
 
 })
-
 .catch(error => {
 
     console.error(error);
 
     document.getElementById("content").innerHTML = `
+
         <section class="panel">
 
             <div class="panelhead">

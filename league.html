@@ -2,172 +2,809 @@
 <html lang="en">
 
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+>
+
 <title>NFL Analytics — League</title>
+
 <link rel="stylesheet" href="styles.css">
+
+
+<style>
+
+/* =========================
+   LEAGUE PAGE
+========================= */
+
+.league-header {
+    margin-bottom: 20px;
+}
+
+.league-header h1 {
+    margin: 0 0 6px 0;
+    font-size: 32px;
+}
+
+.season {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.mainnav {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+}
+
+.mainnav a {
+    color: var(--muted) !important;
+    background: transparent !important;
+    text-decoration: none !important;
+    font-weight: 700 !important;
+    padding: 12px 15px !important;
+}
+
+.mainnav a:hover {
+    color: var(--text) !important;
+    text-decoration: none !important;
+}
+
+.mainnav a.active {
+    color: var(--text) !important;
+    border-bottom: 2px solid var(--accent) !important;
+}
+
+
+/* =========================
+   NORMAL / RED ZONE
+========================= */
+
+.section-toggle {
+    display: flex;
+    gap: 8px;
+    margin: 16px 0 14px 0;
+}
+
+.section-toggle button {
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 11px 18px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.section-toggle button:hover {
+    color: var(--text);
+    border-color: var(--accent);
+}
+
+.section-toggle button.active {
+    color: var(--text);
+    background: var(--panel2);
+    border-color: var(--accent);
+}
+
+
+/* =========================
+   STAT SELECTOR
+========================= */
+
+.stat-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.stat-label {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.stat-select {
+    appearance: none;
+    -webkit-appearance: none;
+
+    min-width: 210px;
+
+    padding: 12px 38px 12px 14px;
+
+    color: var(--text);
+    background:
+        var(--panel)
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239aa6b2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")
+        no-repeat right 14px center;
+
+    border: 1px solid var(--line);
+    border-radius: 10px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.stat-select:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+
+/* =========================
+   LEADERBOARD PANEL
+========================= */
+
+.leaderboard {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.leaderboard-header {
+    padding: 18px;
+    border-bottom: 1px solid var(--line);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.leaderboard-header h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.leaderboard-note {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.league-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 620px;
+}
+
+.league-table th,
+.league-table td {
+    padding: 13px 15px;
+    border-bottom: 1px solid var(--line);
+}
+
+.league-table th {
+    color: var(--muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    text-align: left;
+    background: var(--panel2);
+}
+
+.league-table td {
+    font-size: 14px;
+}
+
+.league-table th:last-child,
+.league-table td:last-child {
+    text-align: right;
+}
+
+.league-table tr:last-child td {
+    border-bottom: none;
+}
+
+.league-table tbody tr:hover {
+    background: rgba(255,255,255,.025);
+}
+
+
+/* =========================
+   RANK
+========================= */
+
+.rank {
+    width: 65px;
+    color: var(--muted);
+    font-weight: 700;
+}
+
+
+/* =========================
+   PLAYER
+========================= */
+
+.player-cell {
+    min-width: 220px;
+}
+
+.player-link {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.player-link:hover {
+    color: var(--accent);
+}
+
+.player-meta {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+
+/* =========================
+   STAT VALUE
+========================= */
+
+.value {
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.share-value {
+    min-width: 200px;
+    text-align: right;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+
+/* =========================
+   SHARE BAR
+========================= */
+
+.share-bar {
+    width: 120px;
+    height: 5px;
+
+    margin-top: 7px;
+    margin-left: auto;
+
+    background: #252f3b;
+
+    border-radius: 99px;
+
+    overflow: hidden;
+}
+
+.share-bar-fill {
+    display: block;
+    height: 100%;
+    background: var(--accent);
+}
+
+
+/* =========================
+   EMPTY / ERROR
+========================= */
+
+.message {
+    padding: 22px;
+    color: var(--muted);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+    color: var(--muted);
+    text-align: center;
+    padding: 24px 0;
+    font-size: 13px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 650px) {
+
+    .league-header h1 {
+        font-size: 27px;
+    }
+
+    .section-toggle {
+        width: 100%;
+    }
+
+    .section-toggle button {
+        flex: 1;
+    }
+
+    .stat-controls {
+        display: block;
+    }
+
+    .stat-label {
+        display: block;
+        margin-bottom: 7px;
+    }
+
+    .stat-select {
+        width: 100%;
+    }
+
+    .leaderboard-header {
+        display: block;
+    }
+
+    .leaderboard-note {
+        margin-top: 5px;
+    }
+
+    .league-table {
+        min-width: 620px;
+    }
+}
+
+</style>
+
 </head>
+
 
 <body>
 
 <div class="site">
 
-    <div class="brand">
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <div class="league-header">
+
         <h1>NFL Analytics</h1>
-        <div class="season" id="season"></div>
+
+        <div
+            class="season"
+            id="season"
+        >
+            Loading season...
+        </div>
+
     </div>
 
+
+    <!-- =========================
+         MAIN NAV
+    ========================= -->
+
     <nav class="mainnav">
-        <a class="active" href="league.html">LEAGUE</a>
-        <a href="players.html">PLAYERS</a>
-        <a href="teams.html">TEAMS</a>
+
+        <a
+            class="active"
+            href="league.html"
+        >
+            LEAGUE
+        </a>
+
+        <a href="players.html">
+            PLAYERS
+        </a>
+
+        <a href="teams.html">
+            TEAMS
+        </a>
+
     </nav>
 
-    <div class="controls">
 
-        <select id="stat" class="filter">
+    <!-- =========================
+         SECTION TOGGLE
+    ========================= -->
 
-            <option value="targets">Targets</option>
-            <option value="receptions">Receptions</option>
-            <option value="receiving_yards">Receiving Yards</option>
-            <option value="receiving_tds">Receiving TDs</option>
-            <option value="carries">Carries</option>
-            <option value="rushing_yards">Rushing Yards</option>
-            <option value="rushing_tds">Rushing TDs</option>
+    <div class="section-toggle">
 
+        <button
+            class="active"
+            data-section="normal"
+        >
+            NORMAL
+        </button>
+
+        <button
+            data-section="red_zone"
+        >
+            RED ZONE
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         STAT SELECTOR
+    ========================= -->
+
+    <div class="stat-controls">
+
+        <label
+            class="stat-label"
+            for="statSelect"
+        >
+            STAT
+        </label>
+
+        <select
+            id="statSelect"
+            class="stat-select"
+        >
         </select>
 
     </div>
 
-    <section class="panel">
 
-        <div class="panelhead">
+    <!-- =========================
+         LEADERBOARD
+    ========================= -->
 
-            <h2 id="title">Targets</h2>
+    <section class="leaderboard">
 
-            <div class="note">
-                League Leaders
+        <div class="leaderboard-header">
+
+            <h2 id="title">
+                Targets
+            </h2>
+
+            <div
+                class="leaderboard-note"
+                id="note"
+            >
+                Top 25 league leaders
             </div>
 
         </div>
 
-        <div id="table"></div>
+
+        <div
+            class="table-wrap"
+            id="table"
+        >
+
+            <div class="message">
+                Loading league data...
+            </div>
+
+        </div>
 
     </section>
 
+
     <div class="footer">
-        NFL Analytics
+        NFL offensive usage • regular season
     </div>
+
 
 </div>
 
 
 <script>
 
-let DATA = {};
+
+/* =========================
+   STATE
+========================= */
+
+let DATA = null;
+
+let section = "normal";
+
+let metric = "targets";
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const seasonEl =
+    document.getElementById("season");
 
 const statSelect =
-    document.getElementById("stat");
+    document.getElementById("statSelect");
 
-const table =
-    document.getElementById("table");
-
-const title =
+const titleEl =
     document.getElementById("title");
 
+const noteEl =
+    document.getElementById("note");
 
-const LABELS = {
+const tableEl =
+    document.getElementById("table");
 
-    targets: "Targets",
-    receptions: "Receptions",
-    receiving_yards: "Receiving Yards",
-    receiving_tds: "Receiving TDs",
-    carries: "Carries",
-    rushing_yards: "Rushing Yards",
-    rushing_tds: "Rushing TDs"
+
+/* =========================
+   METRICS
+========================= */
+
+const configs = {
+
+    normal: [
+
+        {
+            key: "targets",
+            label: "Targets",
+            field: "targets"
+        },
+
+        {
+            key: "carries",
+            label: "Carries",
+            field: "carries"
+        },
+
+        {
+            key: "receptions",
+            label: "Receptions",
+            field: "receptions"
+        },
+
+        {
+            key: "receiving_yards",
+            label: "Receiving Yards",
+            field: "receiving_yards"
+        },
+
+        {
+            key: "rushing_yards",
+            label: "Rushing Yards",
+            field: "rushing_yards"
+        },
+
+        {
+            key: "receiving_tds",
+            label: "Receiving TDs",
+            field: "receiving_tds"
+        },
+
+        {
+            key: "rushing_tds",
+            label: "Rushing TDs",
+            field: "rushing_tds"
+        }
+
+    ],
+
+
+    red_zone: [
+
+        {
+            key: "targets",
+            label: "RZ Targets",
+            field: "red_zone_targets",
+            share: true
+        },
+
+        {
+            key: "carries",
+            label: "RZ Carries",
+            field: "red_zone_carries"
+        },
+
+        {
+            key: "receptions",
+            label: "RZ Receptions",
+            field: "red_zone_receptions"
+        },
+
+        {
+            key: "receiving_tds",
+            label: "RZ Receiving TDs",
+            field: "red_zone_receiving_tds"
+        },
+
+        {
+            key: "rushing_tds",
+            label: "RZ Rushing TDs",
+            field: "red_zone_rushing_tds"
+        }
+
+    ]
 
 };
 
 
+/* =========================
+   ESCAPE HTML
+========================= */
+
 function esc(value) {
 
-    return String(value ?? "").replace(
-        /[&<>"']/g,
-        m => ({
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            '"': "&quot;",
-            "'": "&#39;"
-        }[m])
-    );
+    return String(value ?? "")
+        .replace(
+            /[&<>"']/g,
+            char => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            }[char])
+        );
 
 }
 
 
-function numberValue(value) {
+/* =========================
+   FORMAT NUMBER
+========================= */
 
-    const n = Number(value);
+function formatNumber(value) {
 
-    return Number.isFinite(n)
-        ? n
-        : 0;
+    const number =
+        Number(value);
+
+    if (!Number.isFinite(number)) {
+        return "0";
+    }
+
+    return number.toLocaleString();
 
 }
 
 
-function render() {
+/* =========================
+   FORMAT PERCENTAGE
+========================= */
 
-    const stat =
-        statSelect.value;
+function formatPercentage(value) {
+
+    let number =
+        Number(value);
+
+    if (!Number.isFinite(number)) {
+        return "0.0%";
+    }
+
+    /*
+        league.json stores rz_target_share
+        as a decimal, e.g. 0.25 = 25%.
+    */
+
+    if (number <= 1) {
+        number *= 100;
+    }
+
+    return number.toFixed(1) + "%";
+
+}
+
+
+/* =========================
+   RENDER DROPDOWN
+========================= */
+
+function renderStatDropdown() {
+
+    statSelect.innerHTML = "";
+
+    const options =
+        configs[section];
+
+    options.forEach(option => {
+
+        const element =
+            document.createElement("option");
+
+        element.value =
+            option.key;
+
+        element.textContent =
+            option.label;
+
+        if (option.key === metric) {
+            element.selected = true;
+        }
+
+        statSelect.appendChild(element);
+
+    });
+
+}
+
+
+/* =========================
+   RENDER TABLE
+========================= */
+
+function renderTable() {
+
+    if (!DATA) {
+        return;
+    }
+
+
+    const config =
+        configs[section].find(
+            item => item.key === metric
+        );
+
+
+    if (!config) {
+        return;
+    }
+
 
     const rows =
-        Array.isArray(DATA[stat])
-            ? [...DATA[stat]]
-            : [];
+        DATA?.[section]?.[metric] || [];
 
 
-    rows.sort(
-        (a, b) =>
-            numberValue(b[stat]) -
-            numberValue(a[stat])
-    );
+    const topRows =
+        rows.slice(0, 25);
 
 
-    title.textContent =
-        LABELS[stat] || stat;
+    titleEl.textContent =
+        config.label;
 
 
-    if (!rows.length) {
+    if (
+        section === "red_zone" &&
+        metric === "targets"
+    ) {
 
-        table.innerHTML = `
-            <div style="
-                padding:20px;
-                color:#9aa6b2
-            ">
-                No data available.
-            </div>
-        `;
+        noteEl.textContent =
+            "Top 25 • RZ target share shown";
 
-        return;
+    } else {
+
+        noteEl.textContent =
+            "Top 25 league leaders";
 
     }
 
 
-    const top25 =
-        rows.slice(0, 25);
+    if (!topRows.length) {
+
+        tableEl.innerHTML = `
+            <div class="message">
+                No league data available for this stat.
+            </div>
+        `;
+
+        return;
+    }
 
 
     let html = `
 
-        <table>
+        <table class="league-table">
 
             <thead>
 
                 <tr>
 
-                    <th class="rank">
-                        #
+                    <th>
+                        Rank
                     </th>
 
                     <th>
@@ -175,68 +812,180 @@ function render() {
                     </th>
 
                     <th>
-                        Position
+                        ${esc(config.label)}
                     </th>
 
-                    <th>
-                        Team
-                    </th>
-
-                    <th>
-                        ${esc(
-                            LABELS[stat] || stat
-                        )}
-                    </th>
+                    ${
+                        config.share
+                        ? `
+                            <th>
+                                RZ Target Share
+                            </th>
+                          `
+                        : ""
+                    }
 
                 </tr>
 
             </thead>
 
             <tbody>
-
     `;
 
 
-    top25.forEach((player, index) => {
+    topRows.forEach(
+        (row, index) => {
 
-        html += `
+            const playerId =
+                row.player_id || "";
 
-            <tr>
 
-                <td class="rank">
-                    ${index + 1}
-                </td>
+            const playerName =
+                row.name ||
+                "Unknown Player";
 
-                <td>
 
-                    <a
-                        class="link"
-                        href="player.html?id=${encodeURIComponent(
-                            player.player_id || ""
-                        )}"
-                    >
-                        ${esc(player.name)}
-                    </a>
+            const position =
+                row.position ||
+                "";
 
-                </td>
 
-                <td>
-                    ${esc(player.position || "")}
-                </td>
+            const team =
+                row.team ||
+                "";
 
-                <td>
-                    ${esc(player.team || "")}
-                </td>
 
-                <td>
-                    ${numberValue(player[stat])}
-                </td>
+            const value =
+                row[config.field] ?? 0;
 
-            </tr>
 
-        `;
+            let shareColumn = "";
 
-    });
+
+            if (config.share) {
+
+                const targets =
+                    Number(
+                        row.red_zone_targets || 0
+                    );
+
+
+                const teamTargets =
+                    Number(
+                        row.team_rz_targets || 0
+                    );
+
+
+                const percentage =
+                    formatPercentage(
+                        row.rz_target_share
+                    );
+
+
+                let barWidth = 0;
+
+
+                if (
+                    Number.isFinite(
+                        Number(row.rz_target_share)
+                    )
+                ) {
+
+                    barWidth =
+                        Number(
+                            row.rz_target_share
+                        );
+
+                    if (barWidth <= 1) {
+                        barWidth *= 100;
+                    }
+
+                    barWidth =
+                        Math.min(
+                            Math.max(
+                                barWidth,
+                                0
+                            ),
+                            100
+                        );
+
+                }
+
+
+                shareColumn = `
+
+                    <td class="share-value">
+
+                        ${targets}/${teamTargets}
+                        (${percentage})
+
+                        <div class="share-bar">
+
+                            <span
+                                class="share-bar-fill"
+                                style="width:${barWidth}%"
+                            ></span>
+
+                        </div>
+
+                    </td>
+
+                `;
+
+            }
+
+
+            html += `
+
+                <tr>
+
+                    <td class="rank">
+                        ${index + 1}
+                    </td>
+
+
+                    <td class="player-cell">
+
+                        <a
+                            class="player-link"
+                            href="player.html?id=${encodeURIComponent(playerId)}"
+                        >
+                            ${esc(playerName)}
+                        </a>
+
+
+                        <div class="player-meta">
+
+                            ${esc(position)}
+
+                            ${
+                                position && team
+                                    ? " • "
+                                    : ""
+                            }
+
+                            ${esc(team)}
+
+                        </div>
+
+                    </td>
+
+
+                    <td class="value">
+
+                        ${formatNumber(value)}
+
+                    </td>
+
+
+                    ${shareColumn}
+
+                </tr>
+
+            `;
+
+        }
+    );
 
 
     html += `
@@ -248,71 +997,152 @@ function render() {
     `;
 
 
-    table.innerHTML = html;
+    tableEl.innerHTML =
+        html;
 
 }
 
 
+/* =========================
+   SECTION BUTTONS
+========================= */
+
+document
+    .querySelectorAll(
+        ".section-toggle button"
+    )
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .querySelectorAll(
+                        ".section-toggle button"
+                    )
+                    .forEach(
+                        item =>
+                            item.classList.remove(
+                                "active"
+                            )
+                    );
+
+
+                button.classList.add(
+                    "active"
+                );
+
+
+                section =
+                    button.dataset.section;
+
+
+                metric =
+                    configs[section][0].key;
+
+
+                renderStatDropdown();
+
+                renderTable();
+
+            }
+        );
+
+    });
+
+
+/* =========================
+   STAT DROPDOWN
+========================= */
+
 statSelect.addEventListener(
     "change",
-    render
+    () => {
+
+        metric =
+            statSelect.value;
+
+        renderTable();
+
+    }
 );
 
 
-fetch("data/league.json")
+/* =========================
+   LOAD DATA
+========================= */
 
-.then(response => {
+async function loadLeagueData() {
 
-    if (!response.ok) {
+    try {
 
-        throw new Error(
-            "HTTP " + response.status
-        );
+        const response =
+            await fetch(
+                "data/league.json?ts=" +
+                Date.now(),
+                {
+                    cache: "no-store"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to load league data."
+            );
+
+        }
+
+
+        DATA =
+            await response.json();
+
+
+        seasonEl.textContent =
+            `${DATA.season} Season`;
+
+
+        renderStatDropdown();
+
+        renderTable();
 
     }
 
-    return response.json();
 
-})
+    catch (error) {
 
-.then(data => {
-
-    DATA =
-        data.normal || {};
+        console.error(error);
 
 
-    document.getElementById(
-        "season"
-    ).textContent =
-        (data.season || "") +
-        " Season";
+        seasonEl.textContent =
+            "Season unavailable";
 
 
-    render();
+        tableEl.innerHTML = `
 
-})
+            <div class="message">
 
-.catch(error => {
+                Unable to load league data.
 
-    console.error(error);
+            </div>
 
-    table.innerHTML = `
+        `;
 
-        <div style="
-            padding:20px;
-            color:#ff6b6b
-        ">
+    }
 
-            Unable to load league data:
-            ${esc(error.message)}
+}
 
-        </div>
 
-    `;
+/* =========================
+   START
+========================= */
 
-});
+loadLeagueData();
 
 </script>
 
 </body>
+
 </html>

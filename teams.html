@@ -2,301 +2,749 @@
 <html lang="en">
 
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+>
+
 <title>NFL Analytics — Teams</title>
+
 <link rel="stylesheet" href="styles.css">
+
+
+<style>
+
+/* =========================
+   TEAMS PAGE
+========================= */
+
+.team-header {
+    margin-bottom: 20px;
+}
+
+.team-header h1 {
+    margin: 0 0 6px 0;
+    font-size: 32px;
+}
+
+.season {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.mainnav {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+}
+
+.mainnav a {
+    color: var(--muted) !important;
+    background: transparent !important;
+    text-decoration: none !important;
+    font-weight: 700 !important;
+    padding: 12px 15px !important;
+}
+
+.mainnav a:hover {
+    color: var(--text) !important;
+    text-decoration: none !important;
+}
+
+.mainnav a.active {
+    color: var(--text) !important;
+    border-bottom: 2px solid var(--accent) !important;
+}
+
+
+/* =========================
+   TEAM SELECTOR
+========================= */
+
+.team-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 16px 0 14px 0;
+}
+
+.team-label {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.team-select {
+    appearance: none;
+    -webkit-appearance: none;
+
+    min-width: 210px;
+
+    padding: 12px 38px 12px 14px;
+
+    color: var(--text);
+
+    background:
+        var(--panel)
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239aa6b2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")
+        no-repeat right 14px center;
+
+    border: 1px solid var(--line);
+    border-radius: 10px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.team-select:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+
+/* =========================
+   TEAM PANEL
+========================= */
+
+.team-panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.team-panel-header {
+    padding: 18px;
+    border-bottom: 1px solid var(--line);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.team-panel-header h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.team-panel-note {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.team-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 760px;
+}
+
+.team-table th,
+.team-table td {
+    padding: 13px 15px;
+    border-bottom: 1px solid var(--line);
+}
+
+.team-table th {
+    color: var(--muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    text-align: left;
+    background: var(--panel2);
+}
+
+.team-table td {
+    font-size: 14px;
+}
+
+.team-table th:not(:first-child),
+.team-table td:not(:first-child) {
+    text-align: right;
+}
+
+.team-table tr:last-child td {
+    border-bottom: none;
+}
+
+.team-table tbody tr:hover {
+    background: rgba(255,255,255,.025);
+}
+
+
+/* =========================
+   TEAM NAME
+========================= */
+
+.team-name {
+    font-weight: 700;
+    color: var(--text);
+}
+
+.team-abbr {
+    color: var(--muted);
+    font-size: 12px;
+    margin-left: 6px;
+}
+
+
+/* =========================
+   VALUE
+========================= */
+
+.value {
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message {
+    padding: 22px;
+    color: var(--muted);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 650px) {
+
+    .team-header h1 {
+        font-size: 27px;
+    }
+
+    .team-controls {
+        display: block;
+    }
+
+    .team-label {
+        display: block;
+        margin-bottom: 7px;
+    }
+
+    .team-select {
+        width: 100%;
+    }
+
+    .team-panel-header {
+        display: block;
+    }
+
+    .team-panel-note {
+        margin-top: 5px;
+    }
+
+    .team-table {
+        min-width: 760px;
+    }
+
+}
+
+</style>
+
 </head>
+
 
 <body>
 
 <div class="site">
 
-    <div class="brand">
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <div class="team-header">
+
         <h1>NFL Analytics</h1>
-        <div class="season" id="season"></div>
-    </div>
 
-    <nav class="mainnav">
-        <a href="league.html">LEAGUE</a>
-        <a href="players.html">PLAYERS</a>
-        <a class="active" href="teams.html">TEAMS</a>
-    </nav>
-
-    <div class="controls">
-
-        <input
-            id="search"
-            class="search"
-            placeholder="Search teams..."
-            autocomplete="off"
+        <div
+            class="season"
+            id="season"
         >
-
-    </div>
-
-    <section class="panel">
-
-        <div class="panelhead">
-            <h2>Teams</h2>
-
-            <div class="note">
-                Click a column to sort
-            </div>
+            Loading season...
         </div>
 
-        <div id="table"></div>
+    </div>
+
+
+    <!-- =========================
+         MAIN NAV
+    ========================= -->
+
+    <nav class="mainnav">
+
+        <a href="league.html">
+            LEAGUE
+        </a>
+
+        <a href="players.html">
+            PLAYERS
+        </a>
+
+        <a
+            class="active"
+            href="teams.html"
+        >
+            TEAMS
+        </a>
+
+    </nav>
+
+
+    <!-- =========================
+         TEAM SELECTOR
+    ========================= -->
+
+    <div class="team-controls">
+
+        <label
+            class="team-label"
+            for="teamSelect"
+        >
+            TEAM
+        </label>
+
+        <select
+            id="teamSelect"
+            class="team-select"
+        >
+        </select>
+
+    </div>
+
+
+    <!-- =========================
+         TEAM DATA
+    ========================= -->
+
+    <section class="team-panel">
+
+        <div class="team-panel-header">
+
+            <h2 id="title">
+                Team Statistics
+            </h2>
+
+            <div
+                class="team-panel-note"
+                id="note"
+            >
+                Current season
+            </div>
+
+        </div>
+
+
+        <div
+            class="table-wrap"
+            id="table"
+        >
+
+            <div class="message">
+                Loading team data...
+            </div>
+
+        </div>
 
     </section>
 
+
     <div class="footer">
-        NFL offensive tendencies • regular season
+        NFL team offensive usage • regular season
     </div>
+
 
 </div>
 
 
 <script>
 
-let DATA = [];
 
-let currentSort = "pass_rate";
+/* =========================
+   STATE
+========================= */
 
-let sortDirection = "desc";
+let DATA = null;
+
+let selectedTeam = "";
 
 
-const search =
-    document.getElementById("search");
+/* =========================
+   ELEMENTS
+========================= */
 
-const table =
+const seasonEl =
+    document.getElementById("season");
+
+const teamSelect =
+    document.getElementById("teamSelect");
+
+const titleEl =
+    document.getElementById("title");
+
+const noteEl =
+    document.getElementById("note");
+
+const tableEl =
     document.getElementById("table");
 
 
-const COLUMNS = [
-
-    {
-        key: "team",
-        label: "Team",
-        type: "text"
-    },
-
-    {
-        key: "pass_rate",
-        label: "Pass Rate",
-        type: "percent"
-    },
-
-    {
-        key: "rz_pass_rate",
-        label: "RZ Pass Rate",
-        type: "percent"
-    },
-
-    {
-        key: "trailing_pass_rate",
-        label: "Trailing",
-        type: "percent"
-    },
-
-    {
-        key: "leading_pass_rate",
-        label: "Leading",
-        type: "percent"
-    },
-
-    {
-        key: "two_minute_pass_rate",
-        label: "2-Minute",
-        type: "percent"
-    }
-
-];
-
+/* =========================
+   ESCAPE HTML
+========================= */
 
 function esc(value) {
 
-    return String(value ?? "").replace(
-        /[&<>"']/g,
-        m => ({
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            '"': "&quot;",
-            "'": "&#39;"
-        }[m])
-    );
-
-}
-
-
-function numberValue(value) {
-
-    const n = Number(value);
-
-    return Number.isFinite(n) ? n : 0;
-
-}
-
-
-function percent(value) {
-
-    return (
-        numberValue(value) * 100
-    ).toFixed(1) + "%";
-
-}
-
-
-function sortValue(team, column) {
-
-    if (column.type === "text") {
-
-        return String(
-            team[column.key] || ""
-        ).toLowerCase();
-
-    }
-
-    return numberValue(
-        team[column.key]
-    );
-
-}
-
-
-function sortRows(rows) {
-
-    const column =
-        COLUMNS.find(
-            c => c.key === currentSort
+    return String(value ?? "")
+        .replace(
+            /[&<>"']/g,
+            char => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            }[char])
         );
 
-    if (!column) return rows;
-
-
-    rows.sort((a, b) => {
-
-        const aValue =
-            sortValue(a, column);
-
-        const bValue =
-            sortValue(b, column);
-
-
-        if (column.type === "text") {
-
-            const result =
-                aValue.localeCompare(bValue);
-
-            return sortDirection === "asc"
-                ? result
-                : -result;
-
-        }
-
-
-        return sortDirection === "desc"
-            ? bValue - aValue
-            : aValue - bValue;
-
-    });
-
-
-    return rows;
-
 }
 
 
-function arrow(key) {
+/* =========================
+   NUMBER FORMAT
+========================= */
 
-    if (key !== currentSort) {
-        return "";
+function formatNumber(value) {
+
+    const number =
+        Number(value);
+
+    if (!Number.isFinite(number)) {
+        return "0";
     }
 
-    return sortDirection === "desc"
-        ? " ↓"
-        : " ↑";
+    return number.toLocaleString();
 
 }
 
 
-function render() {
+/* =========================
+   GET TEAM LIST
+========================= */
 
-    const q =
-        search.value
-            .trim()
-            .toLowerCase();
+function getTeams() {
 
+    const teams =
+        new Set();
 
-    let rows =
-        DATA.filter(team => {
+    /*
+        Team data can be stored in several
+        structures depending on the builder.
+        This collects team abbreviations from
+        every available section.
+    */
 
-            const name =
-                String(
-                    team.team || ""
-                ).toLowerCase();
+    Object.values(DATA || {})
+        .forEach(section => {
 
-            return !q ||
-                name.includes(q);
+            if (!section || typeof section !== "object") {
+                return;
+            }
+
+            Object.values(section)
+                .forEach(rows => {
+
+                    if (!Array.isArray(rows)) {
+                        return;
+                    }
+
+                    rows.forEach(row => {
+
+                        if (row && row.team) {
+                            teams.add(row.team);
+                        }
+
+                    });
+
+                });
 
         });
 
 
-    sortRows(rows);
+    return Array.from(teams)
+        .sort();
+
+}
+
+
+/* =========================
+   RENDER TEAM DROPDOWN
+========================= */
+
+function renderTeamDropdown() {
+
+    const teams =
+        getTeams();
+
+
+    teamSelect.innerHTML = "";
+
+
+    if (!teams.length) {
+
+        teamSelect.innerHTML = `
+            <option value="">
+                No teams available
+            </option>
+        `;
+
+        return;
+    }
+
+
+    teams.forEach(team => {
+
+        const option =
+            document.createElement("option");
+
+        option.value =
+            team;
+
+        option.textContent =
+            team;
+
+        teamSelect.appendChild(option);
+
+    });
+
+
+    if (
+        selectedTeam &&
+        teams.includes(selectedTeam)
+    ) {
+
+        teamSelect.value =
+            selectedTeam;
+
+    } else {
+
+        selectedTeam =
+            teams[0];
+
+        teamSelect.value =
+            selectedTeam;
+
+    }
+
+}
+
+
+/* =========================
+   FIND TEAM DATA
+========================= */
+
+function findTeamRows(team) {
+
+    const results = [];
+
+
+    Object.entries(DATA || {})
+        .forEach(
+            ([sectionName, section]) => {
+
+                if (
+                    sectionName === "season" ||
+                    !section ||
+                    typeof section !== "object"
+                ) {
+                    return;
+                }
+
+
+                Object.entries(section)
+                    .forEach(
+                        ([metric, rows]) => {
+
+                            if (!Array.isArray(rows)) {
+                                return;
+                            }
+
+
+                            rows.forEach(row => {
+
+                                if (
+                                    row &&
+                                    row.team === team
+                                ) {
+
+                                    results.push({
+                                        section: sectionName,
+                                        metric,
+                                        row
+                                    });
+
+                                }
+
+                            });
+
+                        }
+                    );
+
+            }
+        );
+
+
+    return results;
+
+}
+
+
+/* =========================
+   RENDER TABLE
+========================= */
+
+function renderTable() {
+
+    if (!DATA || !selectedTeam) {
+        return;
+    }
+
+
+    const rows =
+        findTeamRows(selectedTeam);
+
+
+    titleEl.textContent =
+        `${selectedTeam} Team Statistics`;
+
+
+    noteEl.textContent =
+        `${DATA.season} regular season`;
 
 
     if (!rows.length) {
 
-        table.innerHTML = `
-            <div style="
-                padding:20px;
-                color:#9aa6b2
-            ">
-                No teams match your search.
+        tableEl.innerHTML = `
+            <div class="message">
+                No team data available.
             </div>
         `;
 
         return;
-
     }
+
+
+    /*
+        Group player rows by metric and
+        calculate team totals.
+    */
+
+    const metrics = {};
+
+
+    rows.forEach(item => {
+
+        if (!metrics[item.metric]) {
+            metrics[item.metric] = [];
+        }
+
+        metrics[item.metric].push(item.row);
+
+    });
+
+
+    const metricLabels = {
+
+        targets: "Targets",
+
+        carries: "Carries",
+
+        receptions: "Receptions",
+
+        receiving_yards: "Receiving Yards",
+
+        rushing_yards: "Rushing Yards",
+
+        receiving_tds: "Receiving TDs",
+
+        rushing_tds: "Rushing TDs",
+
+        red_zone_targets: "RZ Targets",
+
+        red_zone_carries: "RZ Carries",
+
+        red_zone_receptions: "RZ Receptions",
+
+        red_zone_receiving_tds:
+            "RZ Receiving TDs",
+
+        red_zone_rushing_tds:
+            "RZ Rushing TDs"
+
+    };
+
+
+    const order = [
+
+        "targets",
+        "carries",
+        "receptions",
+        "receiving_yards",
+        "rushing_yards",
+        "receiving_tds",
+        "rushing_tds",
+        "red_zone_targets",
+        "red_zone_carries",
+        "red_zone_receptions",
+        "red_zone_receiving_tds",
+        "red_zone_rushing_tds"
+
+    ];
 
 
     let html = `
 
-        <div style="overflow-x:auto">
-
-        <table>
+        <table class="team-table">
 
             <thead>
 
                 <tr>
 
-                    <th class="rank">
-                        #
+                    <th>
+                        Statistic
                     </th>
-    `;
 
-
-    COLUMNS.forEach(column => {
-
-        html += `
-
-            <th>
-
-                <button
-                    class="sort-button"
-                    data-sort="${column.key}"
-                >
-                    ${column.label}${arrow(column.key)}
-                </button>
-
-            </th>
-
-        `;
-
-    });
-
-
-    html += `
+                    <th>
+                        Total
+                    </th>
 
                 </tr>
 
@@ -307,57 +755,40 @@ function render() {
     `;
 
 
-    rows.forEach((team, index) => {
+    order.forEach(metric => {
+
+        if (!metrics[metric]) {
+            return;
+        }
+
+
+        const total =
+            metrics[metric]
+                .reduce(
+                    (sum, row) =>
+                        sum +
+                        Number(row[metric] || 0),
+                    0
+                );
+
 
         html += `
 
             <tr>
 
-                <td class="rank">
-                    ${index + 1}
-                </td>
+                <td class="team-name">
 
-                <td>
-
-                    <a
-                        class="link"
-                        href="team.html?id=${encodeURIComponent(
-                            team.team
-                        )}"
-                    >
-                        ${esc(team.team)}
-                    </a>
-
-                </td>
-
-                <td>
-                    ${percent(
-                        team.pass_rate
+                    ${esc(
+                        metricLabels[metric] ||
+                        metric
                     )}
+
                 </td>
 
-                <td>
-                    ${percent(
-                        team.rz_pass_rate
-                    )}
-                </td>
+                <td class="value">
 
-                <td>
-                    ${percent(
-                        team.trailing_pass_rate
-                    )}
-                </td>
+                    ${formatNumber(total)}
 
-                <td>
-                    ${percent(
-                        team.leading_pass_rate
-                    )}
-                </td>
-
-                <td>
-                    ${percent(
-                        team.two_minute_pass_rate
-                    )}
                 </td>
 
             </tr>
@@ -373,124 +804,106 @@ function render() {
 
         </table>
 
-        </div>
-
     `;
 
 
-    table.innerHTML = html;
-
-
-    document
-        .querySelectorAll(".sort-button")
-        .forEach(button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    const key =
-                        button.dataset.sort;
-
-
-                    if (
-                        currentSort === key
-                    ) {
-
-                        sortDirection =
-                            sortDirection === "desc"
-                                ? "asc"
-                                : "desc";
-
-                    } else {
-
-                        currentSort = key;
-
-                        const column =
-                            COLUMNS.find(
-                                c => c.key === key
-                            );
-
-                        sortDirection =
-                            column.type === "text"
-                                ? "asc"
-                                : "desc";
-
-                    }
-
-
-                    render();
-
-                }
-            );
-
-        });
+    tableEl.innerHTML =
+        html;
 
 }
 
 
-search.addEventListener(
-    "input",
-    render
+/* =========================
+   TEAM CHANGE
+========================= */
+
+teamSelect.addEventListener(
+    "change",
+    () => {
+
+        selectedTeam =
+            teamSelect.value;
+
+        renderTable();
+
+    }
 );
 
 
-fetch("data/teams.json")
+/* =========================
+   LOAD DATA
+========================= */
 
-.then(response => {
+async function loadTeamData() {
 
-    if (!response.ok) {
+    try {
 
-        throw new Error(
-            "HTTP " + response.status
-        );
+        const response =
+            await fetch(
+                "data/teams.json?ts=" +
+                Date.now(),
+                {
+                    cache: "no-store"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to load team data."
+            );
+
+        }
+
+
+        DATA =
+            await response.json();
+
+
+        seasonEl.textContent =
+            `${DATA.season} Season`;
+
+
+        renderTeamDropdown();
+
+        renderTable();
 
     }
 
-    return response.json();
 
-})
+    catch (error) {
 
-.then(data => {
-
-    DATA =
-        Array.isArray(data)
-            ? data
-            : (data.teams || []);
+        console.error(error);
 
 
-    document.getElementById(
-        "season"
-    ).textContent =
-        (data.season || "") +
-        " Season";
+        seasonEl.textContent =
+            "Season unavailable";
 
 
-    render();
+        tableEl.innerHTML = `
 
-})
+            <div class="message">
 
-.catch(error => {
+                Unable to load team data.
 
-    console.error(error);
+            </div>
 
-    table.innerHTML = `
+        `;
 
-        <div style="
-            padding:20px;
-            color:#ff6b6b
-        ">
+    }
 
-            Unable to load team data:
-            ${esc(error.message)}
+}
 
-        </div>
 
-    `;
+/* =========================
+   START
+========================= */
 
-});
+loadTeamData();
 
 </script>
 
 </body>
+
 </html>

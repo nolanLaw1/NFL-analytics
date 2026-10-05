@@ -5,6 +5,71 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>NFL Analytics — Player</title>
 <link rel="stylesheet" href="styles.css">
+
+<style>
+    .weekly-wrap {
+        overflow-x: auto;
+    }
+
+    .weekly-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 600px;
+    }
+
+    .weekly-table th,
+    .weekly-table td {
+        padding: 12px 14px;
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .weekly-table th:first-child,
+    .weekly-table td:first-child {
+        text-align: left;
+    }
+
+    .weekly-table thead th {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: .05em;
+        color: #9aa6b2;
+        border-bottom: 1px solid #27313d;
+    }
+
+    .weekly-table tbody tr {
+        border-bottom: 1px solid #202a35;
+    }
+
+    .weekly-table tbody tr:last-child {
+        border-bottom: none;
+    }
+
+    .weekly-table tbody tr:hover {
+        background: rgba(255,255,255,.025);
+    }
+
+    .week-number {
+        font-weight: 700;
+    }
+
+    .weekly-section-note {
+        padding: 0 18px 14px;
+        color: #7f8b98;
+        font-size: 13px;
+    }
+
+    @media (max-width: 700px) {
+        .weekly-table {
+            min-width: 520px;
+        }
+
+        .weekly-table th,
+        .weekly-table td {
+            padding: 10px 11px;
+        }
+    }
+</style>
 </head>
 
 <body>
@@ -52,7 +117,9 @@ function pct(value) {
     return Number.isFinite(n) ? n.toFixed(1) + "%" : "0.0%";
 }
 
-fetch("data/players.json")
+fetch("data/players.json?ts=" + Date.now(), {
+    cache: "no-store"
+})
 .then(response => {
     if (!response.ok) {
         throw new Error("HTTP " + response.status);
@@ -272,6 +339,10 @@ fetch("data/players.json")
 
             </div>
 
+            <div class="weekly-section-note">
+                Usage by completed week
+            </div>
+
             <div id="weekly"></div>
 
         </section>
@@ -294,22 +365,24 @@ fetch("data/players.json")
     }
 
     let html = `
-        <table>
+        <div class="weekly-wrap">
 
-            <thead>
+            <table class="weekly-table">
 
-                <tr>
-                    <th>Week</th>
-                    <th>Targets</th>
-                    <th>Carries</th>
-                    <th class="hide-mobile">Receptions</th>
-                    <th class="hide-mobile">RZ Targets</th>
-                    <th class="hide-mobile">RZ Carries</th>
-                </tr>
+                <thead>
 
-            </thead>
+                    <tr>
+                        <th>Week</th>
+                        <th>Targets</th>
+                        <th>Carries</th>
+                        <th>Receptions</th>
+                        <th>RZ Targets</th>
+                        <th>RZ Carries</th>
+                    </tr>
 
-            <tbody>
+                </thead>
+
+                <tbody>
     `;
 
     weekly.forEach(week => {
@@ -317,21 +390,23 @@ fetch("data/players.json")
         html += `
             <tr>
 
-                <td>${week.week ?? ""}</td>
+                <td class="week-number">
+                    Week ${esc(week.week ?? "")}
+                </td>
 
                 <td>${week.targets ?? 0}</td>
 
                 <td>${week.carries ?? 0}</td>
 
-                <td class="hide-mobile">
+                <td>
                     ${week.receptions ?? 0}
                 </td>
 
-                <td class="hide-mobile">
+                <td>
                     ${week.red_zone_targets ?? 0}
                 </td>
 
-                <td class="hide-mobile">
+                <td>
                     ${week.red_zone_carries ?? 0}
                 </td>
 
@@ -341,9 +416,11 @@ fetch("data/players.json")
     });
 
     html += `
-            </tbody>
+                </tbody>
 
-        </table>
+            </table>
+
+        </div>
     `;
 
     document.getElementById("weekly").innerHTML = html;

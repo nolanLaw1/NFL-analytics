@@ -1,451 +1,721 @@
 <!doctype html>
 <html lang="en">
+
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>NFL Analytics — Player</title>
+
 <link rel="stylesheet" href="styles.css">
 
 <style>
-    .weekly-wrap {
-        overflow-x: auto;
+/* =========================
+   PLAYER PAGE
+========================= */
+
+.player-header {
+    margin-bottom: 24px;
+}
+
+.player-header h1 {
+    margin-bottom: 6px;
+}
+
+.player-meta {
+    color: #8b949e;
+    font-size: 15px;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 18px;
+    color: #58a6ff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   STAT CARDS
+========================= */
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.stat-card {
+    background: var(--panel);
+    border: 1px solid #263241;
+    border-radius: 10px;
+    padding: 16px;
+}
+
+.stat-card-label {
+    color: #8b949e;
+    font-size: 12px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.stat-card-value {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.stat-card-sub {
+    color: #8b949e;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+.section {
+    margin-top: 30px;
+}
+
+.section h2 {
+    margin-bottom: 6px;
+}
+
+.section-note {
+    color: #8b949e;
+    font-size: 13px;
+    margin-bottom: 14px;
+}
+
+/* =========================
+   WEEKLY TABLE
+========================= */
+
+.table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid #263241;
+    border-radius: 10px;
+}
+
+.weekly-table {
+    width: 100%;
+    min-width: 780px;
+    border-collapse: collapse;
+    background: var(--panel);
+}
+
+.weekly-table th,
+.weekly-table td {
+    padding: 12px 14px;
+    text-align: right;
+    border-bottom: 1px solid #263241;
+    white-space: nowrap;
+}
+
+.weekly-table th:first-child,
+.weekly-table td:first-child {
+    text-align: left;
+}
+
+.weekly-table th {
+    background: var(--panel2);
+    color: #c9d1d9;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    position: sticky;
+    top: 0;
+}
+
+.weekly-table td {
+    font-size: 14px;
+}
+
+.weekly-table tr:last-child td {
+    border-bottom: none;
+}
+
+.weekly-table tbody tr:hover {
+    background: rgba(255,255,255,.025);
+}
+
+.share {
+    font-weight: 600;
+}
+
+/* =========================
+   EMPTY / ERROR
+========================= */
+
+.message {
+    background: var(--panel);
+    border: 1px solid #263241;
+    border-radius: 10px;
+    padding: 18px;
+    color: #8b949e;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .stat-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .weekly-table {
-        width: 100%;
-        border-collapse: collapse;
-        min-width: 600px;
+    .stat-card {
+        padding: 13px;
     }
 
-    .weekly-table th,
-    .weekly-table td {
-        padding: 12px 14px;
-        text-align: right;
-        white-space: nowrap;
+    .stat-card-value {
+        font-size: 19px;
     }
 
-    .weekly-table th:first-child,
-    .weekly-table td:first-child {
-        text-align: left;
+    .player-header h1 {
+        font-size: 25px;
     }
-
-    .weekly-table thead th {
-        font-size: 12px;
-        text-transform: uppercase;
-        letter-spacing: .05em;
-        color: #9aa6b2;
-        border-bottom: 1px solid #27313d;
-    }
-
-    .weekly-table tbody tr {
-        border-bottom: 1px solid #202a35;
-    }
-
-    .weekly-table tbody tr:last-child {
-        border-bottom: none;
-    }
-
-    .weekly-table tbody tr:hover {
-        background: rgba(255,255,255,.025);
-    }
-
-    .week-number {
-        font-weight: 700;
-    }
-
-    .weekly-section-note {
-        padding: 0 18px 14px;
-        color: #7f8b98;
-        font-size: 13px;
-    }
-
-    @media (max-width: 700px) {
-        .weekly-table {
-            min-width: 520px;
-        }
-
-        .weekly-table th,
-        .weekly-table td {
-            padding: 10px 11px;
-        }
-    }
+}
 </style>
+
 </head>
 
 <body>
 
-<div class="site">
+<div class="container">
 
-    <div class="brand">
-        <h1>NFL Analytics</h1>
-        <div class="season" id="season"></div>
-    </div>
-
-    <nav class="mainnav">
+    <!-- NAV -->
+    <nav class="nav">
         <a href="league.html">LEAGUE</a>
-        <a class="active" href="players.html">PLAYERS</a>
+        <a href="players.html" class="active">PLAYERS</a>
         <a href="teams.html">TEAMS</a>
     </nav>
 
-    <div id="content"></div>
+    <!-- PLAYER CONTENT -->
+    <main id="playerContent">
 
-    <div class="footer">
-        NFL offensive usage • player detail
-    </div>
+        <div class="message">
+            Loading player...
+        </div>
+
+    </main>
 
 </div>
 
 <script>
 
-const id = new URLSearchParams(location.search).get("id");
+const params = new URLSearchParams(window.location.search);
+const playerId = params.get("id");
 
-function esc(value) {
-    return String(value ?? "").replace(
-        /[&<>"']/g,
-        m => ({
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            '"': "&quot;",
-            "'": "&#39;"
-        }[m])
-    );
-}
+const content = document.getElementById("playerContent");
 
-function pct(value) {
+
+/* =========================
+   HELPERS
+========================= */
+
+function number(value) {
+    if (value === null || value === undefined || value === "") {
+        return "0";
+    }
+
     const n = Number(value);
-    return Number.isFinite(n) ? n.toFixed(1) + "%" : "0.0%";
+
+    if (!Number.isFinite(n)) {
+        return "0";
+    }
+
+    return n.toLocaleString();
 }
 
-fetch("data/players.json?ts=" + Date.now(), {
-    cache: "no-store"
-})
-.then(response => {
-    if (!response.ok) {
-        throw new Error("HTTP " + response.status);
+
+function decimal(value, digits = 1) {
+    if (value === null || value === undefined || value === "") {
+        return "0";
     }
-    return response.json();
-})
-.then(data => {
 
-    const players = Array.isArray(data)
-        ? data
-        : (data.players || []);
+    const n = Number(value);
 
-    const player = players.find(
-        p => String(p.player_id) === String(id)
-    );
-
-    document.getElementById("season").textContent =
-        (data.season || "") + " Season";
-
-    if (!player) {
-        document.getElementById("content").innerHTML = `
-            <section class="panel">
-                <div class="panelhead">
-                    <h2>Player Not Found</h2>
-                </div>
-
-                <div style="padding:20px;color:#9aa6b2">
-                    We couldn't find this player.
-                </div>
-            </section>
-        `;
-        return;
+    if (!Number.isFinite(n)) {
+        return "0";
     }
+
+    return n.toFixed(digits);
+}
+
+
+function percentage(value) {
+    if (value === null || value === undefined || value === "") {
+        return "0.0%";
+    }
+
+    const n = Number(value);
+
+    if (!Number.isFinite(n)) {
+        return "0.0%";
+    }
+
+    return n.toFixed(1) + "%";
+}
+
+
+/*
+    Handles both possible weekly field names
+    so older generated data doesn't break the page.
+*/
+function getWeekly(player) {
+    if (Array.isArray(player.weekly)) {
+        return player.weekly;
+    }
+
+    if (Array.isArray(player.weekly_usage)) {
+        return player.weekly_usage;
+    }
+
+    return [];
+}
+
+
+/* =========================
+   STAT CARD
+========================= */
+
+function statCard(label, value, sub = "") {
+
+    return `
+        <div class="stat-card">
+            <div class="stat-card-label">${label}</div>
+            <div class="stat-card-value">${value}</div>
+            ${sub ? `<div class="stat-card-sub">${sub}</div>` : ""}
+        </div>
+    `;
+}
+
+
+/* =========================
+   POSITION STATS
+========================= */
+
+function buildStats(player) {
 
     const position = player.position;
 
-    let cards = "";
+    let html = `<div class="stat-grid">`;
 
     /*
-     * QB
-     */
+        QB
+    */
     if (position === "QB") {
 
-        cards = `
-            <div class="card">
-                <div class="meta">Pass Attempts</div>
-                <h2>${player.pass_attempts ?? 0}</h2>
-            </div>
+        html += statCard(
+            "Pass Attempts",
+            number(player.attempts ?? player.passing_attempts)
+        );
 
-            <div class="card">
-                <div class="meta">Passing Yards</div>
-                <h2>${player.passing_yards ?? 0}</h2>
-            </div>
+        html += statCard(
+            "Pass Yards",
+            number(player.passing_yards)
+        );
 
-            <div class="card">
-                <div class="meta">Passing TDs</div>
-                <h2>${player.passing_tds ?? 0}</h2>
-            </div>
+        html += statCard(
+            "Pass TDs",
+            number(player.passing_touchdowns)
+        );
 
-            <div class="card">
-                <div class="meta">RZ Pass Attempts</div>
-                <h2>${player.red_zone_pass_attempts ?? 0}</h2>
-            </div>
+        html += statCard(
+            "Completions",
+            number(player.completions)
+        );
 
-            <div class="card">
-                <div class="meta">RZ Rushes</div>
-                <h2>${player.red_zone_rushes ?? 0}</h2>
-            </div>
+        html += statCard(
+            "RZ Pass Attempts",
+            number(player.red_zone_pass_attempts)
+        );
 
-            <div class="card">
-                <div class="meta">Rushing Yards</div>
-                <h2>${player.rushing_yards ?? 0}</h2>
-            </div>
+        html += statCard(
+            "RZ Pass TDs",
+            number(player.red_zone_pass_touchdowns)
+        );
 
-            <div class="card">
-                <div class="meta">Rushing TDs</div>
-                <h2>${player.rushing_tds ?? 0}</h2>
-            </div>
-        `;
+        html += statCard(
+            "Carries",
+            number(player.carries)
+        );
 
-    /*
-     * RB
-     */
-    } else if (position === "RB") {
+        html += statCard(
+            "Rush Yards",
+            number(player.rushing_yards)
+        );
 
-        cards = `
-            <div class="card">
-                <div class="meta">Carries</div>
-                <h2>${player.carries ?? 0}</h2>
-            </div>
-
-            <div class="card">
-                <div class="meta">Rushing Yards</div>
-                <h2>${player.rushing_yards ?? 0}</h2>
-            </div>
-
-            <div class="card">
-                <div class="meta">Rushing TDs</div>
-                <h2>${player.rushing_tds ?? 0}</h2>
-            </div>
-
-            <div class="card">
-                <div class="meta">Targets</div>
-                <h2>${player.targets ?? 0}</h2>
-            </div>
-
-            <div class="card">
-                <div class="meta">Receptions</div>
-                <h2>${player.receptions ?? 0}</h2>
-            </div>
-
-            <div class="card">
-                <div class="meta">Receiving Yards</div>
-                <h2>${player.receiving_yards ?? 0}</h2>
-            </div>
-
-            <div class="card">
-                <div class="meta">Target Share</div>
-                <h2>${pct(player.target_share)}</h2>
-            </div>
-
-            <div class="card">
-                <div class="meta">RZ Target Share</div>
-                <h2>${pct(player.red_zone_target_share)}</h2>
-            </div>
-
-            <div class="card">
-                <div class="meta">RZ Rushes</div>
-                <h2>${player.red_zone_rushes ?? 0}</h2>
-            </div>
-
-            <div class="card">
-                <div class="meta">RZ Targets</div>
-                <h2>${player.red_zone_targets ?? 0}</h2>
-            </div>
-        `;
-
-    /*
-     * WR / TE
-     */
-    } else {
-
-        cards = `
-            <div class="card">
-                <div class="meta">Targets</div>
-                <h2>${player.targets ?? 0}</h2>
-            </div>
-
-            <div class="card">
-                <div class="meta">Receptions</div>
-                <h2>${player.receptions ?? 0}</h2>
-            </div>
-
-            <div class="card">
-                <div class="meta">Receiving Yards</div>
-                <h2>${player.receiving_yards ?? 0}</h2>
-            </div>
-
-            <div class="card">
-                <div class="meta">Receiving TDs</div>
-                <h2>${player.receiving_tds ?? 0}</h2>
-            </div>
-
-            <div class="card">
-                <div class="meta">Target Share</div>
-                <h2>${pct(player.target_share)}</h2>
-            </div>
-
-            <div class="card">
-                <div class="meta">RZ Target Share</div>
-                <h2>${pct(player.red_zone_target_share)}</h2>
-            </div>
-
-            <div class="card">
-                <div class="meta">RZ Targets</div>
-                <h2>${player.red_zone_targets ?? 0}</h2>
-            </div>
-
-            <div class="card">
-                <div class="meta">RZ Receptions</div>
-                <h2>${player.red_zone_receptions ?? 0}</h2>
-            </div>
-        `;
+        html += statCard(
+            "RZ Rushes",
+            number(player.red_zone_rushes)
+        );
     }
 
-    document.getElementById("content").innerHTML = `
+    /*
+        RB
+    */
+    else if (position === "RB") {
 
-        <section class="panel">
+        html += statCard(
+            "Carries",
+            number(player.carries)
+        );
 
-            <div class="panelhead">
+        html += statCard(
+            "Rush Yards",
+            number(player.rushing_yards)
+        );
 
-                <div>
-                    <h2>${esc(player.name)}</h2>
+        html += statCard(
+            "Rush TDs",
+            number(player.rushing_touchdowns)
+        );
 
-                    <div class="meta">
-                        ${esc(player.position)} · ${esc(player.team || "")}
-                    </div>
-                </div>
+        html += statCard(
+            "Targets",
+            number(player.targets)
+        );
 
-            </div>
+        html += statCard(
+            "Target Share",
+            percentage(player.target_share)
+        );
 
-            <div class="grid" style="padding:18px">
-                ${cards}
-            </div>
+        html += statCard(
+            "Receptions",
+            number(player.receptions)
+        );
 
-        </section>
+        html += statCard(
+            "Receiving Yards",
+            number(player.receiving_yards)
+        );
 
-        <section class="panel" style="margin-top:14px">
+        html += statCard(
+            "Receiving TDs",
+            number(player.receiving_touchdowns)
+        );
 
-            <div class="panelhead">
+        html += statCard(
+            "RZ Targets",
+            number(player.red_zone_targets)
+        );
 
-                <h2>Weekly Usage</h2>
+        html += statCard(
+            "RZ Target Share",
+            percentage(player.red_zone_target_share)
+        );
 
-                <div class="note">
-                    Regular season
-                </div>
+        html += statCard(
+            "RZ Carries",
+            number(player.red_zone_carries)
+        );
 
-            </div>
+        html += statCard(
+            "RZ Rushes",
+            number(player.red_zone_rushes)
+        );
+    }
 
-            <div class="weekly-section-note">
-                Usage by completed week
-            </div>
+    /*
+        WR / TE
+    */
+    else {
 
-            <div id="weekly"></div>
+        html += statCard(
+            "Targets",
+            number(player.targets)
+        );
 
-        </section>
-    `;
+        html += statCard(
+            "Target Share",
+            percentage(player.target_share)
+        );
 
-    const weekly =
-        player.weekly ||
-        player.weekly_usage ||
-        [];
+        html += statCard(
+            "Receptions",
+            number(player.receptions)
+        );
+
+        html += statCard(
+            "Receiving Yards",
+            number(player.receiving_yards)
+        );
+
+        html += statCard(
+            "Receiving TDs",
+            number(player.receiving_touchdowns)
+        );
+
+        html += statCard(
+            "RZ Targets",
+            number(player.red_zone_targets)
+        );
+
+        html += statCard(
+            "RZ Target Share",
+            percentage(player.red_zone_target_share)
+        );
+
+        html += statCard(
+            "RZ Receptions",
+            number(player.red_zone_receptions)
+        );
+
+        html += statCard(
+            "RZ Receiving Yards",
+            number(player.red_zone_receiving_yards)
+        );
+
+        html += statCard(
+            "RZ Receiving TDs",
+            number(player.red_zone_receiving_touchdowns)
+        );
+
+        html += statCard(
+            "RZ Carries",
+            number(player.red_zone_carries)
+        );
+    }
+
+    html += `</div>`;
+
+    return html;
+}
+
+
+/* =========================
+   WEEKLY TABLE
+========================= */
+
+function buildWeeklyTable(player) {
+
+    const weekly = getWeekly(player);
 
     if (!weekly.length) {
 
-        document.getElementById("weekly").innerHTML = `
-            <div style="padding:20px;color:#9aa6b2">
+        return `
+            <div class="message">
                 Weekly usage data is not available yet.
             </div>
         `;
-
-        return;
     }
 
-    let html = `
-        <div class="weekly-wrap">
+    /*
+        The builder already limits this to completed weeks.
+        Sort again here so the page always displays
+        Week 1 → latest completed week.
+    */
+    const completedWeeks = [...weekly]
+        .filter(row => row && row.week !== undefined)
+        .sort((a, b) => Number(a.week) - Number(b.week));
 
-            <table class="weekly-table">
+    if (!completedWeeks.length) {
 
-                <thead>
+        return `
+            <div class="message">
+                Weekly usage data is not available yet.
+            </div>
+        `;
+    }
 
-                    <tr>
-                        <th>Week</th>
-                        <th>Targets</th>
-                        <th>Carries</th>
-                        <th>Receptions</th>
-                        <th>RZ Targets</th>
-                        <th>RZ Carries</th>
-                    </tr>
+    let rows = "";
 
-                </thead>
+    for (const row of completedWeeks) {
 
-                <tbody>
-    `;
-
-    weekly.forEach(week => {
-
-        html += `
+        rows += `
             <tr>
 
-                <td class="week-number">
-                    Week ${esc(week.week ?? "")}
-                </td>
-
-                <td>${week.targets ?? 0}</td>
-
-                <td>${week.carries ?? 0}</td>
-
                 <td>
-                    ${week.receptions ?? 0}
+                    Week ${number(row.week)}
                 </td>
 
                 <td>
-                    ${week.red_zone_targets ?? 0}
+                    ${number(row.targets)}
+                </td>
+
+                <td class="share">
+                    ${percentage(row.target_share)}
                 </td>
 
                 <td>
-                    ${week.red_zone_carries ?? 0}
+                    ${number(row.carries)}
+                </td>
+
+                <td>
+                    ${number(row.receptions)}
+                </td>
+
+                <td>
+                    ${number(row.red_zone_targets)}
+                </td>
+
+                <td class="share">
+                    ${percentage(row.red_zone_target_share)}
+                </td>
+
+                <td>
+                    ${number(row.red_zone_carries)}
                 </td>
 
             </tr>
         `;
+    }
 
-    });
+    return `
+        <div class="table-wrap">
 
-    html += `
+            <table class="weekly-table">
+
+                <thead>
+                    <tr>
+                        <th>Week</th>
+                        <th>Targets</th>
+                        <th>Target Share</th>
+                        <th>Carries</th>
+                        <th>Receptions</th>
+                        <th>RZ Targets</th>
+                        <th>RZ Target Share</th>
+                        <th>RZ Carries</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    ${rows}
                 </tbody>
 
             </table>
 
         </div>
     `;
+}
 
-    document.getElementById("weekly").innerHTML = html;
 
-})
-.catch(error => {
+/* =========================
+   LOAD PLAYER
+========================= */
 
-    console.error(error);
+async function loadPlayer() {
 
-    document.getElementById("content").innerHTML = `
+    if (!playerId) {
 
-        <section class="panel">
+        content.innerHTML = `
+            <div class="message">
+                No player selected.
+            </div>
+        `;
 
-            <div class="panelhead">
-                <h2>Player Data Error</h2>
+        return;
+    }
+
+    try {
+
+        /*
+            Cache busting ensures GitHub Pages doesn't
+            keep showing an older players.json.
+        */
+        const response = await fetch(
+            "data/players.json?ts=" + Date.now(),
+            {
+                cache: "no-store"
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("Unable to load player data.");
+        }
+
+        const players = await response.json();
+
+        const player = players.find(
+            p => String(p.player_id) === String(playerId)
+        );
+
+        if (!player) {
+
+            content.innerHTML = `
+                <div class="message">
+                    Player not found.
+                </div>
+            `;
+
+            return;
+        }
+
+        const playerName =
+            player.player_name ||
+            player.name ||
+            "Unknown Player";
+
+        const position =
+            player.position ||
+            "";
+
+        const team =
+            player.team ||
+            "";
+
+        document.title =
+            `NFL Analytics — ${playerName}`;
+
+        content.innerHTML = `
+
+            <a class="back-link" href="players.html">
+                ← Back to Players
+            </a>
+
+            <div class="player-header">
+
+                <h1>${playerName}</h1>
+
+                <div class="player-meta">
+                    ${position}${position && team ? " • " : ""}${team}
+                </div>
+
             </div>
 
-            <div style="padding:20px;color:#ff6b6b">
+            ${buildStats(player)}
+
+            <section class="section">
+
+                <h2>Weekly Usage</h2>
+
+                <div class="section-note">
+                    Completed regular-season weeks only
+                </div>
+
+                ${buildWeeklyTable(player)}
+
+            </section>
+
+        `;
+
+    } catch (error) {
+
+        console.error(error);
+
+        content.innerHTML = `
+            <div class="message">
                 Unable to load player data.
             </div>
+        `;
+    }
+}
 
-        </section>
-    `;
 
-});
+loadPlayer();
 
 </script>
 

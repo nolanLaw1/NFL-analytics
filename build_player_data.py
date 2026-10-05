@@ -1,64 +1,41 @@
 import sys
 import json
 from pathlib import Path
-
 import pandas as pd
-
-
 SEASON = int(sys.argv[1]) if len(sys.argv) > 1 else 2026
-
 DATA_DIR = Path("data")
 DATA_DIR.mkdir(exist_ok=True)
-
 OUTPUT_FILE = DATA_DIR / "players.json"
-
-
 def first_existing(df, names, default=None):
     for name in names:
         if name in df.columns:
             return name
     return default
-
-
 def clean_number(value):
     if pd.isna(value):
         return 0
-
     if isinstance(value, float) and value.is_integer():
         return int(value)
-
     return value
-
-
 def load_player_stats():
     url = (
         "https://github.com/nflverse/nflverse-data/releases/download/"
         f"stats_player/stats_player_week_{SEASON}.csv"
     )
-
     print(f"Downloading player statistics from {url}")
-
     df = pd.read_csv(
         url,
         low_memory=False
     )
-
     print(f"Loaded {len(df)} player-stat rows.")
-
     return df
-
-
 def load_pbp():
     url = (
         "https://github.com/nflverse/nflverse-data/releases/download/"
         f"pbp/play_by_play_{SEASON}.parquet"
     )
-
     print(f"Downloading play-by-play data from {url}")
-
     return pd.read_parquet(url)
-
-
 def build_player_totals(stats):
     player_id_col = first_existing(
         stats,
@@ -68,22 +45,23 @@ def build_player_totals(stats):
             "gsis_id"
         ]
     )
-
+    # IMPORTANT:
+    # player_display_name is the full player name.
+    # player_name is often the abbreviated name.
     name_col = first_existing(
         stats,
         [
+            "player_display_name",
             "player_name",
             "name"
         ]
     )
-
     position_col = first_existing(
         stats,
         [
             "position"
         ]
     )
-
     team_col = first_existing(
         stats,
         [
@@ -92,31 +70,43 @@ def build_player_totals(stats):
             "posteam"
         ]
     )
-
     if not player_id_col:
         raise RuntimeError(
             f"Could not find player ID column. Available columns: {list(stats.columns)}"
         )
-
     if not name_col:
         raise RuntimeError(
             f"Could not find player name column. Available columns: {list(stats.columns)}"
         )
-
     if not position_col:
         raise RuntimeError(
             f"Could not find position column. Available columns: {list(stats.columns)}"
         )
-
-    stats["player_id"] = stats[player_id_col].astype(str)
-    stats["player_name"] = stats[name_col].fillna("").astype(str)
-    stats["position"] = stats[position_col].fillna("").astype(str)
-
+    stats["player_id"] = (
+        stats[player_id_col]
+        .fillna("")
+        .astype(str)
+    )
+    stats["player_name"] = (
+        stats[name_col]
+        .fillna("")
+        .astype(str)
+    )
+    # Also create the generic "name" field that the website expects.
+    stats["name"] = stats["player_name"]
+    stats["position"] = (
+        stats[position_col]
+        .fillna("")
+        .astype(str)
+    )
     if team_col:
-        stats["team"] = stats[team_col].fillna("").astype(str)
+        stats["team"] = (
+            stats[team_col]
+            .fillna("")
+            .astype(str)
+        )
     else:
         stats["team"] = ""
-
     numeric_columns = [
         "completions",
         "attempts",
@@ -144,16 +134,22 @@ def build_player_totals(stats):
         "fantasy_points_ppr",
         "special_teams_tds",
     ]
-
     for column in numeric_columns:
         if column not in stats.columns:
             stats[column] = 0
-
+        stats[column] = pd.to_numeric(
+            stats[column],
+            errors="coerce"
+        ).fillna(0)
+    # ---------------------------------------------------------
+    # PLAYER TOTALS
+    # ---------------------------------------------------------
     players = (
         stats.groupby(
             [
                 "player_id",
                 "player_name",
+                "name",
                 "position",
             ],
             dropna=False
@@ -162,7 +158,10 @@ def build_player_totals(stats):
             team=(
                 "team",
                 lambda x: next(
-                    (v for v in reversed(x.tolist()) if v),
+                    (
+                        v for v in reversed(x.tolist())
+                        if v and v != "nan"
+                    ),
                     ""
                 )
             ),
@@ -173,10 +172,53 @@ def build_player_totals(stats):
         )
         .reset_index()
     )
-
+    # ---------------------------------------------------------
+    # NORMAL TARGET SHARE
+    #
+    # Team targets are calculated from the player totals.
+    # Target share = player targets / team targets * 100
+    # ---------------------------------------------------------
+    team_targets = (
+        players.groupby(
+            "team",
+            as_index=False
+        )["targets"]
+        .sum()
+        .rename(
+            columns={
+                "targets": "team_targets"
+            }
+        )
+    )
+    players = players.merge(
+        team_targets,
+        on="team",
+        how="left"
+    )
+    players["team_targets"] = (
+        pd.to_numeric(
+            players["team_targets"],
+            errors="coerce"
+        )
+        .fillna(0)
+    )
+    players["target_share"] = 0.0
+    valid_targets = players["team_targets"] > 0
+    players.loc[
+        valid_targets,
+        "target_share"
+    ] = (
+        players.loc[
+            valid_targets,
+            "targets"
+        ]
+        / players.loc[
+            valid_targets,
+            "team_targets"
+        ]
+        * 100
+    )
     return players
-
-
 def calculate_red_zone_rushes(pbp):
     required = {
         "rush_attempt",
@@ -184,14 +226,11 @@ def calculate_red_zone_rushes(pbp):
         "posteam",
         "yardline_100",
     }
-
     missing = required - set(pbp.columns)
-
     if missing:
         raise RuntimeError(
             f"Play-by-play data is missing columns: {sorted(missing)}"
         )
-
     rz = pbp[
         (pbp["rush_attempt"] == 1)
         & (pbp["yardline_100"].notna())
@@ -199,10 +238,14 @@ def calculate_red_zone_rushes(pbp):
         & (pbp["rusher_player_id"].notna())
         & (pbp["posteam"].notna())
     ].copy()
-
-    rz["player_id"] = rz["rusher_player_id"].astype(str)
-    rz["team"] = rz["posteam"].astype(str)
-
+    rz["player_id"] = (
+        rz["rusher_player_id"]
+        .astype(str)
+    )
+    rz["team"] = (
+        rz["posteam"]
+        .astype(str)
+    )
     player_rushes = (
         rz.groupby(
             ["player_id", "team"],
@@ -215,7 +258,6 @@ def calculate_red_zone_rushes(pbp):
             }
         )
     )
-
     team_rushes = (
         rz.groupby(
             "team",
@@ -228,14 +270,11 @@ def calculate_red_zone_rushes(pbp):
             }
         )
     )
-
     return player_rushes.merge(
         team_rushes,
         on="team",
         how="left"
     )
-
-
 def calculate_red_zone_targets(pbp):
     required = {
         "pass_attempt",
@@ -243,7 +282,6 @@ def calculate_red_zone_targets(pbp):
         "posteam",
         "yardline_100",
     }
-
     if not required.issubset(pbp.columns):
         return pd.DataFrame(
             columns=[
@@ -252,7 +290,6 @@ def calculate_red_zone_targets(pbp):
                 "team_red_zone_targets",
             ]
         )
-
     rz = pbp[
         (pbp["pass_attempt"] == 1)
         & (pbp["yardline_100"].notna())
@@ -260,10 +297,14 @@ def calculate_red_zone_targets(pbp):
         & (pbp["receiver_player_id"].notna())
         & (pbp["posteam"].notna())
     ].copy()
-
-    rz["player_id"] = rz["receiver_player_id"].astype(str)
-    rz["team"] = rz["posteam"].astype(str)
-
+    rz["player_id"] = (
+        rz["receiver_player_id"]
+        .astype(str)
+    )
+    rz["team"] = (
+        rz["posteam"]
+        .astype(str)
+    )
     player_targets = (
         rz.groupby(
             ["player_id", "team"],
@@ -276,7 +317,6 @@ def calculate_red_zone_targets(pbp):
             }
         )
     )
-
     team_targets = (
         rz.groupby(
             "team",
@@ -289,22 +329,17 @@ def calculate_red_zone_targets(pbp):
             }
         )
     )
-
     return player_targets.merge(
         team_targets,
         on="team",
         how="left"
     )
-
-
 def add_red_zone_data(players, pbp):
-
+    # =========================================================
     # RED-ZONE RUSHES
-
+    # =========================================================
     red_zone_rushes = calculate_red_zone_rushes(pbp)
-
     if not red_zone_rushes.empty:
-
         rush_totals = (
             red_zone_rushes
             .groupby(
@@ -322,13 +357,24 @@ def add_red_zone_data(players, pbp):
                 ),
             )
         )
-
-        rush_totals["red_zone_rush_share"] = (
-            rush_totals["red_zone_rushes"]
-            / rush_totals["team_red_zone_rushes"]
+        rush_totals["red_zone_rush_share"] = 0.0
+        valid = (
+            rush_totals["team_red_zone_rushes"] > 0
+        )
+        rush_totals.loc[
+            valid,
+            "red_zone_rush_share"
+        ] = (
+            rush_totals.loc[
+                valid,
+                "red_zone_rushes"
+            ]
+            / rush_totals.loc[
+                valid,
+                "team_red_zone_rushes"
+            ]
             * 100
         )
-
         players = players.merge(
             rush_totals[
                 [
@@ -341,13 +387,11 @@ def add_red_zone_data(players, pbp):
             on="player_id",
             how="left"
         )
-
+    # =========================================================
     # RED-ZONE TARGETS
-
+    # =========================================================
     red_zone_targets = calculate_red_zone_targets(pbp)
-
     if not red_zone_targets.empty:
-
         target_totals = (
             red_zone_targets
             .groupby(
@@ -365,13 +409,24 @@ def add_red_zone_data(players, pbp):
                 ),
             )
         )
-
-        target_totals["red_zone_target_share"] = (
-            target_totals["red_zone_targets"]
-            / target_totals["team_red_zone_targets"]
+        target_totals["red_zone_target_share"] = 0.0
+        valid = (
+            target_totals["team_red_zone_targets"] > 0
+        )
+        target_totals.loc[
+            valid,
+            "red_zone_target_share"
+        ] = (
+            target_totals.loc[
+                valid,
+                "red_zone_targets"
+            ]
+            / target_totals.loc[
+                valid,
+                "team_red_zone_targets"
+            ]
             * 100
         )
-
         players = players.merge(
             target_totals[
                 [
@@ -384,9 +439,9 @@ def add_red_zone_data(players, pbp):
             on="player_id",
             how="left"
         )
-
+    # =========================================================
     # DEFAULT VALUES
-
+    # =========================================================
     defaults = {
         "red_zone_rushes": 0,
         "team_red_zone_rushes": 0,
@@ -395,12 +450,9 @@ def add_red_zone_data(players, pbp):
         "team_red_zone_targets": 0,
         "red_zone_target_share": 0,
     }
-
     for column, default in defaults.items():
-
         if column not in players.columns:
             players[column] = default
-
         players[column] = (
             pd.to_numeric(
                 players[column],
@@ -408,92 +460,62 @@ def add_red_zone_data(players, pbp):
             )
             .fillna(default)
         )
-
     return players
-
-
 def convert_records(players):
-
     records = []
-
     for _, row in players.iterrows():
-
         record = {}
-
         for column in players.columns:
-
             value = row[column]
-
             if pd.isna(value):
                 value = 0
-
             record[column] = clean_number(value)
-
         records.append(record)
-
     return records
-
-
 def main():
-
     print(
         f"Building player data for {SEASON}..."
     )
-
     print(
         "Downloading player statistics..."
     )
-
     player_stats = load_player_stats()
-
     print(
         "Building player totals..."
     )
-
     players = build_player_totals(
         player_stats
     )
-
     print(
         f"Built {len(players)} players."
     )
-
     print(
         "Downloading play-by-play data..."
     )
-
     pbp = load_pbp()
-
     print(
         "Calculating red-zone data..."
     )
-
     players = add_red_zone_data(
         players,
         pbp
     )
-
     records = convert_records(
         players
     )
-
     with open(
         OUTPUT_FILE,
         "w",
         encoding="utf-8"
     ) as f:
-
         json.dump(
             records,
             f,
             indent=2,
             ensure_ascii=False
         )
-
     print(
         f"Done. Wrote {len(records)} players to {OUTPUT_FILE}"
     )
-
-
 if __name__ == "__main__":
     main()

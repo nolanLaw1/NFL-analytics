@@ -14,7 +14,6 @@
 
 <link rel="stylesheet" href="styles.css">
 
-
 <style>
 
 /* =========================
@@ -114,7 +113,43 @@
 
 
 /* =========================
-   TEAM PANEL
+   SUMMARY CARDS
+========================= */
+
+.summary-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(5, minmax(0, 1fr));
+
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.summary-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.summary-label {
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    margin-bottom: 8px;
+}
+
+.summary-value {
+    color: var(--text);
+    font-size: 23px;
+    font-weight: 800;
+}
+
+
+/* =========================
+   PANELS
 ========================= */
 
 .team-panel {
@@ -122,15 +157,18 @@
     border: 1px solid var(--line);
     border-radius: 14px;
     overflow: hidden;
+    margin-bottom: 18px;
 }
 
 .team-panel-header {
     padding: 18px;
+
     border-bottom: 1px solid var(--line);
 
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     gap: 12px;
 }
 
@@ -158,7 +196,7 @@
 .team-table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 760px;
+    min-width: 600px;
 }
 
 .team-table th,
@@ -195,28 +233,35 @@
 
 
 /* =========================
-   TEAM NAME
+   PERCENTAGE
 ========================= */
 
-.team-name {
+.percentage {
     font-weight: 700;
-    color: var(--text);
 }
 
-.team-abbr {
-    color: var(--muted);
-    font-size: 12px;
-    margin-left: 6px;
+.bar-cell {
+    min-width: 170px;
 }
 
+.bar {
+    width: 130px;
+    height: 5px;
 
-/* =========================
-   VALUE
-========================= */
+    margin-left: auto;
+    margin-top: 7px;
 
-.value {
-    font-weight: 700;
-    white-space: nowrap;
+    background: #252f3b;
+
+    border-radius: 99px;
+
+    overflow: hidden;
+}
+
+.bar-fill {
+    display: block;
+    height: 100%;
+    background: var(--accent);
 }
 
 
@@ -233,6 +278,15 @@
 /* =========================
    MOBILE
 ========================= */
+
+@media (max-width: 850px) {
+
+    .summary-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
 
 @media (max-width: 650px) {
 
@@ -253,16 +307,16 @@
         width: 100%;
     }
 
+    .summary-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
     .team-panel-header {
         display: block;
     }
 
     .team-panel-note {
         margin-top: 5px;
-    }
-
-    .team-table {
-        min-width: 760px;
     }
 
 }
@@ -277,9 +331,7 @@
 <div class="site">
 
 
-    <!-- =========================
-         HEADER
-    ========================= -->
+    <!-- HEADER -->
 
     <div class="team-header">
 
@@ -295,9 +347,7 @@
     </div>
 
 
-    <!-- =========================
-         MAIN NAV
-    ========================= -->
+    <!-- NAVIGATION -->
 
     <nav class="mainnav">
 
@@ -319,9 +369,7 @@
     </nav>
 
 
-    <!-- =========================
-         TEAM SELECTOR
-    ========================= -->
+    <!-- TEAM SELECTOR -->
 
     <div class="team-controls">
 
@@ -341,23 +389,30 @@
     </div>
 
 
-    <!-- =========================
-         TEAM DATA
-    ========================= -->
+    <!-- SUMMARY -->
+
+    <div
+        class="summary-grid"
+        id="summary"
+    >
+    </div>
+
+
+    <!-- DOWN SPLITS -->
 
     <section class="team-panel">
 
         <div class="team-panel-header">
 
-            <h2 id="title">
-                Team Statistics
+            <h2>
+                Down Splits
             </h2>
 
             <div
                 class="team-panel-note"
-                id="note"
+                id="downNote"
             >
-                Current season
+                Pass / run tendencies by down
             </div>
 
         </div>
@@ -365,7 +420,38 @@
 
         <div
             class="table-wrap"
-            id="table"
+            id="downTable"
+        >
+
+            <div class="message">
+                Loading team data...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- WEEKLY -->
+
+    <section class="team-panel">
+
+        <div class="team-panel-header">
+
+            <h2>
+                Weekly Usage
+            </h2>
+
+            <div class="team-panel-note">
+                Completed weeks only
+            </div>
+
+        </div>
+
+
+        <div
+            class="table-wrap"
+            id="weeklyTable"
         >
 
             <div class="message">
@@ -407,14 +493,14 @@ const seasonEl =
 const teamSelect =
     document.getElementById("teamSelect");
 
-const titleEl =
-    document.getElementById("title");
+const summaryEl =
+    document.getElementById("summary");
 
-const noteEl =
-    document.getElementById("note");
+const downTableEl =
+    document.getElementById("downTable");
 
-const tableEl =
-    document.getElementById("table");
+const weeklyTableEl =
+    document.getElementById("weeklyTable");
 
 
 /* =========================
@@ -439,80 +525,53 @@ function esc(value) {
 
 
 /* =========================
-   NUMBER FORMAT
+   PERCENTAGE
 ========================= */
 
-function formatNumber(value) {
+function formatPercentage(value) {
 
     const number =
         Number(value);
 
     if (!Number.isFinite(number)) {
-        return "0";
+        return "0.0%";
     }
 
-    return number.toLocaleString();
+    return (
+        number * 100
+    ).toFixed(1) + "%";
 
 }
 
 
 /* =========================
-   GET TEAM LIST
+   FIND TEAM
 ========================= */
 
-function getTeams() {
+function getSelectedTeamData() {
 
-    const teams =
-        new Set();
+    if (!DATA || !Array.isArray(DATA.teams)) {
+        return null;
+    }
 
-    /*
-        Team data can be stored in several
-        structures depending on the builder.
-        This collects team abbreviations from
-        every available section.
-    */
-
-    Object.values(DATA || {})
-        .forEach(section => {
-
-            if (!section || typeof section !== "object") {
-                return;
-            }
-
-            Object.values(section)
-                .forEach(rows => {
-
-                    if (!Array.isArray(rows)) {
-                        return;
-                    }
-
-                    rows.forEach(row => {
-
-                        if (row && row.team) {
-                            teams.add(row.team);
-                        }
-
-                    });
-
-                });
-
-        });
-
-
-    return Array.from(teams)
-        .sort();
+    return DATA.teams.find(
+        team =>
+            team.team === selectedTeam
+    ) || null;
 
 }
 
 
 /* =========================
-   RENDER TEAM DROPDOWN
+   RENDER DROPDOWN
 ========================= */
 
 function renderTeamDropdown() {
 
     const teams =
-        getTeams();
+        Array.isArray(DATA?.teams)
+            ? DATA.teams
+            : [];
 
 
     teamSelect.innerHTML = "";
@@ -536,123 +595,34 @@ function renderTeamDropdown() {
             document.createElement("option");
 
         option.value =
-            team;
+            team.team;
 
         option.textContent =
-            team;
+            team.team;
 
         teamSelect.appendChild(option);
 
     });
 
 
-    if (
-        selectedTeam &&
-        teams.includes(selectedTeam)
-    ) {
+    selectedTeam =
+        teams[0].team;
 
-        teamSelect.value =
-            selectedTeam;
-
-    } else {
-
-        selectedTeam =
-            teams[0];
-
-        teamSelect.value =
-            selectedTeam;
-
-    }
+    teamSelect.value =
+        selectedTeam;
 
 }
 
 
 /* =========================
-   FIND TEAM DATA
+   RENDER SUMMARY
 ========================= */
 
-function findTeamRows(team) {
+function renderSummary(team) {
 
-    const results = [];
+    if (!team) {
 
-
-    Object.entries(DATA || {})
-        .forEach(
-            ([sectionName, section]) => {
-
-                if (
-                    sectionName === "season" ||
-                    !section ||
-                    typeof section !== "object"
-                ) {
-                    return;
-                }
-
-
-                Object.entries(section)
-                    .forEach(
-                        ([metric, rows]) => {
-
-                            if (!Array.isArray(rows)) {
-                                return;
-                            }
-
-
-                            rows.forEach(row => {
-
-                                if (
-                                    row &&
-                                    row.team === team
-                                ) {
-
-                                    results.push({
-                                        section: sectionName,
-                                        metric,
-                                        row
-                                    });
-
-                                }
-
-                            });
-
-                        }
-                    );
-
-            }
-        );
-
-
-    return results;
-
-}
-
-
-/* =========================
-   RENDER TABLE
-========================= */
-
-function renderTable() {
-
-    if (!DATA || !selectedTeam) {
-        return;
-    }
-
-
-    const rows =
-        findTeamRows(selectedTeam);
-
-
-    titleEl.textContent =
-        `${selectedTeam} Team Statistics`;
-
-
-    noteEl.textContent =
-        `${DATA.season} regular season`;
-
-
-    if (!rows.length) {
-
-        tableEl.innerHTML = `
+        summaryEl.innerHTML = `
             <div class="message">
                 No team data available.
             </div>
@@ -662,72 +632,88 @@ function renderTable() {
     }
 
 
-    /*
-        Group player rows by metric and
-        calculate team totals.
-    */
+    const cards = [
 
-    const metrics = {};
+        {
+            label: "Pass Rate",
+            value: formatPercentage(
+                team.pass_rate
+            )
+        },
 
+        {
+            label: "RZ Pass Rate",
+            value: formatPercentage(
+                team.rz_pass_rate
+            )
+        },
 
-    rows.forEach(item => {
+        {
+            label: "Trailing Pass Rate",
+            value: formatPercentage(
+                team.trailing_pass_rate
+            )
+        },
 
-        if (!metrics[item.metric]) {
-            metrics[item.metric] = [];
+        {
+            label: "Leading Pass Rate",
+            value: formatPercentage(
+                team.leading_pass_rate
+            )
+        },
+
+        {
+            label: "2-Minute Pass Rate",
+            value: formatPercentage(
+                team.two_minute_pass_rate
+            )
         }
 
-        metrics[item.metric].push(item.row);
-
-    });
-
-
-    const metricLabels = {
-
-        targets: "Targets",
-
-        carries: "Carries",
-
-        receptions: "Receptions",
-
-        receiving_yards: "Receiving Yards",
-
-        rushing_yards: "Rushing Yards",
-
-        receiving_tds: "Receiving TDs",
-
-        rushing_tds: "Rushing TDs",
-
-        red_zone_targets: "RZ Targets",
-
-        red_zone_carries: "RZ Carries",
-
-        red_zone_receptions: "RZ Receptions",
-
-        red_zone_receiving_tds:
-            "RZ Receiving TDs",
-
-        red_zone_rushing_tds:
-            "RZ Rushing TDs"
-
-    };
-
-
-    const order = [
-
-        "targets",
-        "carries",
-        "receptions",
-        "receiving_yards",
-        "rushing_yards",
-        "receiving_tds",
-        "rushing_tds",
-        "red_zone_targets",
-        "red_zone_carries",
-        "red_zone_receptions",
-        "red_zone_receiving_tds",
-        "red_zone_rushing_tds"
-
     ];
+
+
+    summaryEl.innerHTML =
+        cards.map(card => `
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    ${esc(card.label)}
+                </div>
+
+                <div class="summary-value">
+                    ${esc(card.value)}
+                </div>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+/* =========================
+   RENDER DOWN SPLITS
+========================= */
+
+function renderDownSplits(team) {
+
+    const rows =
+        Array.isArray(team?.down_splits)
+            ? team.down_splits
+            : [];
+
+
+    if (!rows.length) {
+
+        downTableEl.innerHTML = `
+            <div class="message">
+                No down-split data available.
+            </div>
+        `;
+
+        return;
+    }
 
 
     let html = `
@@ -739,11 +725,19 @@ function renderTable() {
                 <tr>
 
                     <th>
-                        Statistic
+                        Down
                     </th>
 
                     <th>
-                        Total
+                        Passes
+                    </th>
+
+                    <th>
+                        Runs
+                    </th>
+
+                    <th>
+                        Pass Rate
                     </th>
 
                 </tr>
@@ -755,39 +749,45 @@ function renderTable() {
     `;
 
 
-    order.forEach(metric => {
+    rows.forEach(row => {
 
-        if (!metrics[metric]) {
-            return;
-        }
-
-
-        const total =
-            metrics[metric]
-                .reduce(
-                    (sum, row) =>
-                        sum +
-                        Number(row[metric] || 0),
-                    0
-                );
+        const rate =
+            Number(row.pass_rate || 0);
 
 
         html += `
 
             <tr>
 
-                <td class="team-name">
-
-                    ${esc(
-                        metricLabels[metric] ||
-                        metric
-                    )}
-
+                <td>
+                    ${esc(row.down)}${getOrdinal(row.down)}
                 </td>
 
-                <td class="value">
+                <td>
+                    ${Number(row.pass || 0).toLocaleString()}
+                </td>
 
-                    ${formatNumber(total)}
+                <td>
+                    ${Number(row.runs || 0).toLocaleString()}
+                </td>
+
+                <td class="bar-cell">
+
+                    <span class="percentage">
+                        ${formatPercentage(rate)}
+                    </span>
+
+                    <div class="bar">
+
+                        <span
+                            class="bar-fill"
+                            style="width:${Math.min(
+                                Math.max(rate * 100, 0),
+                                100
+                            )}%"
+                        ></span>
+
+                    </div>
 
                 </td>
 
@@ -807,8 +807,190 @@ function renderTable() {
     `;
 
 
-    tableEl.innerHTML =
+    downTableEl.innerHTML =
         html;
+
+}
+
+
+/* =========================
+   ORDINAL
+========================= */
+
+function getOrdinal(number) {
+
+    const n =
+        Number(number);
+
+    if (n === 1) return "st";
+    if (n === 2) return "nd";
+    if (n === 3) return "rd";
+
+    return "th";
+
+}
+
+
+/* =========================
+   RENDER WEEKLY
+========================= */
+
+function renderWeekly(team) {
+
+    const rows =
+        Array.isArray(team?.weekly)
+            ? team.weekly
+            : [];
+
+
+    if (!rows.length) {
+
+        weeklyTableEl.innerHTML = `
+            <div class="message">
+                No weekly data available.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    let html = `
+
+        <table class="team-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Week
+                    </th>
+
+                    <th>
+                        Passes
+                    </th>
+
+                    <th>
+                        Runs
+                    </th>
+
+                    <th>
+                        Pass Rate
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+    `;
+
+
+    rows.forEach(row => {
+
+        const rate =
+            Number(row.pass_rate || 0);
+
+
+        html += `
+
+            <tr>
+
+                <td>
+                    ${Number(row.week)}
+                </td>
+
+                <td>
+                    ${Number(row.pass || 0).toLocaleString()}
+                </td>
+
+                <td>
+                    ${Number(row.runs || 0).toLocaleString()}
+                </td>
+
+                <td class="bar-cell">
+
+                    <span class="percentage">
+                        ${formatPercentage(rate)}
+                    </span>
+
+                    <div class="bar">
+
+                        <span
+                            class="bar-fill"
+                            style="width:${Math.min(
+                                Math.max(rate * 100, 0),
+                                100
+                            )}%"
+                        ></span>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+
+    html += `
+
+            </tbody>
+
+        </table>
+
+    `;
+
+
+    weeklyTableEl.innerHTML =
+        html;
+
+}
+
+
+/* =========================
+   RENDER EVERYTHING
+========================= */
+
+function renderTeam() {
+
+    const team =
+        getSelectedTeamData();
+
+
+    if (!team) {
+
+        summaryEl.innerHTML = `
+            <div class="message">
+                No team data available.
+            </div>
+        `;
+
+        downTableEl.innerHTML = `
+            <div class="message">
+                No team data available.
+            </div>
+        `;
+
+        weeklyTableEl.innerHTML = `
+            <div class="message">
+                No team data available.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    renderSummary(team);
+
+    renderDownSplits(team);
+
+    renderWeekly(team);
 
 }
 
@@ -824,7 +1006,7 @@ teamSelect.addEventListener(
         selectedTeam =
             teamSelect.value;
 
-        renderTable();
+        renderTeam();
 
     }
 );
@@ -867,7 +1049,7 @@ async function loadTeamData() {
 
         renderTeamDropdown();
 
-        renderTable();
+        renderTeam();
 
     }
 
@@ -881,14 +1063,24 @@ async function loadTeamData() {
             "Season unavailable";
 
 
-        tableEl.innerHTML = `
-
+        summaryEl.innerHTML = `
             <div class="message">
-
                 Unable to load team data.
-
             </div>
+        `;
 
+
+        downTableEl.innerHTML = `
+            <div class="message">
+                Unable to load team data.
+            </div>
+        `;
+
+
+        weeklyTableEl.innerHTML = `
+            <div class="message">
+                Unable to load team data.
+            </div>
         `;
 
     }

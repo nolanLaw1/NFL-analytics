@@ -12,6 +12,8 @@ def first_existing(df, names, default=None):
             return name
     return default
 def clean_number(value):
+    if isinstance(value, (list, dict)):
+        return value
     if pd.isna(value):
         return 0
     if isinstance(value, float) and value.is_integer():
@@ -45,9 +47,6 @@ def build_player_totals(stats):
             "gsis_id"
         ]
     )
-    # IMPORTANT:
-    # player_display_name is the full player name.
-    # player_name is often the abbreviated name.
     name_col = first_existing(
         stats,
         [
@@ -92,7 +91,6 @@ def build_player_totals(stats):
         .fillna("")
         .astype(str)
     )
-    # Also create the generic "name" field that the website expects.
     stats["name"] = stats["player_name"]
     stats["position"] = (
         stats[position_col]
@@ -137,13 +135,13 @@ def build_player_totals(stats):
     for column in numeric_columns:
         if column not in stats.columns:
             stats[column] = 0
-        stats[column] = pd.to_numeric(
-            stats[column],
-            errors="coerce"
-        ).fillna(0)
-    # ---------------------------------------------------------
-    # PLAYER TOTALS
-    # ---------------------------------------------------------
+        stats[column] = (
+            pd.to_numeric(
+                stats[column],
+                errors="coerce"
+            )
+            .fillna(0)
+        )
     players = (
         stats.groupby(
             [
@@ -174,9 +172,6 @@ def build_player_totals(stats):
     )
     # ---------------------------------------------------------
     # NORMAL TARGET SHARE
-    #
-    # Team targets are calculated from the player totals.
-    # Target share = player targets / team targets * 100
     # ---------------------------------------------------------
     team_targets = (
         players.groupby(
@@ -439,9 +434,6 @@ def add_red_zone_data(players, pbp):
             on="player_id",
             how="left"
         )
-    # =========================================================
-    # DEFAULT VALUES
-    # =========================================================
     defaults = {
         "red_zone_rushes": 0,
         "team_red_zone_rushes": 0,
@@ -461,12 +453,304 @@ def add_red_zone_data(players, pbp):
             .fillna(default)
         )
     return players
+def build_weekly_usage(stats, pbp):
+    print("Building weekly player usage...")
+    # ---------------------------------------------------------
+    # Make sure the necessary columns exist
+    # ---------------------------------------------------------
+    week_col = first_existing(
+        stats,
+        ["week"]
+    )
+    if not week_col:
+        print("WARNING: Player stats do not contain a week column.")
+        return {}
+    # ---------------------------------------------------------
+    # Determine which weeks have actually been played.
+    #
+    # This prevents future weeks from appearing.
+    # ---------------------------------------------------------
+    played_weeks = set()
+    if "week" in pbp.columns:
+        regular_pbp = pbp.copy()
+        if "season_type" in regular_pbp.columns:
+            regular_pbp = regular_pbp[
+                regular_pbp["season_type"] == "REG"
+            ]
+        played_weeks = set(
+            pd.to_numeric(
+                regular_pbp["week"],
+                errors="coerce"
+            )
+            .dropna()
+            .astype(int)
+            .tolist()
+        )
+    if not played_weeks:
+        played_weeks = set(
+            pd.to_numeric(
+                stats[week_col],
+                errors="coerce"
+            )
+            .dropna()
+            .astype(int)
+            .tolist()
+        )
+    # ---------------------------------------------------------
+    # Filter player stats to regular season
+    # ---------------------------------------------------------
+    weekly_stats = stats.copy()
+    if "season_type" in weekly_stats.columns:
+        weekly_stats = weekly_stats[
+            weekly_stats["season_type"] == "REG"
+        ]
+    weekly_stats["player_id"] = (
+        weekly_stats[
+            first_existing(
+                weekly_stats,
+                [
+                    "player_id",
+                    "player_player_id",
+                    "gsis_id"
+                ]
+            )
+        ]
+        .fillna("")
+        .astype(str)
+    )
+    weekly_stats["week_number"] = (
+        pd.to_numeric(
+            weekly_stats[week_col],
+            errors="coerce"
+        )
+    )
+    weekly_stats = weekly_stats[
+        weekly_stats["week_number"].isin(
+            list(played_weeks)
+        )
+    ].copy()
+    # ---------------------------------------------------------
+    # Make sure usage columns exist
+    # ---------------------------------------------------------
+    weekly_columns = [
+        "targets",
+        "carries",
+        "receptions",
+    ]
+    for column in weekly_columns:
+        if column not in weekly_stats.columns:
+            weekly_stats[column] = 0
+        weekly_stats[column] = (
+            pd.to_numeric(
+                weekly_stats[column],
+                errors="coerce"
+            )
+            .fillna(0)
+        )
+    # ---------------------------------------------------------
+    # Aggregate player stats by week
+    # ---------------------------------------------------------
+    weekly = (
+        weekly_stats
+        .groupby(
+            [
+                "player_id",
+                "week_number"
+            ],
+            as_index=False
+        )
+        .agg(
+            targets=("targets", "sum"),
+            carries=("carries", "sum"),
+            receptions=("receptions", "sum"),
+        )
+    )
+    # ---------------------------------------------------------
+    # RED-ZONE RUSHES BY WEEK
+    # ---------------------------------------------------------
+    if {
+        "rush_attempt",
+        "rusher_player_id",
+        "posteam",
+        "yardline_100",
+        "week",
+    }.issubset(pbp.columns):
+        rz_rush = pbp[
+            (pbp["rush_attempt"] == 1)
+            & (pbp["yardline_100"].notna())
+            & (pbp["yardline_100"] <= 20)
+            & (pbp["rusher_player_id"].notna())
+            & (pbp["posteam"].notna())
+        ].copy()
+        if "season_type" in rz_rush.columns:
+            rz_rush = rz_rush[
+                rz_rush["season_type"] == "REG"
+            ]
+        rz_rush["player_id"] = (
+            rz_rush["rusher_player_id"]
+            .astype(str)
+        )
+        rz_rush["week_number"] = (
+            pd.to_numeric(
+                rz_rush["week"],
+                errors="coerce"
+            )
+        )
+        rz_rush = rz_rush[
+            rz_rush["week_number"].isin(
+                list(played_weeks)
+            )
+        ]
+        rz_rush_totals = (
+            rz_rush
+            .groupby(
+                [
+                    "player_id",
+                    "week_number"
+                ],
+                as_index=False
+            )
+            .size()
+            .rename(
+                columns={
+                    "size": "red_zone_carries"
+                }
+            )
+        )
+        weekly = weekly.merge(
+            rz_rush_totals,
+            on=[
+                "player_id",
+                "week_number"
+            ],
+            how="left"
+        )
+    # ---------------------------------------------------------
+    # RED-ZONE TARGETS BY WEEK
+    # ---------------------------------------------------------
+    if {
+        "pass_attempt",
+        "receiver_player_id",
+        "posteam",
+        "yardline_100",
+        "week",
+    }.issubset(pbp.columns):
+        rz_targets = pbp[
+            (pbp["pass_attempt"] == 1)
+            & (pbp["yardline_100"].notna())
+            & (pbp["yardline_100"] <= 20)
+            & (pbp["receiver_player_id"].notna())
+            & (pbp["posteam"].notna())
+        ].copy()
+        if "season_type" in rz_targets.columns:
+            rz_targets = rz_targets[
+                rz_targets["season_type"] == "REG"
+            ]
+        rz_targets["player_id"] = (
+            rz_targets["receiver_player_id"]
+            .astype(str)
+        )
+        rz_targets["week_number"] = (
+            pd.to_numeric(
+                rz_targets["week"],
+                errors="coerce"
+            )
+        )
+        rz_targets = rz_targets[
+            rz_targets["week_number"].isin(
+                list(played_weeks)
+            )
+        ]
+        rz_target_totals = (
+            rz_targets
+            .groupby(
+                [
+                    "player_id",
+                    "week_number"
+                ],
+                as_index=False
+            )
+            .size()
+            .rename(
+                columns={
+                    "size": "red_zone_targets"
+                }
+            )
+        )
+        weekly = weekly.merge(
+            rz_target_totals,
+            on=[
+                "player_id",
+                "week_number"
+            ],
+            how="left"
+        )
+    # ---------------------------------------------------------
+    # Fill missing weekly values
+    # ---------------------------------------------------------
+    for column in [
+        "red_zone_targets",
+        "red_zone_carries",
+    ]:
+        if column not in weekly.columns:
+            weekly[column] = 0
+        weekly[column] = (
+            pd.to_numeric(
+                weekly[column],
+                errors="coerce"
+            )
+            .fillna(0)
+        )
+    # ---------------------------------------------------------
+    # Convert into:
+    #
+    # {
+    #   "player_id": [
+    #       {
+    #          "week": 1,
+    #          ...
+    #       }
+    #   ]
+    # }
+    # ---------------------------------------------------------
+    weekly_map = {}
+    for _, row in weekly.iterrows():
+        player_id = str(row["player_id"])
+        week = int(row["week_number"])
+        record = {
+            "week": week,
+            "targets": int(row["targets"]),
+            "carries": int(row["carries"]),
+            "receptions": int(row["receptions"]),
+            "red_zone_targets": int(row["red_zone_targets"]),
+            "red_zone_carries": int(row["red_zone_carries"]),
+        }
+        if player_id not in weekly_map:
+            weekly_map[player_id] = []
+        weekly_map[player_id].append(record)
+    # ---------------------------------------------------------
+    # Sort every player's weeks chronologically
+    # ---------------------------------------------------------
+    for player_id in weekly_map:
+        weekly_map[player_id].sort(
+            key=lambda x: x["week"]
+        )
+    print(
+        f"Built weekly usage for {len(weekly_map)} players."
+    )
+    print(
+        f"Completed weeks: {sorted(played_weeks)}"
+    )
+    return weekly_map
 def convert_records(players):
     records = []
     for _, row in players.iterrows():
         record = {}
         for column in players.columns:
             value = row[column]
+            if isinstance(value, (list, dict)):
+                record[column] = value
+                continue
             if pd.isna(value):
                 value = 0
             record[column] = clean_number(value)
@@ -499,6 +783,25 @@ def main():
     players = add_red_zone_data(
         players,
         pbp
+    )
+    print(
+        "Calculating weekly usage..."
+    )
+    weekly_usage = build_weekly_usage(
+        player_stats,
+        pbp
+    )
+    # ---------------------------------------------------------
+    # Attach weekly data to each player
+    # ---------------------------------------------------------
+    players["weekly"] = players[
+        "player_id"
+    ].map(
+        lambda player_id:
+            weekly_usage.get(
+                str(player_id),
+                []
+            )
     )
     records = convert_records(
         players

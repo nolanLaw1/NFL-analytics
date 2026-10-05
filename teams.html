@@ -233,23 +233,109 @@
 
 
 /* =========================
-   PERCENTAGE
+   TEAM PLAYER TABLE
 ========================= */
 
-.percentage {
+.player-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 950px;
+}
+
+.player-table th,
+.player-table td {
+    padding: 13px 15px;
+    border-bottom: 1px solid var(--line);
+}
+
+.player-table th {
+    color: var(--muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    text-align: left;
+    background: var(--panel2);
+}
+
+.player-table td {
+    font-size: 14px;
+}
+
+.player-table th:not(:first-child),
+.player-table td:not(:first-child) {
+    text-align: right;
+}
+
+.player-table tr:last-child td {
+    border-bottom: none;
+}
+
+.player-table tbody tr:hover {
+    background: rgba(255,255,255,.025);
+}
+
+
+/* =========================
+   PLAYER NAME
+========================= */
+
+.player-cell {
+    min-width: 220px;
+    text-align: left !important;
+}
+
+.player-link {
+    color: var(--text);
+    text-decoration: none;
     font-weight: 700;
 }
 
-.bar-cell {
-    min-width: 170px;
+.player-link:hover {
+    color: var(--accent);
 }
 
-.bar {
-    width: 130px;
+.player-meta {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+
+/* =========================
+   POSITION
+========================= */
+
+.position {
+    color: var(--muted);
+    font-weight: 700;
+}
+
+
+/* =========================
+   VALUES
+========================= */
+
+.value {
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.share-value {
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+
+/* =========================
+   SHARE BAR
+========================= */
+
+.share-bar {
+    width: 95px;
     height: 5px;
 
     margin-left: auto;
-    margin-top: 7px;
+    margin-top: 6px;
 
     background: #252f3b;
 
@@ -258,7 +344,7 @@
     overflow: hidden;
 }
 
-.bar-fill {
+.share-bar-fill {
     display: block;
     height: 100%;
     background: var(--accent);
@@ -331,7 +417,9 @@
 <div class="site">
 
 
-    <!-- HEADER -->
+    <!-- =========================
+         HEADER
+    ========================= -->
 
     <div class="team-header">
 
@@ -347,7 +435,9 @@
     </div>
 
 
-    <!-- NAVIGATION -->
+    <!-- =========================
+         NAVIGATION
+    ========================= -->
 
     <nav class="mainnav">
 
@@ -369,7 +459,9 @@
     </nav>
 
 
-    <!-- TEAM SELECTOR -->
+    <!-- =========================
+         TEAM SELECTOR
+    ========================= -->
 
     <div class="team-controls">
 
@@ -389,7 +481,9 @@
     </div>
 
 
-    <!-- SUMMARY -->
+    <!-- =========================
+         TEAM SUMMARY
+    ========================= -->
 
     <div
         class="summary-grid"
@@ -398,7 +492,9 @@
     </div>
 
 
-    <!-- DOWN SPLITS -->
+    <!-- =========================
+         DOWN SPLITS
+    ========================= -->
 
     <section class="team-panel">
 
@@ -432,7 +528,42 @@
     </section>
 
 
-    <!-- WEEKLY -->
+    <!-- =========================
+         TEAM PLAYER USAGE
+    ========================= -->
+
+    <section class="team-panel">
+
+        <div class="team-panel-header">
+
+            <h2>
+                Player Usage
+            </h2>
+
+            <div class="team-panel-note">
+                QB / WR / RB / TE
+            </div>
+
+        </div>
+
+
+        <div
+            class="table-wrap"
+            id="playerTable"
+        >
+
+            <div class="message">
+                Loading player data...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         WEEKLY TEAM USAGE
+    ========================= -->
 
     <section class="team-panel">
 
@@ -478,7 +609,9 @@
    STATE
 ========================= */
 
-let DATA = null;
+let TEAM_DATA = null;
+
+let PLAYER_DATA = null;
 
 let selectedTeam = "";
 
@@ -498,6 +631,9 @@ const summaryEl =
 
 const downTableEl =
     document.getElementById("downTable");
+
+const playerTableEl =
+    document.getElementById("playerTable");
 
 const weeklyTableEl =
     document.getElementById("weeklyTable");
@@ -525,6 +661,24 @@ function esc(value) {
 
 
 /* =========================
+   NUMBER FORMAT
+========================= */
+
+function formatNumber(value) {
+
+    const number =
+        Number(value);
+
+    if (!Number.isFinite(number)) {
+        return "0";
+    }
+
+    return number.toLocaleString();
+
+}
+
+
+/* =========================
    PERCENTAGE
 ========================= */
 
@@ -537,24 +691,25 @@ function formatPercentage(value) {
         return "0.0%";
     }
 
-    return (
-        number * 100
-    ).toFixed(1) + "%";
+    return number.toFixed(1) + "%";
 
 }
 
 
 /* =========================
-   FIND TEAM
+   TEAM LOOKUP
 ========================= */
 
 function getSelectedTeamData() {
 
-    if (!DATA || !Array.isArray(DATA.teams)) {
+    if (
+        !TEAM_DATA ||
+        !Array.isArray(TEAM_DATA.teams)
+    ) {
         return null;
     }
 
-    return DATA.teams.find(
+    return TEAM_DATA.teams.find(
         team =>
             team.team === selectedTeam
     ) || null;
@@ -563,14 +718,14 @@ function getSelectedTeamData() {
 
 
 /* =========================
-   RENDER DROPDOWN
+   TEAM DROPDOWN
 ========================= */
 
 function renderTeamDropdown() {
 
     const teams =
-        Array.isArray(DATA?.teams)
-            ? DATA.teams
+        Array.isArray(TEAM_DATA?.teams)
+            ? TEAM_DATA.teams
             : [];
 
 
@@ -615,7 +770,7 @@ function renderTeamDropdown() {
 
 
 /* =========================
-   RENDER SUMMARY
+   SUMMARY
 ========================= */
 
 function renderSummary(team) {
@@ -693,7 +848,7 @@ function renderSummary(team) {
 
 
 /* =========================
-   RENDER DOWN SPLITS
+   DOWN SPLITS
 ========================= */
 
 function renderDownSplits(team) {
@@ -764,23 +919,23 @@ function renderDownSplits(team) {
                 </td>
 
                 <td>
-                    ${Number(row.pass || 0).toLocaleString()}
+                    ${formatNumber(row.pass)}
                 </td>
 
                 <td>
-                    ${Number(row.runs || 0).toLocaleString()}
+                    ${formatNumber(row.runs)}
                 </td>
 
-                <td class="bar-cell">
+                <td>
 
-                    <span class="percentage">
+                    <span class="value">
                         ${formatPercentage(rate)}
                     </span>
 
-                    <div class="bar">
+                    <div class="share-bar">
 
                         <span
-                            class="bar-fill"
+                            class="share-bar-fill"
                             style="width:${Math.min(
                                 Math.max(rate * 100, 0),
                                 100
@@ -832,7 +987,325 @@ function getOrdinal(number) {
 
 
 /* =========================
-   RENDER WEEKLY
+   PLAYER DATA
+========================= */
+
+function getTeamPlayers() {
+
+    if (
+        !Array.isArray(PLAYER_DATA)
+    ) {
+        return [];
+    }
+
+
+    const positions =
+        new Set([
+            "QB",
+            "WR",
+            "RB",
+            "TE"
+        ]);
+
+
+    return PLAYER_DATA
+        .filter(player => {
+
+            if (!player) {
+                return false;
+            }
+
+            if (player.team !== selectedTeam) {
+                return false;
+            }
+
+            if (!positions.has(player.position)) {
+                return false;
+            }
+
+            const attempts =
+                Number(player.attempts || 0);
+
+            const targets =
+                Number(player.targets || 0);
+
+            const carries =
+                Number(player.carries || 0);
+
+            const receptions =
+                Number(player.receptions || 0);
+
+            const rzTargets =
+                Number(
+                    player.red_zone_targets || 0
+                );
+
+            return (
+                attempts > 0 ||
+                targets > 0 ||
+                carries > 0 ||
+                receptions > 0 ||
+                rzTargets > 0
+            );
+
+        })
+        .sort((a, b) => {
+
+            const usageA =
+                Number(a.attempts || 0) +
+                Number(a.targets || 0) +
+                Number(a.carries || 0);
+
+            const usageB =
+                Number(b.attempts || 0) +
+                Number(b.targets || 0) +
+                Number(b.carries || 0);
+
+            return usageB - usageA;
+
+        });
+
+}
+
+
+/* =========================
+   PLAYER USAGE TABLE
+========================= */
+
+function renderPlayerUsage() {
+
+    const players =
+        getTeamPlayers();
+
+
+    if (!players.length) {
+
+        playerTableEl.innerHTML = `
+            <div class="message">
+                No player usage data available.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    let html = `
+
+        <table class="player-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Player
+                    </th>
+
+                    <th>
+                        Pos
+                    </th>
+
+                    <th>
+                        Pass Att
+                    </th>
+
+                    <th>
+                        Targets
+                    </th>
+
+                    <th>
+                        Target Share
+                    </th>
+
+                    <th>
+                        Carries
+                    </th>
+
+                    <th>
+                        Receptions
+                    </th>
+
+                    <th>
+                        RZ Targets
+                    </th>
+
+                    <th>
+                        RZ Target Share
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+    `;
+
+
+    players.forEach(player => {
+
+        const playerId =
+            player.player_id || "";
+
+
+        const playerName =
+            player.player_name ||
+            player.name ||
+            "Unknown Player";
+
+
+        const position =
+            player.position || "";
+
+
+        const attempts =
+            Number(player.attempts || 0);
+
+
+        const targets =
+            Number(player.targets || 0);
+
+
+        const targetShare =
+            Number(player.target_share || 0);
+
+
+        const carries =
+            Number(player.carries || 0);
+
+
+        const receptions =
+            Number(player.receptions || 0);
+
+
+        const rzTargets =
+            Number(
+                player.red_zone_targets || 0
+            );
+
+
+        const rzShare =
+            Number(
+                player.red_zone_target_share || 0
+            );
+
+
+        const safeTargetShare =
+            Math.min(
+                Math.max(targetShare, 0),
+                100
+            );
+
+
+        const safeRzShare =
+            Math.min(
+                Math.max(rzShare, 0),
+                100
+            );
+
+
+        html += `
+
+            <tr>
+
+                <td class="player-cell">
+
+                    <a
+                        class="player-link"
+                        href="player.html?id=${encodeURIComponent(playerId)}"
+                    >
+                        ${esc(playerName)}
+                    </a>
+
+                </td>
+
+
+                <td class="position">
+                    ${esc(position)}
+                </td>
+
+
+                <td class="value">
+                    ${formatNumber(attempts)}
+                </td>
+
+
+                <td class="value">
+                    ${formatNumber(targets)}
+                </td>
+
+
+                <td class="share-value">
+
+                    ${formatPercentage(targetShare)}
+
+                    <div class="share-bar">
+
+                        <span
+                            class="share-bar-fill"
+                            style="width:${safeTargetShare}%"
+                        ></span>
+
+                    </div>
+
+                </td>
+
+
+                <td class="value">
+                    ${formatNumber(carries)}
+                </td>
+
+
+                <td class="value">
+                    ${formatNumber(receptions)}
+                </td>
+
+
+                <td class="value">
+                    ${formatNumber(rzTargets)}
+                </td>
+
+
+                <td class="share-value">
+
+                    ${formatPercentage(rzShare)}
+
+                    <div class="share-bar">
+
+                        <span
+                            class="share-bar-fill"
+                            style="width:${safeRzShare}%"
+                        ></span>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+
+    html += `
+
+            </tbody>
+
+        </table>
+
+    `;
+
+
+    playerTableEl.innerHTML =
+        html;
+
+}
+
+
+/* =========================
+   WEEKLY TEAM USAGE
 ========================= */
 
 function renderWeekly(team) {
@@ -899,27 +1372,27 @@ function renderWeekly(team) {
             <tr>
 
                 <td>
-                    ${Number(row.week)}
+                    ${formatNumber(row.week)}
                 </td>
 
                 <td>
-                    ${Number(row.pass || 0).toLocaleString()}
+                    ${formatNumber(row.pass)}
                 </td>
 
                 <td>
-                    ${Number(row.runs || 0).toLocaleString()}
+                    ${formatNumber(row.runs)}
                 </td>
 
-                <td class="bar-cell">
+                <td>
 
-                    <span class="percentage">
+                    <span class="value">
                         ${formatPercentage(rate)}
                     </span>
 
-                    <div class="bar">
+                    <div class="share-bar">
 
                         <span
-                            class="bar-fill"
+                            class="share-bar-fill"
                             style="width:${Math.min(
                                 Math.max(rate * 100, 0),
                                 100
@@ -953,7 +1426,7 @@ function renderWeekly(team) {
 
 
 /* =========================
-   RENDER EVERYTHING
+   RENDER TEAM
 ========================= */
 
 function renderTeam() {
@@ -976,6 +1449,12 @@ function renderTeam() {
             </div>
         `;
 
+        playerTableEl.innerHTML = `
+            <div class="message">
+                No player data available.
+            </div>
+        `;
+
         weeklyTableEl.innerHTML = `
             <div class="message">
                 No team data available.
@@ -989,6 +1468,8 @@ function renderTeam() {
     renderSummary(team);
 
     renderDownSplits(team);
+
+    renderPlayerUsage();
 
     renderWeekly(team);
 
@@ -1020,17 +1501,31 @@ async function loadTeamData() {
 
     try {
 
-        const response =
-            await fetch(
+        const [
+            teamResponse,
+            playerResponse
+        ] = await Promise.all([
+
+            fetch(
                 "data/teams.json?ts=" +
                 Date.now(),
                 {
                     cache: "no-store"
                 }
-            );
+            ),
+
+            fetch(
+                "data/players.json?ts=" +
+                Date.now(),
+                {
+                    cache: "no-store"
+                }
+            )
+
+        ]);
 
 
-        if (!response.ok) {
+        if (!teamResponse.ok) {
 
             throw new Error(
                 "Unable to load team data."
@@ -1039,12 +1534,25 @@ async function loadTeamData() {
         }
 
 
-        DATA =
-            await response.json();
+        if (!playerResponse.ok) {
+
+            throw new Error(
+                "Unable to load player data."
+            );
+
+        }
+
+
+        TEAM_DATA =
+            await teamResponse.json();
+
+
+        PLAYER_DATA =
+            await playerResponse.json();
 
 
         seasonEl.textContent =
-            `${DATA.season} Season`;
+            `${TEAM_DATA.season} Season`;
 
 
         renderTeamDropdown();
@@ -1073,6 +1581,13 @@ async function loadTeamData() {
         downTableEl.innerHTML = `
             <div class="message">
                 Unable to load team data.
+            </div>
+        `;
+
+
+        playerTableEl.innerHTML = `
+            <div class="message">
+                Unable to load player data.
             </div>
         `;
 

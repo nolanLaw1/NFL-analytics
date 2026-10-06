@@ -2808,7 +2808,7 @@
         "player_id": "00-0038611",
         "name": "C.Rodriguez",
         "position": "RB",
-        "team": "",
+        "team": "JAX",
         "carries": 26
       },
       {
@@ -2822,7 +2822,7 @@
         "player_id": "00-0036893",
         "name": "N.Harris",
         "position": "RB",
-        "team": "",
+        "team": "NYG",
         "carries": 23
       },
       {
@@ -2878,7 +2878,7 @@
         "player_id": "00-0037525",
         "name": "J.Mason",
         "position": "RB",
-        "team": "",
+        "team": "MIN",
         "carries": 15
       },
       {
@@ -2941,7 +2941,7 @@
         "player_id": "00-0041096",
         "name": "K.Allen",
         "position": "RB",
-        "team": "",
+        "team": "WAS",
         "carries": 12
       },
       {
@@ -3004,7 +3004,7 @@
         "player_id": "00-0039874",
         "name": "J.Wright",
         "position": "RB",
-        "team": "",
+        "team": "MIA",
         "carries": 8
       },
       {
@@ -3018,7 +3018,7 @@
         "player_id": "00-0040886",
         "name": "N.Singleton",
         "position": "RB",
-        "team": "",
+        "team": "TEN",
         "carries": 7
       },
       {
@@ -3046,7 +3046,7 @@
         "player_id": "00-0038705",
         "name": "E.Demercado",
         "position": "RB",
-        "team": "",
+        "team": "DAL",
         "carries": 5
       },
       {
@@ -3074,7 +3074,7 @@
         "player_id": "00-0035594",
         "name": "T.Homer",
         "position": "RB",
-        "team": "",
+        "team": "PIT",
         "carries": 5
       },
       {
@@ -3095,7 +3095,7 @@
         "player_id": "00-0040177",
         "name": "J.James",
         "position": "RB",
-        "team": "",
+        "team": "SF",
         "carries": 4
       },
       {
@@ -3116,7 +3116,7 @@
         "player_id": "00-0039384",
         "name": "T.Tracy",
         "position": "RB",
-        "team": "",
+        "team": "NYG",
         "carries": 4
       },
       {
@@ -3151,7 +3151,7 @@
         "player_id": "00-0038951",
         "name": "S.Tucker",
         "position": "RB",
-        "team": "",
+        "team": "TB",
         "carries": 3
       },
       {
@@ -3172,7 +3172,7 @@
         "player_id": "00-0035567",
         "name": "C.Reynolds",
         "position": "RB",
-        "team": "",
+        "team": "WAS",
         "carries": 2
       },
       {
@@ -3221,7 +3221,7 @@
         "player_id": "00-0035662",
         "name": "M.Brown",
         "position": "WR",
-        "team": "",
+        "team": "PHI",
         "carries": 2
       },
       {
@@ -3270,7 +3270,7 @@
         "player_id": "00-0037157",
         "name": "Z.Knight",
         "position": "RB",
-        "team": "",
+        "team": "ARI",
         "carries": 2
       },
       {
@@ -3284,7 +3284,7 @@
         "player_id": "00-0041099",
         "name": "B.Brown",
         "position": "WR",
-        "team": "",
+        "team": "NO",
         "carries": 1
       },
       {
@@ -3319,7 +3319,7 @@
         "player_id": "00-0039471",
         "name": "F.Gore",
         "position": "RB",
-        "team": "",
+        "team": "BUF",
         "carries": 1
       },
       {
@@ -3368,7 +3368,7 @@
         "player_id": "00-0038409",
         "name": "L.Nichols",
         "position": "RB",
-        "team": "",
+        "team": "PIT",
         "carries": 1
       },
       {
@@ -8764,7 +8764,7 @@
         "player_id": "00-0038611",
         "name": "C.Rodriguez",
         "position": "RB",
-        "team": "",
+        "team": "JAX",
         "rushing_yards": 108
       },
       {
@@ -8785,7 +8785,7 @@
         "player_id": "00-0036893",
         "name": "N.Harris",
         "position": "RB",
-        "team": "",
+        "team": "NYG",
         "rushing_yards": 88
       },
       {
@@ -8848,7 +8848,7 @@
         "player_id": "00-0037525",
         "name": "J.Mason",
         "position": "RB",
-        "team": "",
+        "team": "MIN",
         "rushing_yards": 59
       },
       {
@@ -8918,7 +8918,7 @@
         "player_id": "00-0041096",
         "name": "K.Allen",
         "position": "RB",
-        "team": "",
+        "team": "WAS",
         "rushing_yards": 41
       },
       {
@@ -9023,7 +9023,7 @@
         "player_id": "00-0037157",
         "name": "Z.Knight",
         "position": "RB",
-        "team": "",
+        "team": "ARI",
         "rushing_yards": 24
       },
       {
@@ -9051,7 +9051,7 @@
         "player_id": "00-0039874",
         "name": "J.Wright",
         "position": "RB",
-        "team": "",
+        "team": "MIA",
         "rushing_yards": 17
       },
       {
@@ -9072,7 +9072,7 @@
         "player_id": "00-0039384",
         "name": "T.Tracy",
         "position": "RB",
-        "team": "",
+        "team": "NYG",
         "rushing_yards": 16
       },
       {
@@ -9086,21 +9086,21 @@
         "player_id": "00-0038705",
         "name": "E.Demercado",
         "position": "RB",
-        "team": "",
+        "team": "DAL",
         "rushing_yards": 15
       },
       {
         "player_id": "00-0040177",
         "name": "J.James",
         "position": "RB",
-        "team": "",
+        "team": "SF",
         "rushing_yards": 15
       },
       {
         "player_id": "00-0035594",
         "name": "T.Homer",
         "position": "RB",
-        "team": "",
+        "team": "PIT",
         "rushing_yards": 15
       },
       {
@@ -9135,7 +9135,7 @@
         "player_id": "00-0035662",
         "name": "M.Brown",
         "position": "WR",
-        "team": "",
+        "team": "PHI",
         "rushing_yards": 12
       },
       {
@@ -9149,7 +9149,7 @@
         "player_id": "00-0040886",
         "name": "N.Singleton",
         "position": "RB",
-        "team": "",
+        "team": "TEN",
         "rushing_yards": 12
       },
       {
@@ -9184,7 +9184,7 @@
         "player_id": "00-0038951",
         "name": "S.Tucker",
         "position": "RB",
-        "team": "",
+        "team": "TB",
         "rushing_yards": 10
       },
       {
@@ -9275,7 +9275,7 @@
         "player_id": "00-0035567",
         "name": "C.Reynolds",
         "position": "RB",
-        "team": "",
+        "team": "WAS",
         "rushing_yards": 4
       },
       {
@@ -9296,14 +9296,14 @@
         "player_id": "00-0041099",
         "name": "B.Brown",
         "position": "WR",
-        "team": "",
+        "team": "NO",
         "rushing_yards": 3
       },
       {
         "player_id": "00-0039471",
         "name": "F.Gore",
         "position": "RB",
-        "team": "",
+        "team": "BUF",
         "rushing_yards": 3
       },
       {
@@ -9408,7 +9408,7 @@
         "player_id": "00-0038409",
         "name": "L.Nichols",
         "position": "RB",
-        "team": "",
+        "team": "PIT",
         "rushing_yards": 0
       },
       {
@@ -9575,13 +9575,6 @@
         "receiving_tds": 2
       },
       {
-        "player_id": "00-0038542",
-        "name": "Bi.Robinson",
-        "position": "RB",
-        "team": "ATL",
-        "receiving_tds": 2
-      },
-      {
         "player_id": "00-0036555",
         "name": "C.Hubbard",
         "position": "RB",
@@ -9687,24 +9680,10 @@
         "receiving_tds": 2
       },
       {
-        "player_id": "00-0037840",
-        "name": "K.Williams",
-        "position": "RB",
-        "team": "LA",
-        "receiving_tds": 2
-      },
-      {
         "player_id": "00-0040667",
         "name": "M.Golden",
         "position": "WR",
         "team": "GB",
-        "receiving_tds": 2
-      },
-      {
-        "player_id": "00-0038559",
-        "name": "Mi.Wilson",
-        "position": "WR",
-        "team": "ARI",
         "receiving_tds": 2
       },
       {
@@ -9806,24 +9785,10 @@
         "receiving_tds": 2
       },
       {
-        "player_id": "00-0039793",
-        "name": "A.Barner",
-        "position": "TE",
-        "team": "SEA",
-        "receiving_tds": 1
-      },
-      {
         "player_id": "00-0032392",
         "name": "A.Hooper",
         "position": "TE",
         "team": "ATL",
-        "receiving_tds": 1
-      },
-      {
-        "player_id": "00-0038619",
-        "name": "A.Iosivas",
-        "position": "WR",
-        "team": "CIN",
         "receiving_tds": 1
       },
       {
@@ -9852,6 +9817,13 @@
         "name": "B.Whiteheart",
         "position": "TE",
         "team": "CLE",
+        "receiving_tds": 1
+      },
+      {
+        "player_id": "00-0038542",
+        "name": "Bi.Robinson",
+        "position": "RB",
+        "team": "ATL",
         "receiving_tds": 1
       },
       {
@@ -10058,13 +10030,6 @@
         "receiving_tds": 1
       },
       {
-        "player_id": "00-0037741",
-        "name": "J.Dotson",
-        "position": "WR",
-        "team": "ATL",
-        "receiving_tds": 1
-      },
-      {
         "player_id": "00-0041027",
         "name": "J.Love",
         "position": "RB",
@@ -10170,6 +10135,13 @@
         "receiving_tds": 1
       },
       {
+        "player_id": "00-0037840",
+        "name": "K.Williams",
+        "position": "RB",
+        "team": "LA",
+        "receiving_tds": 1
+      },
+      {
         "player_id": "00-0040735",
         "name": "L.Burden",
         "position": "WR",
@@ -10230,6 +10202,13 @@
         "name": "M.Nabers",
         "position": "WR",
         "team": "NYG",
+        "receiving_tds": 1
+      },
+      {
+        "player_id": "00-0038559",
+        "name": "Mi.Wilson",
+        "position": "WR",
+        "team": "ARI",
         "receiving_tds": 1
       },
       {
@@ -10359,6 +10338,13 @@
         "receiving_tds": 0
       },
       {
+        "player_id": "00-0039793",
+        "name": "A.Barner",
+        "position": "TE",
+        "team": "SEA",
+        "receiving_tds": 0
+      },
+      {
         "player_id": "00-0035676",
         "name": "A.Brown",
         "position": "WR",
@@ -10384,6 +10370,13 @@
         "name": "A.Ekeler",
         "position": "RB",
         "team": "WAS",
+        "receiving_tds": 0
+      },
+      {
+        "player_id": "00-0038619",
+        "name": "A.Iosivas",
+        "position": "WR",
+        "team": "CIN",
         "receiving_tds": 0
       },
       {
@@ -11063,6 +11056,13 @@
         "name": "J.Dobbins",
         "position": "RB",
         "team": "DEN",
+        "receiving_tds": 0
+      },
+      {
+        "player_id": "00-0037741",
+        "name": "J.Dotson",
+        "position": "WR",
+        "team": "ATL",
         "receiving_tds": 0
       },
       {
@@ -12044,7 +12044,7 @@
         "player_id": "00-0038611",
         "name": "C.Rodriguez",
         "position": "RB",
-        "team": "",
+        "team": "JAX",
         "rushing_tds": 2
       },
       {
@@ -12156,7 +12156,7 @@
         "player_id": "00-0037525",
         "name": "J.Mason",
         "position": "RB",
-        "team": "",
+        "team": "MIN",
         "rushing_tds": 1
       },
       {
@@ -12226,7 +12226,7 @@
         "player_id": "00-0038951",
         "name": "S.Tucker",
         "position": "RB",
-        "team": "",
+        "team": "TB",
         "rushing_tds": 1
       },
       {
@@ -12296,7 +12296,7 @@
         "player_id": "00-0041099",
         "name": "B.Brown",
         "position": "WR",
-        "team": "",
+        "team": "NO",
         "rushing_tds": 0
       },
       {
@@ -12345,7 +12345,7 @@
         "player_id": "00-0035567",
         "name": "C.Reynolds",
         "position": "RB",
-        "team": "",
+        "team": "WAS",
         "rushing_tds": 0
       },
       {
@@ -12429,7 +12429,7 @@
         "player_id": "00-0038705",
         "name": "E.Demercado",
         "position": "RB",
-        "team": "",
+        "team": "DAL",
         "rushing_tds": 0
       },
       {
@@ -12450,7 +12450,7 @@
         "player_id": "00-0039471",
         "name": "F.Gore",
         "position": "RB",
-        "team": "",
+        "team": "BUF",
         "rushing_tds": 0
       },
       {
@@ -12513,7 +12513,7 @@
         "player_id": "00-0040177",
         "name": "J.James",
         "position": "RB",
-        "team": "",
+        "team": "SF",
         "rushing_tds": 0
       },
       {
@@ -12555,14 +12555,14 @@
         "player_id": "00-0039874",
         "name": "J.Wright",
         "position": "RB",
-        "team": "",
+        "team": "MIA",
         "rushing_tds": 0
       },
       {
         "player_id": "00-0041096",
         "name": "K.Allen",
         "position": "RB",
-        "team": "",
+        "team": "WAS",
         "rushing_tds": 0
       },
       {
@@ -12618,7 +12618,7 @@
         "player_id": "00-0038409",
         "name": "L.Nichols",
         "position": "RB",
-        "team": "",
+        "team": "PIT",
         "rushing_tds": 0
       },
       {
@@ -12632,7 +12632,7 @@
         "player_id": "00-0035662",
         "name": "M.Brown",
         "position": "WR",
-        "team": "",
+        "team": "PHI",
         "rushing_tds": 0
       },
       {
@@ -12688,14 +12688,14 @@
         "player_id": "00-0036893",
         "name": "N.Harris",
         "position": "RB",
-        "team": "",
+        "team": "NYG",
         "rushing_tds": 0
       },
       {
         "player_id": "00-0040886",
         "name": "N.Singleton",
         "position": "RB",
-        "team": "",
+        "team": "TEN",
         "rushing_tds": 0
       },
       {
@@ -12842,7 +12842,7 @@
         "player_id": "00-0035594",
         "name": "T.Homer",
         "position": "RB",
-        "team": "",
+        "team": "PIT",
         "rushing_tds": 0
       },
       {
@@ -12877,7 +12877,7 @@
         "player_id": "00-0039384",
         "name": "T.Tracy",
         "position": "RB",
-        "team": "",
+        "team": "NYG",
         "rushing_tds": 0
       },
       {
@@ -12919,7 +12919,7 @@
         "player_id": "00-0037157",
         "name": "Z.Knight",
         "position": "RB",
-        "team": "",
+        "team": "ARI",
         "rushing_tds": 0
       }
     ]
@@ -15031,7 +15031,7 @@
         "player_id": "00-0036893",
         "name": "N.Harris",
         "position": "RB",
-        "team": "",
+        "team": "NYG",
         "red_zone_carries": 7
       },
       {
@@ -15059,7 +15059,7 @@
         "player_id": "00-0038611",
         "name": "C.Rodriguez",
         "position": "RB",
-        "team": "",
+        "team": "JAX",
         "red_zone_carries": 6
       },
       {
@@ -15136,14 +15136,14 @@
         "player_id": "00-0037525",
         "name": "J.Mason",
         "position": "RB",
-        "team": "",
+        "team": "MIN",
         "red_zone_carries": 4
       },
       {
         "player_id": "00-0041096",
         "name": "K.Allen",
         "position": "RB",
-        "team": "",
+        "team": "WAS",
         "red_zone_carries": 4
       },
       {
@@ -15220,14 +15220,14 @@
         "player_id": "00-0038951",
         "name": "S.Tucker",
         "position": "RB",
-        "team": "",
+        "team": "TB",
         "red_zone_carries": 3
       },
       {
         "player_id": "00-0035594",
         "name": "T.Homer",
         "position": "RB",
-        "team": "",
+        "team": "PIT",
         "red_zone_carries": 3
       },
       {
@@ -15241,7 +15241,7 @@
         "player_id": "00-0039874",
         "name": "J.Wright",
         "position": "RB",
-        "team": "",
+        "team": "MIA",
         "red_zone_carries": 2
       },
       {
@@ -15276,7 +15276,7 @@
         "player_id": "00-0040886",
         "name": "N.Singleton",
         "position": "RB",
-        "team": "",
+        "team": "TEN",
         "red_zone_carries": 2
       },
       {
@@ -15360,7 +15360,7 @@
         "player_id": "00-0038705",
         "name": "E.Demercado",
         "position": "RB",
-        "team": "",
+        "team": "DAL",
         "red_zone_carries": 1
       },
       {
@@ -15402,7 +15402,7 @@
         "player_id": "00-0038409",
         "name": "L.Nichols",
         "position": "RB",
-        "team": "",
+        "team": "PIT",
         "red_zone_carries": 1
       },
       {
@@ -16948,6 +16948,1499 @@
         "red_zone_receptions": 0
       }
     ],
+    "receiving_yards": [
+      {
+        "player_id": "00-0033288",
+        "name": "G.Kittle",
+        "position": "TE",
+        "team": "SF",
+        "red_zone_receiving_yards": 50
+      },
+      {
+        "player_id": "00-0036358",
+        "name": "C.Lamb",
+        "position": "WR",
+        "team": "DAL",
+        "red_zone_receiving_yards": 48
+      },
+      {
+        "player_id": "00-0036963",
+        "name": "A.St. Brown",
+        "position": "WR",
+        "team": "DET",
+        "red_zone_receiving_yards": 46
+      },
+      {
+        "player_id": "00-0039139",
+        "name": "J.Gibbs",
+        "position": "RB",
+        "team": "DET",
+        "red_zone_receiving_yards": 46
+      },
+      {
+        "player_id": "00-0037838",
+        "name": "I.Likely",
+        "position": "TE",
+        "team": "NYG",
+        "red_zone_receiving_yards": 42
+      },
+      {
+        "player_id": "00-0031588",
+        "name": "S.Diggs",
+        "position": "WR",
+        "team": "WAS",
+        "red_zone_receiving_yards": 42
+      },
+      {
+        "player_id": "00-0038041",
+        "name": "J.Ferguson",
+        "position": "TE",
+        "team": "DAL",
+        "red_zone_receiving_yards": 41
+      },
+      {
+        "player_id": "00-0039064",
+        "name": "Z.Flowers",
+        "position": "WR",
+        "team": "BAL",
+        "red_zone_receiving_yards": 39
+      },
+      {
+        "player_id": "00-0038543",
+        "name": "J.Smith-Njigba",
+        "position": "WR",
+        "team": "SEA",
+        "red_zone_receiving_yards": 38
+      },
+      {
+        "player_id": "00-0040122",
+        "name": "A.Jeanty",
+        "position": "RB",
+        "team": "LV",
+        "red_zone_receiving_yards": 36
+      },
+      {
+        "player_id": "00-0033280",
+        "name": "C.McCaffrey",
+        "position": "RB",
+        "team": "SF",
+        "red_zone_receiving_yards": 36
+      },
+      {
+        "player_id": "00-0035229",
+        "name": "T.Hockenson",
+        "position": "TE",
+        "team": "MIN",
+        "red_zone_receiving_yards": 33
+      },
+      {
+        "player_id": "00-0039793",
+        "name": "A.Barner",
+        "position": "TE",
+        "team": "SEA",
+        "red_zone_receiving_yards": 32
+      },
+      {
+        "player_id": "00-0040024",
+        "name": "D.Cooper",
+        "position": "WR",
+        "team": "PHI",
+        "red_zone_receiving_yards": 31
+      },
+      {
+        "player_id": "00-0039065",
+        "name": "S.LaPorta",
+        "position": "TE",
+        "team": "DET",
+        "red_zone_receiving_yards": 30
+      },
+      {
+        "player_id": "00-0040126",
+        "name": "C.Loveland",
+        "position": "TE",
+        "team": "CHI",
+        "red_zone_receiving_yards": 29
+      },
+      {
+        "player_id": "00-0038997",
+        "name": "J.Downs",
+        "position": "WR",
+        "team": "IND",
+        "red_zone_receiving_yards": 29
+      },
+      {
+        "player_id": "00-0032464",
+        "name": "K.Raymond",
+        "position": "WR",
+        "team": "CHI",
+        "red_zone_receiving_yards": 29
+      },
+      {
+        "player_id": "00-0035891",
+        "name": "C.White",
+        "position": "WR",
+        "team": "LV",
+        "red_zone_receiving_yards": 28
+      },
+      {
+        "player_id": "00-0036900",
+        "name": "J.Chase",
+        "position": "WR",
+        "team": "CIN",
+        "red_zone_receiving_yards": 28
+      },
+      {
+        "player_id": "00-0039067",
+        "name": "R.Rice",
+        "position": "WR",
+        "team": "KC",
+        "red_zone_receiving_yards": 28
+      },
+      {
+        "player_id": "00-0040124",
+        "name": "T.McMillan",
+        "position": "WR",
+        "team": "CAR",
+        "red_zone_receiving_yards": 28
+      },
+      {
+        "player_id": "00-0037239",
+        "name": "C.Olave",
+        "position": "WR",
+        "team": "NO",
+        "red_zone_receiving_yards": 27
+      },
+      {
+        "player_id": "00-0038124",
+        "name": "C.Watson",
+        "position": "WR",
+        "team": "GB",
+        "red_zone_receiving_yards": 27
+      },
+      {
+        "player_id": "00-0035719",
+        "name": "D.Samuel",
+        "position": "WR",
+        "team": "SF",
+        "red_zone_receiving_yards": 27
+      },
+      {
+        "player_id": "00-0031408",
+        "name": "M.Evans",
+        "position": "WR",
+        "team": "SF",
+        "red_zone_receiving_yards": 27
+      },
+      {
+        "player_id": "00-0035644",
+        "name": "N.Fant",
+        "position": "TE",
+        "team": "NO",
+        "red_zone_receiving_yards": 27
+      },
+      {
+        "player_id": "00-0040667",
+        "name": "M.Golden",
+        "position": "WR",
+        "team": "GB",
+        "red_zone_receiving_yards": 25
+      },
+      {
+        "player_id": "00-0037816",
+        "name": "R.Doubs",
+        "position": "WR",
+        "team": "NE",
+        "red_zone_receiving_yards": 25
+      },
+      {
+        "player_id": "00-0039338",
+        "name": "B.Bowers",
+        "position": "TE",
+        "team": "LV",
+        "red_zone_receiving_yards": 24
+      },
+      {
+        "player_id": "00-0030506",
+        "name": "T.Kelce",
+        "position": "TE",
+        "team": "KC",
+        "red_zone_receiving_yards": 24
+      },
+      {
+        "player_id": "00-0034960",
+        "name": "J.Meyers",
+        "position": "WR",
+        "team": "JAX",
+        "red_zone_receiving_yards": 23
+      },
+      {
+        "player_id": "00-0040170",
+        "name": "E.Ayomanor",
+        "position": "WR",
+        "team": "TEN",
+        "red_zone_receiving_yards": 22
+      },
+      {
+        "player_id": "00-0040735",
+        "name": "L.Burden",
+        "position": "WR",
+        "team": "CHI",
+        "red_zone_receiving_yards": 22
+      },
+      {
+        "player_id": "00-0038559",
+        "name": "Mi.Wilson",
+        "position": "WR",
+        "team": "ARI",
+        "red_zone_receiving_yards": 22
+      },
+      {
+        "player_id": "00-0036613",
+        "name": "J.Waddle",
+        "position": "WR",
+        "team": "DEN",
+        "red_zone_receiving_yards": 21
+      },
+      {
+        "player_id": "00-0037240",
+        "name": "J.Williams",
+        "position": "WR",
+        "team": "DET",
+        "red_zone_receiving_yards": 21
+      },
+      {
+        "player_id": "00-0031610",
+        "name": "D.Waller",
+        "position": "TE",
+        "team": "CAR",
+        "red_zone_receiving_yards": 19
+      },
+      {
+        "player_id": "00-0033881",
+        "name": "E.Engram",
+        "position": "TE",
+        "team": "DEN",
+        "red_zone_receiving_yards": 19
+      },
+      {
+        "player_id": "00-0039491",
+        "name": "J.Coker",
+        "position": "WR",
+        "team": "CAR",
+        "red_zone_receiving_yards": 19
+      },
+      {
+        "player_id": "00-0033307",
+        "name": "K.Bourne",
+        "position": "WR",
+        "team": "ARI",
+        "red_zone_receiving_yards": 19
+      },
+      {
+        "player_id": "00-0036554",
+        "name": "N.Collins",
+        "position": "WR",
+        "team": "HOU",
+        "red_zone_receiving_yards": 19
+      },
+      {
+        "player_id": "00-0040663",
+        "name": "H.Fannin",
+        "position": "TE",
+        "team": "CLE",
+        "red_zone_receiving_yards": 18
+      },
+      {
+        "player_id": "00-0040729",
+        "name": "J.Bech",
+        "position": "WR",
+        "team": "LV",
+        "red_zone_receiving_yards": 18
+      },
+      {
+        "player_id": "00-0036040",
+        "name": "J.Johnson",
+        "position": "TE",
+        "team": "NO",
+        "red_zone_receiving_yards": 18
+      },
+      {
+        "player_id": "00-0032951",
+        "name": "L.Treadwell",
+        "position": "WR",
+        "team": "IND",
+        "red_zone_receiving_yards": 18
+      },
+      {
+        "player_id": "00-0041040",
+        "name": "A.Williams",
+        "position": "WR",
+        "team": "WAS",
+        "red_zone_receiving_yards": 17
+      },
+      {
+        "player_id": "00-0038935",
+        "name": "B.Strange",
+        "position": "TE",
+        "team": "JAX",
+        "red_zone_receiving_yards": 17
+      },
+      {
+        "player_id": "00-0038710",
+        "name": "B.Whiteheart",
+        "position": "TE",
+        "team": "CLE",
+        "red_zone_receiving_yards": 17
+      },
+      {
+        "player_id": "00-0034351",
+        "name": "D.Goedert",
+        "position": "TE",
+        "team": "PHI",
+        "red_zone_receiving_yards": 17
+      },
+      {
+        "player_id": "00-0037840",
+        "name": "K.Williams",
+        "position": "RB",
+        "team": "LA",
+        "red_zone_receiving_yards": 17
+      },
+      {
+        "player_id": "00-0034829",
+        "name": "M.Gesicki",
+        "position": "TE",
+        "team": "CIN",
+        "red_zone_receiving_yards": 17
+      },
+      {
+        "player_id": "00-0038606",
+        "name": "P.Washington",
+        "position": "WR",
+        "team": "JAX",
+        "red_zone_receiving_yards": 17
+      },
+      {
+        "player_id": "00-0040128",
+        "name": "T.Warren",
+        "position": "TE",
+        "team": "IND",
+        "red_zone_receiving_yards": 17
+      },
+      {
+        "player_id": "00-0031381",
+        "name": "D.Adams",
+        "position": "WR",
+        "team": "LA",
+        "red_zone_receiving_yards": 16
+      },
+      {
+        "player_id": "00-0038933",
+        "name": "D.Kincaid",
+        "position": "TE",
+        "team": "BUF",
+        "red_zone_receiving_yards": 16
+      },
+      {
+        "player_id": "00-0034827",
+        "name": "D.Moore",
+        "position": "WR",
+        "team": "BUF",
+        "red_zone_receiving_yards": 16
+      },
+      {
+        "player_id": "00-0035250",
+        "name": "D.Singletary",
+        "position": "RB",
+        "team": "NYG",
+        "red_zone_receiving_yards": 16
+      },
+      {
+        "player_id": "00-0038393",
+        "name": "D.Wicks",
+        "position": "WR",
+        "team": "PHI",
+        "red_zone_receiving_yards": 16
+      },
+      {
+        "player_id": "00-0041100",
+        "name": "J.Cameron",
+        "position": "WR",
+        "team": "JAX",
+        "red_zone_receiving_yards": 16
+      },
+      {
+        "player_id": "00-0038134",
+        "name": "K.Walker",
+        "position": "RB",
+        "team": "KC",
+        "red_zone_receiving_yards": 16
+      },
+      {
+        "player_id": "00-0039890",
+        "name": "A.Mitchell",
+        "position": "WR",
+        "team": "NYJ",
+        "red_zone_receiving_yards": 15
+      },
+      {
+        "player_id": "00-0034348",
+        "name": "C.Sutton",
+        "position": "WR",
+        "team": "DEN",
+        "red_zone_receiving_yards": 15
+      },
+      {
+        "player_id": "00-0037228",
+        "name": "J.Warren",
+        "position": "RB",
+        "team": "PIT",
+        "red_zone_receiving_yards": 15
+      },
+      {
+        "player_id": "00-0038783",
+        "name": "N.Adkins",
+        "position": "TE",
+        "team": "DEN",
+        "red_zone_receiving_yards": 15
+      },
+      {
+        "player_id": "00-0040189",
+        "name": "O.Gadsden",
+        "position": "TE",
+        "team": "LAC",
+        "red_zone_receiving_yards": 15
+      },
+      {
+        "player_id": "00-0036322",
+        "name": "J.Jefferson",
+        "position": "WR",
+        "team": "MIN",
+        "red_zone_receiving_yards": 14
+      },
+      {
+        "player_id": "00-0037664",
+        "name": "A.Pierce",
+        "position": "WR",
+        "team": "IND",
+        "red_zone_receiving_yards": 13
+      },
+      {
+        "player_id": "00-0038129",
+        "name": "C.Otton",
+        "position": "TE",
+        "team": "TB",
+        "red_zone_receiving_yards": 13
+      },
+      {
+        "player_id": "00-0034383",
+        "name": "D.Schultz",
+        "position": "TE",
+        "team": "HOU",
+        "red_zone_receiving_yards": 12
+      },
+      {
+        "player_id": "00-0038728",
+        "name": "J.Wayne",
+        "position": "WR",
+        "team": "HOU",
+        "red_zone_receiving_yards": 12
+      },
+      {
+        "player_id": "00-0036997",
+        "name": "J.Williams",
+        "position": "RB",
+        "team": "DAL",
+        "red_zone_receiving_yards": 12
+      },
+      {
+        "player_id": "00-0041042",
+        "name": "M.Fields",
+        "position": "WR",
+        "team": "NYG",
+        "red_zone_receiving_yards": 12
+      },
+      {
+        "player_id": "00-0039849",
+        "name": "M.Harrison",
+        "position": "WR",
+        "team": "ARI",
+        "red_zone_receiving_yards": 12
+      },
+      {
+        "player_id": "00-0039337",
+        "name": "M.Nabers",
+        "position": "WR",
+        "team": "NYG",
+        "red_zone_receiving_yards": 12
+      },
+      {
+        "player_id": "00-0039739",
+        "name": "R.Wilson",
+        "position": "WR",
+        "team": "PIT",
+        "red_zone_receiving_yards": 12
+      },
+      {
+        "player_id": "00-0037085",
+        "name": "T.Badie",
+        "position": "RB",
+        "team": "DEN",
+        "red_zone_receiving_yards": 12
+      },
+      {
+        "player_id": "00-0037744",
+        "name": "T.McBride",
+        "position": "TE",
+        "team": "ARI",
+        "red_zone_receiving_yards": 12
+      },
+      {
+        "player_id": "00-0032775",
+        "name": "D.Robinson",
+        "position": "WR",
+        "team": "SF",
+        "red_zone_receiving_yards": 11
+      },
+      {
+        "player_id": "00-0035631",
+        "name": "D.Sample",
+        "position": "TE",
+        "team": "CIN",
+        "red_zone_receiving_yards": 11
+      },
+      {
+        "player_id": "00-0040870",
+        "name": "J.Lane",
+        "position": "WR",
+        "team": "BAL",
+        "red_zone_receiving_yards": 11
+      },
+      {
+        "player_id": "00-0036894",
+        "name": "P.Freiermuth",
+        "position": "TE",
+        "team": "PIT",
+        "red_zone_receiving_yards": 11
+      },
+      {
+        "player_id": "00-0040784",
+        "name": "Q.Judkins",
+        "position": "RB",
+        "team": "CLE",
+        "red_zone_receiving_yards": 11
+      },
+      {
+        "player_id": "00-0037742",
+        "name": "T.Burks",
+        "position": "WR",
+        "team": "WAS",
+        "red_zone_receiving_yards": 11
+      },
+      {
+        "player_id": "00-0040727",
+        "name": "T.Harris",
+        "position": "WR",
+        "team": "LAC",
+        "red_zone_receiving_yards": 11
+      },
+      {
+        "player_id": "00-0039847",
+        "name": "T.Johnson",
+        "position": "TE",
+        "team": "NYG",
+        "red_zone_receiving_yards": 11
+      },
+      {
+        "player_id": "00-0039811",
+        "name": "M.Lloyd",
+        "position": "RB",
+        "team": "GB",
+        "red_zone_receiving_yards": 10
+      },
+      {
+        "player_id": "00-0038104",
+        "name": "T.Thornton",
+        "position": "WR",
+        "team": "KC",
+        "red_zone_receiving_yards": 10
+      },
+      {
+        "player_id": "00-0030279",
+        "name": "K.Allen",
+        "position": "WR",
+        "team": "IND",
+        "red_zone_receiving_yards": 9
+      },
+      {
+        "player_id": "00-0041547",
+        "name": "K.Concepcion",
+        "position": "WR",
+        "team": "CLE",
+        "red_zone_receiving_yards": 9
+      },
+      {
+        "player_id": "00-0037261",
+        "name": "K.Shakir",
+        "position": "WR",
+        "team": "BUF",
+        "red_zone_receiving_yards": 9
+      },
+      {
+        "player_id": "00-0037801",
+        "name": "K.Turpin",
+        "position": "WR",
+        "team": "DAL",
+        "red_zone_receiving_yards": 9
+      },
+      {
+        "player_id": "00-0039391",
+        "name": "K.Vidal",
+        "position": "RB",
+        "team": "LAC",
+        "red_zone_receiving_yards": 9
+      },
+      {
+        "player_id": "00-0040187",
+        "name": "M.Evans",
+        "position": "TE",
+        "team": "CAR",
+        "red_zone_receiving_yards": 9
+      },
+      {
+        "player_id": "00-0033555",
+        "name": "M.Hollins",
+        "position": "WR",
+        "team": "NE",
+        "red_zone_receiving_yards": 9
+      },
+      {
+        "player_id": "00-0038839",
+        "name": "M.Tinsley",
+        "position": "WR",
+        "team": "CIN",
+        "red_zone_receiving_yards": 9
+      },
+      {
+        "player_id": "00-0038090",
+        "name": "S.Moore",
+        "position": "WR",
+        "team": "GB",
+        "red_zone_receiving_yards": 9
+      },
+      {
+        "player_id": "00-0030061",
+        "name": "Z.Ertz",
+        "position": "TE",
+        "team": "PHI",
+        "red_zone_receiving_yards": 9
+      },
+      {
+        "player_id": "00-0033293",
+        "name": "A.Jones",
+        "position": "RB",
+        "team": "MIN",
+        "red_zone_receiving_yards": 8
+      },
+      {
+        "player_id": "00-0041523",
+        "name": "C.Douglas",
+        "position": "WR",
+        "team": "MIA",
+        "red_zone_receiving_yards": 8
+      },
+      {
+        "player_id": "00-0036912",
+        "name": "D.Smith",
+        "position": "WR",
+        "team": "PHI",
+        "red_zone_receiving_yards": 8
+      },
+      {
+        "player_id": "00-0040584",
+        "name": "G.Helm",
+        "position": "TE",
+        "team": "TEN",
+        "red_zone_receiving_yards": 8
+      },
+      {
+        "player_id": "00-0039451",
+        "name": "I.Williams",
+        "position": "WR",
+        "team": "NYJ",
+        "red_zone_receiving_yards": 8
+      },
+      {
+        "player_id": "00-0037614",
+        "name": "J.Metchie",
+        "position": "WR",
+        "team": "CAR",
+        "red_zone_receiving_yards": 8
+      },
+      {
+        "player_id": "00-0036919",
+        "name": "K.Gainwell",
+        "position": "RB",
+        "team": "TB",
+        "red_zone_receiving_yards": 8
+      },
+      {
+        "player_id": "00-0039915",
+        "name": "L.McConkey",
+        "position": "WR",
+        "team": "LAC",
+        "red_zone_receiving_yards": 8
+      },
+      {
+        "player_id": "00-0037256",
+        "name": "R.White",
+        "position": "RB",
+        "team": "WAS",
+        "red_zone_receiving_yards": 8
+      },
+      {
+        "player_id": "00-0038996",
+        "name": "T.Kraft",
+        "position": "TE",
+        "team": "GB",
+        "red_zone_receiving_yards": 8
+      },
+      {
+        "player_id": "00-0039893",
+        "name": "Bri.Thomas",
+        "position": "WR",
+        "team": "JAX",
+        "red_zone_receiving_yards": 7
+      },
+      {
+        "player_id": "00-0036555",
+        "name": "C.Hubbard",
+        "position": "RB",
+        "team": "CAR",
+        "red_zone_receiving_yards": 7
+      },
+      {
+        "player_id": "00-0033908",
+        "name": "C.Kupp",
+        "position": "WR",
+        "team": "SEA",
+        "red_zone_receiving_yards": 7
+      },
+      {
+        "player_id": "00-0035685",
+        "name": "D.Montgomery",
+        "position": "RB",
+        "team": "HOU",
+        "red_zone_receiving_yards": 7
+      },
+      {
+        "player_id": "00-0040236",
+        "name": "K.Monangai",
+        "position": "RB",
+        "team": "CHI",
+        "red_zone_receiving_yards": 7
+      },
+      {
+        "player_id": "00-0039021",
+        "name": "R.Johnson",
+        "position": "RB",
+        "team": "CHI",
+        "red_zone_receiving_yards": 7
+      },
+      {
+        "player_id": "00-0039919",
+        "name": "R.Odunze",
+        "position": "WR",
+        "team": "CHI",
+        "red_zone_receiving_yards": 7
+      },
+      {
+        "player_id": "00-0036973",
+        "name": "T.Etienne",
+        "position": "RB",
+        "team": "NO",
+        "red_zone_receiving_yards": 7
+      },
+      {
+        "player_id": "00-0033110",
+        "name": "T.Higbee",
+        "position": "TE",
+        "team": "LA",
+        "red_zone_receiving_yards": 7
+      },
+      {
+        "player_id": "00-0038117",
+        "name": "W.Robinson",
+        "position": "WR",
+        "team": "TEN",
+        "red_zone_receiving_yards": 7
+      },
+      {
+        "player_id": "00-0039894",
+        "name": "X.Worthy",
+        "position": "WR",
+        "team": "KC",
+        "red_zone_receiving_yards": 7
+      },
+      {
+        "player_id": "00-0036244",
+        "name": "C.Parkinson",
+        "position": "TE",
+        "team": "LA",
+        "red_zone_receiving_yards": 6
+      },
+      {
+        "player_id": "00-0035689",
+        "name": "D.Knox",
+        "position": "TE",
+        "team": "BUF",
+        "red_zone_receiving_yards": 6
+      },
+      {
+        "player_id": "00-0035640",
+        "name": "D.Metcalf",
+        "position": "WR",
+        "team": "PIT",
+        "red_zone_receiving_yards": 6
+      },
+      {
+        "player_id": "00-0033885",
+        "name": "D.Njoku",
+        "position": "TE",
+        "team": "LAC",
+        "red_zone_receiving_yards": 6
+      },
+      {
+        "player_id": "00-0038608",
+        "name": "K.Boutte",
+        "position": "WR",
+        "team": "HOU",
+        "red_zone_receiving_yards": 6
+      },
+      {
+        "player_id": "00-0040648",
+        "name": "T.Horton",
+        "position": "WR",
+        "team": "SEA",
+        "red_zone_receiving_yards": 6
+      },
+      {
+        "player_id": "00-0041048",
+        "name": "T.Hurst",
+        "position": "WR",
+        "team": "TB",
+        "red_zone_receiving_yards": 6
+      },
+      {
+        "player_id": "00-0035659",
+        "name": "T.McLaurin",
+        "position": "WR",
+        "team": "WAS",
+        "red_zone_receiving_yards": 6
+      },
+      {
+        "player_id": "00-0032392",
+        "name": "A.Hooper",
+        "position": "TE",
+        "team": "ATL",
+        "red_zone_receiving_yards": 5
+      },
+      {
+        "player_id": "00-0039361",
+        "name": "B.Irving",
+        "position": "RB",
+        "team": "TB",
+        "red_zone_receiving_yards": 5
+      },
+      {
+        "player_id": "00-0040129",
+        "name": "E.Egbuka",
+        "position": "WR",
+        "team": "TB",
+        "red_zone_receiving_yards": 5
+      },
+      {
+        "player_id": "00-0041489",
+        "name": "G.Bernard",
+        "position": "WR",
+        "team": "PIT",
+        "red_zone_receiving_yards": 5
+      },
+      {
+        "player_id": "00-0037740",
+        "name": "G.Wilson",
+        "position": "WR",
+        "team": "NYJ",
+        "red_zone_receiving_yards": 5
+      },
+      {
+        "player_id": "00-0040669",
+        "name": "I.TeSlaa",
+        "position": "WR",
+        "team": "DET",
+        "red_zone_receiving_yards": 5
+      },
+      {
+        "player_id": "00-0041027",
+        "name": "J.Love",
+        "position": "RB",
+        "team": "ARI",
+        "red_zone_receiving_yards": 5
+      },
+      {
+        "player_id": "00-0040134",
+        "name": "P.Bryant",
+        "position": "WR",
+        "team": "DEN",
+        "red_zone_receiving_yards": 5
+      },
+      {
+        "player_id": "00-0040737",
+        "name": "T.Ferguson",
+        "position": "TE",
+        "team": "LA",
+        "red_zone_receiving_yards": 5
+      },
+      {
+        "player_id": "00-0039794",
+        "name": "B.Allen",
+        "position": "RB",
+        "team": "NYJ",
+        "red_zone_receiving_yards": 4
+      },
+      {
+        "player_id": "00-0040078",
+        "name": "B.Smith",
+        "position": "RB",
+        "team": "KC",
+        "red_zone_receiving_yards": 4
+      },
+      {
+        "player_id": "00-0032398",
+        "name": "C.Moore",
+        "position": "WR",
+        "team": "BAL",
+        "red_zone_receiving_yards": 4
+      },
+      {
+        "player_id": "00-0034798",
+        "name": "D.Smythe",
+        "position": "TE",
+        "team": "BAL",
+        "red_zone_receiving_yards": 4
+      },
+      {
+        "player_id": "00-0033090",
+        "name": "H.Henry",
+        "position": "TE",
+        "team": "NE",
+        "red_zone_receiving_yards": 4
+      },
+      {
+        "player_id": "00-0037805",
+        "name": "J.Ruckert",
+        "position": "TE",
+        "team": "NYJ",
+        "red_zone_receiving_yards": 4
+      },
+      {
+        "player_id": "00-0039901",
+        "name": "K.Coleman",
+        "position": "WR",
+        "team": "BUF",
+        "red_zone_receiving_yards": 4
+      },
+      {
+        "player_id": "00-0037005",
+        "name": "T.Tremble",
+        "position": "TE",
+        "team": "CAR",
+        "red_zone_receiving_yards": 4
+      },
+      {
+        "player_id": "00-0038597",
+        "name": "C.Brown",
+        "position": "RB",
+        "team": "CIN",
+        "red_zone_receiving_yards": 3
+      },
+      {
+        "player_id": "00-0033576",
+        "name": "E.Saubert",
+        "position": "TE",
+        "team": "SEA",
+        "red_zone_receiving_yards": 3
+      },
+      {
+        "player_id": "00-0037248",
+        "name": "J.Cook",
+        "position": "RB",
+        "team": "BUF",
+        "red_zone_receiving_yards": 3
+      },
+      {
+        "player_id": "00-0034753",
+        "name": "M.Andrews",
+        "position": "TE",
+        "team": "BAL",
+        "red_zone_receiving_yards": 3
+      },
+      {
+        "player_id": "00-0039066",
+        "name": "M.Mayer",
+        "position": "TE",
+        "team": "LV",
+        "red_zone_receiving_yards": 3
+      },
+      {
+        "player_id": "00-0039041",
+        "name": "E.Higgins",
+        "position": "TE",
+        "team": "ARI",
+        "red_zone_receiving_yards": 2
+      },
+      {
+        "player_id": "00-0041395",
+        "name": "E.Raridon",
+        "position": "TE",
+        "team": "NE",
+        "red_zone_receiving_yards": 2
+      },
+      {
+        "player_id": "00-0039299",
+        "name": "G.Holani",
+        "position": "RB",
+        "team": "SEA",
+        "red_zone_receiving_yards": 2
+      },
+      {
+        "player_id": "00-0040879",
+        "name": "M.Hibner",
+        "position": "TE",
+        "team": "BAL",
+        "red_zone_receiving_yards": 2
+      },
+      {
+        "player_id": "00-0036637",
+        "name": "N.Gray",
+        "position": "TE",
+        "team": "KC",
+        "red_zone_receiving_yards": 2
+      },
+      {
+        "player_id": "00-0040730",
+        "name": "R.Harvey",
+        "position": "RB",
+        "team": "DEN",
+        "red_zone_receiving_yards": 2
+      },
+      {
+        "player_id": "00-0033757",
+        "name": "R.Tonyan",
+        "position": "TE",
+        "team": "PIT",
+        "red_zone_receiving_yards": 2
+      },
+      {
+        "player_id": "00-0034613",
+        "name": "T.Hudson",
+        "position": "TE",
+        "team": "CIN",
+        "red_zone_receiving_yards": 2
+      },
+      {
+        "player_id": "00-0036275",
+        "name": "D.Swift",
+        "position": "RB",
+        "team": "CHI",
+        "red_zone_receiving_yards": 1
+      },
+      {
+        "player_id": "00-0039424",
+        "name": "D.Vele",
+        "position": "WR",
+        "team": "NO",
+        "red_zone_receiving_yards": 1
+      },
+      {
+        "player_id": "00-0034981",
+        "name": "F.Moreau",
+        "position": "TE",
+        "team": "HOU",
+        "red_zone_receiving_yards": 1
+      },
+      {
+        "player_id": "00-0040646",
+        "name": "J.Royals",
+        "position": "WR",
+        "team": "KC",
+        "red_zone_receiving_yards": 1
+      },
+      {
+        "player_id": "00-0036223",
+        "name": "J.Taylor",
+        "position": "RB",
+        "team": "IND",
+        "red_zone_receiving_yards": 1
+      },
+      {
+        "player_id": "00-0040277",
+        "name": "J.Walker",
+        "position": "WR",
+        "team": "CHI",
+        "red_zone_receiving_yards": 1
+      },
+      {
+        "player_id": "00-0038454",
+        "name": "K.Mitchell",
+        "position": "RB",
+        "team": "LAC",
+        "red_zone_receiving_yards": 1
+      },
+      {
+        "player_id": "00-0039880",
+        "name": "M.Washington",
+        "position": "WR",
+        "team": "MIA",
+        "red_zone_receiving_yards": 1
+      },
+      {
+        "player_id": "00-0039075",
+        "name": "P.Nacua",
+        "position": "WR",
+        "team": "LA",
+        "red_zone_receiving_yards": 1
+      },
+      {
+        "player_id": "00-0032104",
+        "name": "A.Abdullah",
+        "position": "RB",
+        "team": "JAX",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0038619",
+        "name": "A.Iosivas",
+        "position": "WR",
+        "team": "CIN",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0039738",
+        "name": "B.Corum",
+        "position": "RB",
+        "team": "LA",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0041067",
+        "name": "B.Lance",
+        "position": "WR",
+        "team": "NO",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0036862",
+        "name": "B.Skowronek",
+        "position": "WR",
+        "team": "PIT",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0040719",
+        "name": "B.Tuten",
+        "position": "RB",
+        "team": "JAX",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0036754",
+        "name": "B.Wright",
+        "position": "TE",
+        "team": "DET",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0036463",
+        "name": "C.Blair",
+        "position": "WR",
+        "team": "ATL",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0031484",
+        "name": "C.Manhertz",
+        "position": "TE",
+        "team": "NYG",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0041438",
+        "name": "C.Tate",
+        "position": "WR",
+        "team": "TEN",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0041037",
+        "name": "D.Boston",
+        "position": "WR",
+        "team": "CLE",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0036626",
+        "name": "D.Brown",
+        "position": "WR",
+        "team": "WAS",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0038621",
+        "name": "D.Douglas",
+        "position": "WR",
+        "team": "NE",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0038558",
+        "name": "D.Washington",
+        "position": "TE",
+        "team": "PIT",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0040563",
+        "name": "E.Chism",
+        "position": "WR",
+        "team": "NE",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0038797",
+        "name": "E.Wilson",
+        "position": "RB",
+        "team": "SEA",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0037247",
+        "name": "G.Pickens",
+        "position": "WR",
+        "team": "DAL",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0038994",
+        "name": "J.Addison",
+        "position": "WR",
+        "team": "MIN",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0036628",
+        "name": "J.Bates",
+        "position": "TE",
+        "team": "WAS",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0040242",
+        "name": "J.Croskey-Merritt",
+        "position": "RB",
+        "team": "WAS",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0037291",
+        "name": "J.Nailor",
+        "position": "WR",
+        "team": "LV",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0036988",
+        "name": "J.Palmer",
+        "position": "WR",
+        "team": "BUF",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0039146",
+        "name": "J.Reed",
+        "position": "WR",
+        "team": "GB",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0040265",
+        "name": "J.Reed",
+        "position": "WR",
+        "team": "CAR",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0033858",
+        "name": "J.Smith",
+        "position": "TE",
+        "team": "GB",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0041529",
+        "name": "K.Coleman",
+        "position": "WR",
+        "team": "MIA",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0040590",
+        "name": "K.Mumpfield",
+        "position": "WR",
+        "team": "LA",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0040238",
+        "name": "L.Allen",
+        "position": "RB",
+        "team": "JAX",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0041503",
+        "name": "N.Boerkircher",
+        "position": "TE",
+        "team": "JAX",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0036550",
+        "name": "R.Bateman",
+        "position": "WR",
+        "team": "BAL",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0039410",
+        "name": "R.Flournoy",
+        "position": "WR",
+        "team": "DAL",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0036875",
+        "name": "R.Stevenson",
+        "position": "RB",
+        "team": "NE",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0041558",
+        "name": "S.Roush",
+        "position": "TE",
+        "team": "CHI",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0032385",
+        "name": "S.Shepard",
+        "position": "WR",
+        "team": "NYJ",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0037263",
+        "name": "T.Allgeier",
+        "position": "RB",
+        "team": "ARI",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0039868",
+        "name": "T.Franklin",
+        "position": "WR",
+        "team": "DEN",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0036410",
+        "name": "T.Higgins",
+        "position": "WR",
+        "team": "CIN",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0035537",
+        "name": "T.Johnson",
+        "position": "RB",
+        "team": "BUF",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0040237",
+        "name": "T.Johnson",
+        "position": "WR",
+        "team": "TB",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0038563",
+        "name": "T.Tucker",
+        "position": "WR",
+        "team": "LV",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0038618",
+        "name": "X.Hutchinson",
+        "position": "WR",
+        "team": "HOU",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0039342",
+        "name": "X.Legette",
+        "position": "WR",
+        "team": "CAR",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0038359",
+        "name": "X.Smith",
+        "position": "WR",
+        "team": "LA",
+        "red_zone_receiving_yards": 0
+      },
+      {
+        "player_id": "00-0040583",
+        "name": "W.Marks",
+        "position": "RB",
+        "team": "HOU",
+        "red_zone_receiving_yards": -2
+      },
+      {
+        "player_id": "00-0033906",
+        "name": "A.Kamara",
+        "position": "RB",
+        "team": "NO",
+        "red_zone_receiving_yards": -4
+      },
+      {
+        "player_id": "00-0037252",
+        "name": "G.Dulcich",
+        "position": "TE",
+        "team": "MIA",
+        "red_zone_receiving_yards": -5
+      },
+      {
+        "player_id": "00-0039344",
+        "name": "J.Brooks",
+        "position": "RB",
+        "team": "CAR",
+        "red_zone_receiving_yards": -5
+      }
+    ],
     "receiving_tds": [
       {
         "player_id": "00-0036963",
@@ -17115,13 +18608,6 @@
         "name": "M.Golden",
         "position": "WR",
         "team": "GB",
-        "red_zone_receiving_tds": 2
-      },
-      {
-        "player_id": "00-0038559",
-        "name": "Mi.Wilson",
-        "position": "WR",
-        "team": "ARI",
         "red_zone_receiving_tds": 2
       },
       {
@@ -17535,6 +19021,13 @@
         "name": "M.Mayer",
         "position": "TE",
         "team": "LV",
+        "red_zone_receiving_tds": 1
+      },
+      {
+        "player_id": "00-0038559",
+        "name": "Mi.Wilson",
+        "position": "WR",
+        "team": "ARI",
         "red_zone_receiving_tds": 1
       },
       {
@@ -18441,6 +19934,617 @@
         "red_zone_receiving_tds": 0
       }
     ],
+    "rushing_yards": [
+      {
+        "player_id": "00-0032764",
+        "name": "D.Henry",
+        "position": "RB",
+        "team": "BAL",
+        "red_zone_rushing_yards": 83
+      },
+      {
+        "player_id": "00-0039139",
+        "name": "J.Gibbs",
+        "position": "RB",
+        "team": "DET",
+        "red_zone_rushing_yards": 62
+      },
+      {
+        "player_id": "00-0040666",
+        "name": "O.Hampton",
+        "position": "RB",
+        "team": "LAC",
+        "red_zone_rushing_yards": 52
+      },
+      {
+        "player_id": "00-0036275",
+        "name": "D.Swift",
+        "position": "RB",
+        "team": "CHI",
+        "red_zone_rushing_yards": 47
+      },
+      {
+        "player_id": "00-0037248",
+        "name": "J.Cook",
+        "position": "RB",
+        "team": "BUF",
+        "red_zone_rushing_yards": 46
+      },
+      {
+        "player_id": "00-0035261",
+        "name": "T.Pollard",
+        "position": "RB",
+        "team": "TEN",
+        "red_zone_rushing_yards": 46
+      },
+      {
+        "player_id": "00-0037840",
+        "name": "K.Williams",
+        "position": "RB",
+        "team": "LA",
+        "red_zone_rushing_yards": 42
+      },
+      {
+        "player_id": "00-0036555",
+        "name": "C.Hubbard",
+        "position": "RB",
+        "team": "CAR",
+        "red_zone_rushing_yards": 41
+      },
+      {
+        "player_id": "00-0038542",
+        "name": "Bi.Robinson",
+        "position": "RB",
+        "team": "ATL",
+        "red_zone_rushing_yards": 39
+      },
+      {
+        "player_id": "00-0036223",
+        "name": "J.Taylor",
+        "position": "RB",
+        "team": "IND",
+        "red_zone_rushing_yards": 38
+      },
+      {
+        "player_id": "00-0036997",
+        "name": "J.Williams",
+        "position": "RB",
+        "team": "DAL",
+        "red_zone_rushing_yards": 37
+      },
+      {
+        "player_id": "00-0040719",
+        "name": "B.Tuten",
+        "position": "RB",
+        "team": "JAX",
+        "red_zone_rushing_yards": 36
+      },
+      {
+        "player_id": "00-0038134",
+        "name": "K.Walker",
+        "position": "RB",
+        "team": "KC",
+        "red_zone_rushing_yards": 32
+      },
+      {
+        "player_id": "00-0041027",
+        "name": "J.Love",
+        "position": "RB",
+        "team": "ARI",
+        "red_zone_rushing_yards": 30
+      },
+      {
+        "player_id": "00-0039746",
+        "name": "W.Shipley",
+        "position": "RB",
+        "team": "PHI",
+        "red_zone_rushing_yards": 28
+      },
+      {
+        "player_id": "00-0040122",
+        "name": "A.Jeanty",
+        "position": "RB",
+        "team": "LV",
+        "red_zone_rushing_yards": 27
+      },
+      {
+        "player_id": "00-0040198",
+        "name": "O.Gordon",
+        "position": "RB",
+        "team": "MIA",
+        "red_zone_rushing_yards": 26
+      },
+      {
+        "player_id": "00-0039361",
+        "name": "B.Irving",
+        "position": "RB",
+        "team": "TB",
+        "red_zone_rushing_yards": 24
+      },
+      {
+        "player_id": "00-0039040",
+        "name": "D.Achane",
+        "position": "RB",
+        "team": "MIA",
+        "red_zone_rushing_yards": 22
+      },
+      {
+        "player_id": "00-0035685",
+        "name": "D.Montgomery",
+        "position": "RB",
+        "team": "HOU",
+        "red_zone_rushing_yards": 20
+      },
+      {
+        "player_id": "00-0038597",
+        "name": "C.Brown",
+        "position": "RB",
+        "team": "CIN",
+        "red_zone_rushing_yards": 18
+      },
+      {
+        "player_id": "00-0040715",
+        "name": "C.Skattebo",
+        "position": "RB",
+        "team": "NYG",
+        "red_zone_rushing_yards": 18
+      },
+      {
+        "player_id": "00-0038797",
+        "name": "E.Wilson",
+        "position": "RB",
+        "team": "SEA",
+        "red_zone_rushing_yards": 18
+      },
+      {
+        "player_id": "00-0037228",
+        "name": "J.Warren",
+        "position": "RB",
+        "team": "PIT",
+        "red_zone_rushing_yards": 18
+      },
+      {
+        "player_id": "00-0041052",
+        "name": "K.Black",
+        "position": "RB",
+        "team": "SF",
+        "red_zone_rushing_yards": 18
+      },
+      {
+        "player_id": "00-0038611",
+        "name": "C.Rodriguez",
+        "position": "RB",
+        "team": "JAX",
+        "red_zone_rushing_yards": 17
+      },
+      {
+        "player_id": "00-0040236",
+        "name": "K.Monangai",
+        "position": "RB",
+        "team": "CHI",
+        "red_zone_rushing_yards": 17
+      },
+      {
+        "player_id": "00-0039794",
+        "name": "B.Allen",
+        "position": "RB",
+        "team": "NYJ",
+        "red_zone_rushing_yards": 16
+      },
+      {
+        "player_id": "00-0039811",
+        "name": "M.Lloyd",
+        "position": "RB",
+        "team": "GB",
+        "red_zone_rushing_yards": 16
+      },
+      {
+        "player_id": "00-0036893",
+        "name": "N.Harris",
+        "position": "RB",
+        "team": "NYG",
+        "red_zone_rushing_yards": 16
+      },
+      {
+        "player_id": "00-0040583",
+        "name": "W.Marks",
+        "position": "RB",
+        "team": "HOU",
+        "red_zone_rushing_yards": 15
+      },
+      {
+        "player_id": "00-0039299",
+        "name": "G.Holani",
+        "position": "RB",
+        "team": "SEA",
+        "red_zone_rushing_yards": 14
+      },
+      {
+        "player_id": "00-0040784",
+        "name": "Q.Judkins",
+        "position": "RB",
+        "team": "CLE",
+        "red_zone_rushing_yards": 14
+      },
+      {
+        "player_id": "00-0036973",
+        "name": "T.Etienne",
+        "position": "RB",
+        "team": "NO",
+        "red_zone_rushing_yards": 14
+      },
+      {
+        "player_id": "00-0038120",
+        "name": "B.Hall",
+        "position": "RB",
+        "team": "NYJ",
+        "red_zone_rushing_yards": 13
+      },
+      {
+        "player_id": "00-0038685",
+        "name": "C.Brooks",
+        "position": "RB",
+        "team": "GB",
+        "red_zone_rushing_yards": 13
+      },
+      {
+        "player_id": "00-0039344",
+        "name": "J.Brooks",
+        "position": "RB",
+        "team": "CAR",
+        "red_zone_rushing_yards": 13
+      },
+      {
+        "player_id": "00-0041096",
+        "name": "K.Allen",
+        "position": "RB",
+        "team": "WAS",
+        "red_zone_rushing_yards": 13
+      },
+      {
+        "player_id": "00-0038555",
+        "name": "T.Bigsby",
+        "position": "RB",
+        "team": "PHI",
+        "red_zone_rushing_yards": 13
+      },
+      {
+        "player_id": "00-0034844",
+        "name": "S.Barkley",
+        "position": "RB",
+        "team": "PHI",
+        "red_zone_rushing_yards": 12
+      },
+      {
+        "player_id": "00-0039874",
+        "name": "J.Wright",
+        "position": "RB",
+        "team": "MIA",
+        "red_zone_rushing_yards": 11
+      },
+      {
+        "player_id": "00-0039021",
+        "name": "R.Johnson",
+        "position": "RB",
+        "team": "CHI",
+        "red_zone_rushing_yards": 11
+      },
+      {
+        "player_id": "00-0033293",
+        "name": "A.Jones",
+        "position": "RB",
+        "team": "MIN",
+        "red_zone_rushing_yards": 10
+      },
+      {
+        "player_id": "00-0037801",
+        "name": "K.Turpin",
+        "position": "WR",
+        "team": "DAL",
+        "red_zone_rushing_yards": 10
+      },
+      {
+        "player_id": "00-0033526",
+        "name": "S.Perine",
+        "position": "RB",
+        "team": "CIN",
+        "red_zone_rushing_yards": 10
+      },
+      {
+        "player_id": "00-0038951",
+        "name": "S.Tucker",
+        "position": "RB",
+        "team": "TB",
+        "red_zone_rushing_yards": 10
+      },
+      {
+        "player_id": "00-0040734",
+        "name": "T.Henderson",
+        "position": "RB",
+        "team": "NE",
+        "red_zone_rushing_yards": 10
+      },
+      {
+        "player_id": "00-0040242",
+        "name": "J.Croskey-Merritt",
+        "position": "RB",
+        "team": "WAS",
+        "red_zone_rushing_yards": 9
+      },
+      {
+        "player_id": "00-0037545",
+        "name": "R.Shaheed",
+        "position": "WR",
+        "team": "SEA",
+        "red_zone_rushing_yards": 9
+      },
+      {
+        "player_id": "00-0039032",
+        "name": "T.Spears",
+        "position": "RB",
+        "team": "TEN",
+        "red_zone_rushing_yards": 9
+      },
+      {
+        "player_id": "00-0033280",
+        "name": "C.McCaffrey",
+        "position": "RB",
+        "team": "SF",
+        "red_zone_rushing_yards": 8
+      },
+      {
+        "player_id": "00-0037256",
+        "name": "R.White",
+        "position": "RB",
+        "team": "WAS",
+        "red_zone_rushing_yards": 8
+      },
+      {
+        "player_id": "00-0041125",
+        "name": "S.McGowan",
+        "position": "RB",
+        "team": "IND",
+        "red_zone_rushing_yards": 8
+      },
+      {
+        "player_id": "00-0037746",
+        "name": "Br.Robinson",
+        "position": "RB",
+        "team": "ATL",
+        "red_zone_rushing_yards": 7
+      },
+      {
+        "player_id": "00-0038551",
+        "name": "K.Miller",
+        "position": "RB",
+        "team": "NO",
+        "red_zone_rushing_yards": 7
+      },
+      {
+        "player_id": "00-0040735",
+        "name": "L.Burden",
+        "position": "WR",
+        "team": "CHI",
+        "red_zone_rushing_yards": 7
+      },
+      {
+        "player_id": "00-0041496",
+        "name": "J.Coleman",
+        "position": "RB",
+        "team": "DEN",
+        "red_zone_rushing_yards": 6
+      },
+      {
+        "player_id": "00-0041512",
+        "name": "J.Price",
+        "position": "RB",
+        "team": "SEA",
+        "red_zone_rushing_yards": 6
+      },
+      {
+        "player_id": "00-0036919",
+        "name": "K.Gainwell",
+        "position": "RB",
+        "team": "TB",
+        "red_zone_rushing_yards": 6
+      },
+      {
+        "player_id": "00-0039391",
+        "name": "K.Vidal",
+        "position": "RB",
+        "team": "LAC",
+        "red_zone_rushing_yards": 6
+      },
+      {
+        "player_id": "00-0037557",
+        "name": "R.Rivers",
+        "position": "RB",
+        "team": "LA",
+        "red_zone_rushing_yards": 6
+      },
+      {
+        "player_id": "00-0041326",
+        "name": "C.Donaldson",
+        "position": "RB",
+        "team": "NO",
+        "red_zone_rushing_yards": 5
+      },
+      {
+        "player_id": "00-0041013",
+        "name": "E.Johnson",
+        "position": "RB",
+        "team": "KC",
+        "red_zone_rushing_yards": 4
+      },
+      {
+        "player_id": "00-0037525",
+        "name": "J.Mason",
+        "position": "RB",
+        "team": "MIN",
+        "red_zone_rushing_yards": 4
+      },
+      {
+        "player_id": "00-0039880",
+        "name": "M.Washington",
+        "position": "WR",
+        "team": "MIA",
+        "red_zone_rushing_yards": 4
+      },
+      {
+        "player_id": "00-0039364",
+        "name": "S.Vaki",
+        "position": "RB",
+        "team": "DET",
+        "red_zone_rushing_yards": 4
+      },
+      {
+        "player_id": "00-0035250",
+        "name": "D.Singletary",
+        "position": "RB",
+        "team": "NYG",
+        "red_zone_rushing_yards": 3
+      },
+      {
+        "player_id": "00-0038705",
+        "name": "E.Demercado",
+        "position": "RB",
+        "team": "DAL",
+        "red_zone_rushing_yards": 3
+      },
+      {
+        "player_id": "00-0036158",
+        "name": "J.Dobbins",
+        "position": "RB",
+        "team": "DEN",
+        "red_zone_rushing_yards": 3
+      },
+      {
+        "player_id": "00-0040142",
+        "name": "K.Johnson",
+        "position": "RB",
+        "team": "GB",
+        "red_zone_rushing_yards": 3
+      },
+      {
+        "player_id": "00-0041032",
+        "name": "K.Sadiq",
+        "position": "TE",
+        "team": "NYJ",
+        "red_zone_rushing_yards": 3
+      },
+      {
+        "player_id": "00-0036139",
+        "name": "R.Dowdle",
+        "position": "RB",
+        "team": "PIT",
+        "red_zone_rushing_yards": 3
+      },
+      {
+        "player_id": "00-0036875",
+        "name": "R.Stevenson",
+        "position": "RB",
+        "team": "NE",
+        "red_zone_rushing_yards": 3
+      },
+      {
+        "player_id": "00-0035537",
+        "name": "T.Johnson",
+        "position": "RB",
+        "team": "BUF",
+        "red_zone_rushing_yards": 3
+      },
+      {
+        "player_id": "00-0038996",
+        "name": "T.Kraft",
+        "position": "TE",
+        "team": "GB",
+        "red_zone_rushing_yards": 3
+      },
+      {
+        "player_id": "00-0039075",
+        "name": "P.Nacua",
+        "position": "WR",
+        "team": "LA",
+        "red_zone_rushing_yards": 2
+      },
+      {
+        "player_id": "00-0039793",
+        "name": "A.Barner",
+        "position": "TE",
+        "team": "SEA",
+        "red_zone_rushing_yards": 1
+      },
+      {
+        "player_id": "00-0036265",
+        "name": "A.Dillon",
+        "position": "RB",
+        "team": "CAR",
+        "red_zone_rushing_yards": 1
+      },
+      {
+        "player_id": "00-0038454",
+        "name": "K.Mitchell",
+        "position": "RB",
+        "team": "LAC",
+        "red_zone_rushing_yards": 1
+      },
+      {
+        "player_id": "00-0040886",
+        "name": "N.Singleton",
+        "position": "RB",
+        "team": "TEN",
+        "red_zone_rushing_yards": 1
+      },
+      {
+        "player_id": "00-0033906",
+        "name": "A.Kamara",
+        "position": "RB",
+        "team": "NO",
+        "red_zone_rushing_yards": 0
+      },
+      {
+        "player_id": "00-0038409",
+        "name": "L.Nichols",
+        "position": "RB",
+        "team": "PIT",
+        "red_zone_rushing_yards": 0
+      },
+      {
+        "player_id": "00-0037263",
+        "name": "T.Allgeier",
+        "position": "RB",
+        "team": "ARI",
+        "red_zone_rushing_yards": 0
+      },
+      {
+        "player_id": "00-0037085",
+        "name": "T.Badie",
+        "position": "RB",
+        "team": "DEN",
+        "red_zone_rushing_yards": 0
+      },
+      {
+        "player_id": "00-0037120",
+        "name": "T.Goodson",
+        "position": "RB",
+        "team": "DAL",
+        "red_zone_rushing_yards": -1
+      },
+      {
+        "player_id": "00-0035594",
+        "name": "T.Homer",
+        "position": "RB",
+        "team": "PIT",
+        "red_zone_rushing_yards": -1
+      },
+      {
+        "player_id": "00-0040878",
+        "name": "M.Washington",
+        "position": "RB",
+        "team": "LV",
+        "red_zone_rushing_yards": -2
+      }
+    ],
     "rushing_tds": [
       {
         "player_id": "00-0032764",
@@ -18614,7 +20718,7 @@
         "player_id": "00-0038611",
         "name": "C.Rodriguez",
         "position": "RB",
-        "team": "",
+        "team": "JAX",
         "red_zone_rushing_tds": 1
       },
       {
@@ -18656,7 +20760,7 @@
         "player_id": "00-0037525",
         "name": "J.Mason",
         "position": "RB",
-        "team": "",
+        "team": "MIN",
         "red_zone_rushing_tds": 1
       },
       {
@@ -18705,7 +20809,7 @@
         "player_id": "00-0038951",
         "name": "S.Tucker",
         "position": "RB",
-        "team": "",
+        "team": "TB",
         "red_zone_rushing_tds": 1
       },
       {
@@ -18775,7 +20879,7 @@
         "player_id": "00-0038705",
         "name": "E.Demercado",
         "position": "RB",
-        "team": "",
+        "team": "DAL",
         "red_zone_rushing_tds": 0
       },
       {
@@ -18824,14 +20928,14 @@
         "player_id": "00-0039874",
         "name": "J.Wright",
         "position": "RB",
-        "team": "",
+        "team": "MIA",
         "red_zone_rushing_tds": 0
       },
       {
         "player_id": "00-0041096",
         "name": "K.Allen",
         "position": "RB",
-        "team": "",
+        "team": "WAS",
         "red_zone_rushing_tds": 0
       },
       {
@@ -18880,7 +20984,7 @@
         "player_id": "00-0038409",
         "name": "L.Nichols",
         "position": "RB",
-        "team": "",
+        "team": "PIT",
         "red_zone_rushing_tds": 0
       },
       {
@@ -18908,14 +21012,14 @@
         "player_id": "00-0036893",
         "name": "N.Harris",
         "position": "RB",
-        "team": "",
+        "team": "NYG",
         "red_zone_rushing_tds": 0
       },
       {
         "player_id": "00-0040886",
         "name": "N.Singleton",
         "position": "RB",
-        "team": "",
+        "team": "TEN",
         "red_zone_rushing_tds": 0
       },
       {
@@ -19020,7 +21124,7 @@
         "player_id": "00-0035594",
         "name": "T.Homer",
         "position": "RB",
-        "team": "",
+        "team": "PIT",
         "red_zone_rushing_tds": 0
       },
       {

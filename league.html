@@ -4,11 +4,7 @@
 <head>
 
 <meta charset="utf-8">
-
-<meta
-    name="viewport"
-    content="width=device-width,initial-scale=1"
->
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>StackTheStats | League</title>
 
@@ -17,14 +13,14 @@
 <style>
 
 /* =========================
-   LEAGUE PAGE
+   PAGE HEADER
 ========================= */
 
-.league-header {
+.page-header {
     margin-bottom: 20px;
 }
 
-.league-header h1 {
+.page-header h1 {
     margin: 0 0 6px 0;
     font-size: 32px;
     font-weight: 800;
@@ -36,39 +32,37 @@
     font-size: 14px;
 }
 
-
 /* =========================
    NAVIGATION
 ========================= */
 
 .mainnav {
-    display: flex !important;
-    align-items: center !important;
-    gap: 8px !important;
-    flex-wrap: wrap !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
     border-bottom: 1px solid var(--line);
     margin-bottom: 20px;
 }
 
 .mainnav a {
-    color: var(--muted) !important;
-    background: transparent !important;
-    text-decoration: none !important;
-    font-weight: 700 !important;
-    padding: 12px 15px !important;
+    color: var(--muted);
+    background: transparent;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 12px 15px;
     transition: color .2s ease, border-color .2s ease;
 }
 
 .mainnav a:hover {
-    color: var(--text) !important;
-    text-decoration: none !important;
+    color: var(--text);
+    text-decoration: none;
 }
 
 .mainnav a.active {
-    color: var(--text) !important;
-    border-bottom: 2px solid var(--accent) !important;
+    color: var(--text);
+    border-bottom: 2px solid var(--accent);
 }
-
 
 /* =========================
    NORMAL / RED ZONE
@@ -102,7 +96,6 @@
     border-color: var(--accent);
 }
 
-
 /* =========================
    STAT SELECTOR
 ========================= */
@@ -123,11 +116,8 @@
 .stat-select {
     appearance: none;
     -webkit-appearance: none;
-
     min-width: 210px;
-
     padding: 12px 38px 12px 14px;
-
     color: var(--text);
 
     background:
@@ -137,10 +127,8 @@
 
     border: 1px solid var(--line);
     border-radius: 10px;
-
     font-size: 14px;
     font-weight: 600;
-
     cursor: pointer;
 }
 
@@ -150,9 +138,8 @@
     box-shadow: 0 0 0 3px rgba(88,166,255,.10);
 }
 
-
 /* =========================
-   LEADERBOARD PANEL
+   LEADERBOARD
 ========================= */
 
 .leaderboard {
@@ -166,7 +153,6 @@
     border: 1px solid var(--line);
     border-radius: 14px;
     overflow: hidden;
-
     box-shadow: 0 8px 28px rgba(0,0,0,.16);
 }
 
@@ -190,7 +176,6 @@
     color: var(--muted);
     font-size: 13px;
 }
-
 
 /* =========================
    TABLE
@@ -244,7 +229,6 @@
     background: rgba(88,166,255,.035);
 }
 
-
 /* =========================
    RANK
 ========================= */
@@ -254,7 +238,6 @@
     color: var(--muted);
     font-weight: 700;
 }
-
 
 /* =========================
    PLAYER
@@ -280,9 +263,8 @@
     margin-top: 4px;
 }
 
-
 /* =========================
-   STAT VALUE
+   VALUES
 ========================= */
 
 .value {
@@ -297,7 +279,6 @@
     white-space: nowrap;
 }
 
-
 /* =========================
    SHARE BAR
 ========================= */
@@ -305,14 +286,10 @@
 .share-bar {
     width: 120px;
     height: 5px;
-
     margin-top: 7px;
     margin-left: auto;
-
     background: #252f3b;
-
     border-radius: 99px;
-
     overflow: hidden;
 }
 
@@ -330,20 +307,14 @@
     border-radius: 99px;
 }
 
-
 /* =========================
-   EMPTY / ERROR
+   MESSAGE / FOOTER
 ========================= */
 
 .message {
     padding: 22px;
     color: var(--muted);
 }
-
-
-/* =========================
-   FOOTER
-========================= */
 
 .footer {
     color: var(--muted);
@@ -352,14 +323,13 @@
     font-size: 13px;
 }
 
-
 /* =========================
    MOBILE
 ========================= */
 
 @media (max-width: 650px) {
 
-    .league-header h1 {
+    .page-header h1 {
         font-size: 27px;
     }
 
@@ -402,107 +372,53 @@
 
 </head>
 
-
 <body>
 
 <div class="site">
 
+    <div class="page-header">
 
-    <!-- =========================
-         HEADER
-    ========================= -->
+        <h1>StackTheStats</h1>
 
-    <div class="league-header">
-
-        <h1>
-            StackTheStats
-        </h1>
-
-        <div
-            class="season"
-            id="season"
-        >
+        <div class="season" id="season">
             Loading season...
         </div>
 
     </div>
 
-
-    <!-- =========================
-         MAIN NAV
-    ========================= -->
-
     <nav class="mainnav">
 
-        <a href="index.html">
-            HOME
-        </a>
+        <a href="index.html">HOME</a>
 
-        <a
-            class="active"
-            href="league.html"
-        >
-            LEAGUE
-        </a>
+        <a class="active" href="league.html">LEAGUE</a>
 
-        <a href="players.html">
-            PLAYERS
-        </a>
+        <a href="players.html">PLAYERS</a>
 
-        <a href="teams.html">
-            TEAMS
-        </a>
+        <a href="teams.html">TEAMS</a>
 
     </nav>
 
-
-    <!-- =========================
-         SECTION TOGGLE
-    ========================= -->
-
     <div class="section-toggle">
 
-        <button
-            class="active"
-            data-section="normal"
-        >
+        <button class="active" data-section="normal">
             NORMAL
         </button>
 
-        <button
-            data-section="red_zone"
-        >
+        <button data-section="red_zone">
             RED ZONE
         </button>
 
     </div>
 
-
-    <!-- =========================
-         STAT SELECTOR
-    ========================= -->
-
     <div class="stat-controls">
 
-        <label
-            class="stat-label"
-            for="statSelect"
-        >
+        <label class="stat-label" for="statSelect">
             STAT
         </label>
 
-        <select
-            id="statSelect"
-            class="stat-select"
-        >
-        </select>
+        <select id="statSelect" class="stat-select"></select>
 
     </div>
-
-
-    <!-- =========================
-         LEADERBOARD
-    ========================= -->
 
     <section class="leaderboard">
 
@@ -512,20 +428,13 @@
                 Targets
             </h2>
 
-            <div
-                class="leaderboard-note"
-                id="note"
-            >
+            <div class="leaderboard-note" id="note">
                 Top 25 league leaders
             </div>
 
         </div>
 
-
-        <div
-            class="table-wrap"
-            id="table"
-        >
+        <div class="table-wrap" id="table">
 
             <div class="message">
                 Loading league data...
@@ -535,32 +444,19 @@
 
     </section>
 
-
     <div class="footer">
         StackTheStats · NFL offensive usage · regular season
     </div>
 
-
 </div>
 
-
 <script>
-
-
-/* =========================
-   STATE
-========================= */
 
 let DATA = null;
 
 let section = "normal";
 
 let metric = "targets";
-
-
-/* =========================
-   ELEMENTS
-========================= */
 
 const seasonEl =
     document.getElementById("season");
@@ -576,11 +472,6 @@ const noteEl =
 
 const tableEl =
     document.getElementById("table");
-
-
-/* =========================
-   METRICS
-========================= */
 
 const configs = {
 
@@ -630,7 +521,6 @@ const configs = {
 
     ],
 
-
     red_zone: [
 
         {
@@ -668,11 +558,6 @@ const configs = {
 
 };
 
-
-/* =========================
-   ESCAPE HTML
-========================= */
-
 function esc(value) {
 
     return String(value ?? "")
@@ -689,15 +574,9 @@ function esc(value) {
 
 }
 
-
-/* =========================
-   FORMAT NUMBER
-========================= */
-
 function formatNumber(value) {
 
-    const number =
-        Number(value);
+    const number = Number(value);
 
     if (!Number.isFinite(number)) {
         return "0";
@@ -707,15 +586,9 @@ function formatNumber(value) {
 
 }
 
-
-/* =========================
-   FORMAT PERCENTAGE
-========================= */
-
 function formatPercentage(value) {
 
-    let number =
-        Number(value);
+    let number = Number(value);
 
     if (!Number.isFinite(number)) {
         return "0.0%";
@@ -729,28 +602,19 @@ function formatPercentage(value) {
 
 }
 
-
-/* =========================
-   RENDER DROPDOWN
-========================= */
-
 function renderStatDropdown() {
 
     statSelect.innerHTML = "";
 
-    const options =
-        configs[section];
+    const options = configs[section];
 
     options.forEach(option => {
 
         const element =
             document.createElement("option");
 
-        element.value =
-            option.key;
-
-        element.textContent =
-            option.label;
+        element.value = option.key;
+        element.textContent = option.label;
 
         if (option.key === metric) {
             element.selected = true;
@@ -762,40 +626,29 @@ function renderStatDropdown() {
 
 }
 
-
-/* =========================
-   RENDER TABLE
-========================= */
-
 function renderTable() {
 
     if (!DATA) {
         return;
     }
 
-
     const config =
         configs[section].find(
             item => item.key === metric
         );
 
-
     if (!config) {
         return;
     }
 
-
     const rows =
         DATA?.[section]?.[metric] || [];
-
 
     const topRows =
         rows.slice(0, 25);
 
-
     titleEl.textContent =
         config.label;
-
 
     if (
         section === "red_zone" &&
@@ -812,7 +665,6 @@ function renderTable() {
 
     }
 
-
     if (!topRows.length) {
 
         tableEl.innerHTML = `
@@ -822,8 +674,8 @@ function renderTable() {
         `;
 
         return;
-    }
 
+    }
 
     let html = `
 
@@ -833,25 +685,15 @@ function renderTable() {
 
                 <tr>
 
-                    <th>
-                        Rank
-                    </th>
+                    <th>Rank</th>
 
-                    <th>
-                        Player
-                    </th>
+                    <th>Player</th>
 
-                    <th>
-                        ${esc(config.label)}
-                    </th>
+                    <th>${esc(config.label)}</th>
 
                     ${
                         config.share
-                        ? `
-                            <th>
-                                RZ Target Share
-                            </th>
-                          `
+                        ? `<th>RZ Target Share</th>`
                         : ""
                     }
 
@@ -862,161 +704,134 @@ function renderTable() {
             <tbody>
     `;
 
+    topRows.forEach((row, index) => {
 
-    topRows.forEach(
-        (row, index) => {
+        const playerId =
+            row.player_id || "";
 
-            const playerId =
-                row.player_id || "";
+        const playerName =
+            row.name ||
+            "Unknown Player";
 
+        const position =
+            row.position ||
+            "";
 
-            const playerName =
-                row.name ||
-                "Unknown Player";
+        const team =
+            row.team ||
+            "";
 
+        const value =
+            row[config.field] ?? 0;
 
-            const position =
-                row.position ||
-                "";
+        let shareColumn = "";
 
+        if (config.share) {
 
-            const team =
-                row.team ||
-                "";
+            const targets =
+                Number(
+                    row.red_zone_targets || 0
+                );
 
+            const teamTargets =
+                Number(
+                    row.team_rz_targets || 0
+                );
 
-            const value =
-                row[config.field] ?? 0;
+            const percentage =
+                formatPercentage(
+                    row.rz_target_share
+                );
 
+            let barWidth = 0;
 
-            let shareColumn = "";
+            if (
+                Number.isFinite(
+                    Number(row.rz_target_share)
+                )
+            ) {
 
+                barWidth =
+                    Number(row.rz_target_share);
 
-            if (config.share) {
-
-                const targets =
-                    Number(
-                        row.red_zone_targets || 0
-                    );
-
-
-                const teamTargets =
-                    Number(
-                        row.team_rz_targets || 0
-                    );
-
-
-                const percentage =
-                    formatPercentage(
-                        row.rz_target_share
-                    );
-
-
-                let barWidth = 0;
-
-
-                if (
-                    Number.isFinite(
-                        Number(row.rz_target_share)
-                    )
-                ) {
-
-                    barWidth =
-                        Number(
-                            row.rz_target_share
-                        );
-
-                    if (barWidth <= 1) {
-                        barWidth *= 100;
-                    }
-
-                    barWidth =
-                        Math.min(
-                            Math.max(
-                                barWidth,
-                                0
-                            ),
-                            100
-                        );
-
+                if (barWidth <= 1) {
+                    barWidth *= 100;
                 }
 
-
-                shareColumn = `
-
-                    <td class="share-value">
-
-                        ${targets}/${teamTargets}
-                        (${percentage})
-
-                        <div class="share-bar">
-
-                            <span
-                                class="share-bar-fill"
-                                style="width:${barWidth}%"
-                            ></span>
-
-                        </div>
-
-                    </td>
-
-                `;
+                barWidth =
+                    Math.min(
+                        Math.max(barWidth, 0),
+                        100
+                    );
 
             }
 
+            shareColumn = `
 
-            html += `
+                <td class="share-value">
 
-                <tr>
+                    ${targets}/${teamTargets}
+                    (${percentage})
 
-                    <td class="rank">
-                        ${index + 1}
-                    </td>
+                    <div class="share-bar">
 
+                        <span
+                            class="share-bar-fill"
+                            style="width:${barWidth}%"
+                        ></span>
 
-                    <td class="player-cell">
+                    </div>
 
-                        <a
-                            class="player-link"
-                            href="player.html?id=${encodeURIComponent(playerId)}"
-                        >
-                            ${esc(playerName)}
-                        </a>
-
-
-                        <div class="player-meta">
-
-                            ${esc(position)}
-
-                            ${
-                                position && team
-                                    ? " • "
-                                    : ""
-                            }
-
-                            ${esc(team)}
-
-                        </div>
-
-                    </td>
-
-
-                    <td class="value">
-
-                        ${formatNumber(value)}
-
-                    </td>
-
-
-                    ${shareColumn}
-
-                </tr>
+                </td>
 
             `;
 
         }
-    );
 
+        html += `
+
+            <tr>
+
+                <td class="rank">
+                    ${index + 1}
+                </td>
+
+                <td class="player-cell">
+
+                    <a
+                        class="player-link"
+                        href="player.html?id=${encodeURIComponent(playerId)}"
+                    >
+                        ${esc(playerName)}
+                    </a>
+
+                    <div class="player-meta">
+
+                        ${esc(position)}
+
+                        ${
+                            position && team
+                                ? " • "
+                                : ""
+                        }
+
+                        ${esc(team)}
+
+                    </div>
+
+                </td>
+
+                <td class="value">
+                    ${formatNumber(value)}
+                </td>
+
+                ${shareColumn}
+
+            </tr>
+
+        `;
+
+    });
 
     html += `
 
@@ -1026,82 +841,45 @@ function renderTable() {
 
     `;
 
-
-    tableEl.innerHTML =
-        html;
+    tableEl.innerHTML = html;
 
 }
 
-
-/* =========================
-   SECTION BUTTONS
-========================= */
-
 document
-    .querySelectorAll(
-        ".section-toggle button"
-    )
+    .querySelectorAll(".section-toggle button")
     .forEach(button => {
 
-        button.addEventListener(
-            "click",
-            () => {
+        button.addEventListener("click", () => {
 
-                document
-                    .querySelectorAll(
-                        ".section-toggle button"
-                    )
-                    .forEach(
-                        item =>
-                            item.classList.remove(
-                                "active"
-                            )
-                    );
-
-
-                button.classList.add(
-                    "active"
+            document
+                .querySelectorAll(".section-toggle button")
+                .forEach(item =>
+                    item.classList.remove("active")
                 );
 
+            button.classList.add("active");
 
-                section =
-                    button.dataset.section;
+            section =
+                button.dataset.section;
 
+            metric =
+                configs[section][0].key;
 
-                metric =
-                    configs[section][0].key;
+            renderStatDropdown();
+            renderTable();
 
-
-                renderStatDropdown();
-
-                renderTable();
-
-            }
-        );
+        });
 
     });
 
+statSelect.addEventListener("change", () => {
 
-/* =========================
-   STAT DROPDOWN
-========================= */
+    metric =
+        statSelect.value;
 
-statSelect.addEventListener(
-    "change",
-    () => {
+    renderTable();
 
-        metric =
-            statSelect.value;
-
-        renderTable();
-
-    }
-);
-
-
-/* =========================
-   LOAD DATA
-========================= */
+});
 
 async function loadLeagueData() {
 
@@ -1116,7 +894,6 @@ async function loadLeagueData() {
                 }
             );
 
-
         if (!response.ok) {
 
             throw new Error(
@@ -1125,37 +902,28 @@ async function loadLeagueData() {
 
         }
 
-
         DATA =
             await response.json();
-
 
         seasonEl.textContent =
             `${DATA.season} Season`;
 
-
         renderStatDropdown();
-
         renderTable();
 
     }
-
 
     catch (error) {
 
         console.error(error);
 
-
         seasonEl.textContent =
             "Season unavailable";
-
 
         tableEl.innerHTML = `
 
             <div class="message">
-
                 Unable to load league data.
-
             </div>
 
         `;
@@ -1163,11 +931,6 @@ async function loadLeagueData() {
     }
 
 }
-
-
-/* =========================
-   START
-========================= */
 
 loadLeagueData();
 

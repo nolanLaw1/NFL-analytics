@@ -265,9 +265,7 @@
 ========================= */
 
 let DATA = null;
-
 let section = "normal";
-
 let metric = "targets";
 
 
@@ -343,33 +341,45 @@ const normalMetrics = {
 
 /* =========================
    RED ZONE METRICS
+   IMPORTANT:
+   These keys match league.json
 ========================= */
 
 const redzoneMetrics = {
 
     targets: {
         label: "Red Zone Targets",
-        key: "targets"
+        key: "red_zone_targets"
     },
 
     receptions: {
         label: "Red Zone Receptions",
-        key: "receptions"
+        key: "red_zone_receptions"
     },
 
-    carries: {
-        label: "Red Zone Carries",
-        key: "carries"
+    receiving_yards: {
+        label: "Red Zone Receiving Yards",
+        key: "red_zone_receiving_yards"
     },
 
     receiving_tds: {
         label: "Red Zone Receiving TDs",
-        key: "receiving_tds"
+        key: "red_zone_receiving_touchdowns"
+    },
+
+    carries: {
+        label: "Red Zone Carries",
+        key: "red_zone_carries"
+    },
+
+    rushing_yards: {
+        label: "Red Zone Rushing Yards",
+        key: "red_zone_rushing_yards"
     },
 
     rushing_tds: {
         label: "Red Zone Rushing TDs",
-        key: "rushing_tds"
+        key: "red_zone_rushing_tds"
     }
 
 };
@@ -473,6 +483,7 @@ function updateMetricOptions() {
     }
 
     metricSelect.value = metric;
+
 }
 
 
@@ -498,23 +509,15 @@ function getRows() {
         return metricData;
     }
 
-    if (metricData &&
-        Array.isArray(metricData.players)) {
-
+    if (
+        metricData &&
+        Array.isArray(metricData.players)
+    ) {
         return metricData.players;
     }
 
-    if (Array.isArray(source.players)) {
-
-        return source.players;
-    }
-
-    if (Array.isArray(source.targets)) {
-
-        return source.targets;
-    }
-
     return [];
+
 }
 
 
@@ -564,7 +567,9 @@ function render() {
         `;
 
         return;
+
     }
+
 
     let html = `
         <table>
@@ -580,8 +585,8 @@ function render() {
                     <th>Position</th>
 
                     <th>${metricInfo.label}</th>
-
     `;
+
 
     if (
         section === "redzone" &&
@@ -593,6 +598,7 @@ function render() {
         `;
 
     }
+
 
     html += `
                 </tr>
@@ -614,6 +620,7 @@ function render() {
         const name =
             row.name ||
             row.display_name ||
+            row.player_name ||
             "Unknown";
 
         const position =
@@ -626,6 +633,10 @@ function render() {
             );
 
 
+        /* =========================
+           RED ZONE TARGET SHARE
+        ========================= */
+
         let shareHtml = "";
 
         if (
@@ -635,6 +646,7 @@ function render() {
 
             const teamTargets =
                 Number(
+                    row.team_rz_targets ||
                     row.teamTargets ||
                     row.team_targets ||
                     0
@@ -698,7 +710,7 @@ function render() {
                 </td>
 
                 <td>
-                    ${value}
+                    ${value.toLocaleString()}
                 </td>
 
                 ${shareHtml}
@@ -733,13 +745,9 @@ normalBtn.addEventListener(
 
         section = "normal";
 
-        normalBtn.classList.add(
-            "active"
-        );
+        normalBtn.classList.add("active");
 
-        redzoneBtn.classList.remove(
-            "active"
-        );
+        redzoneBtn.classList.remove("active");
 
         metric = "targets";
 
@@ -761,13 +769,9 @@ redzoneBtn.addEventListener(
 
         section = "redzone";
 
-        redzoneBtn.classList.add(
-            "active"
-        );
+        redzoneBtn.classList.add("active");
 
-        normalBtn.classList.remove(
-            "active"
-        );
+        normalBtn.classList.remove("active");
 
         metric = "targets";
 

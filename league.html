@@ -10,10 +10,9 @@
     content="width=device-width,initial-scale=1"
 >
 
-<title>NFL Analytics — League</title>
+<title>StackTheStats | League</title>
 
 <link rel="stylesheet" href="styles.css">
-
 
 <style>
 
@@ -28,6 +27,8 @@
 .league-header h1 {
     margin: 0 0 6px 0;
     font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -.7px;
 }
 
 .season {
@@ -45,6 +46,8 @@
     align-items: center !important;
     gap: 8px !important;
     flex-wrap: wrap !important;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 20px;
 }
 
 .mainnav a {
@@ -53,6 +56,7 @@
     text-decoration: none !important;
     font-weight: 700 !important;
     padding: 12px 15px !important;
+    transition: color .2s ease, border-color .2s ease;
 }
 
 .mainnav a:hover {
@@ -78,12 +82,13 @@
 
 .section-toggle button {
     color: var(--muted);
-    background: transparent;
+    background: var(--panel);
     border: 1px solid var(--line);
     border-radius: 10px;
     padding: 11px 18px;
     font-weight: 700;
     cursor: pointer;
+    transition: .2s ease;
 }
 
 .section-toggle button:hover {
@@ -106,7 +111,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 16px;
+    margin-bottom: 18px;
 }
 
 .stat-label {
@@ -124,6 +129,7 @@
     padding: 12px 38px 12px 14px;
 
     color: var(--text);
+
     background:
         var(--panel)
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239aa6b2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")
@@ -141,6 +147,7 @@
 .stat-select:focus {
     outline: none;
     border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(88,166,255,.10);
 }
 
 
@@ -149,14 +156,22 @@
 ========================= */
 
 .leaderboard {
-    background: var(--panel);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(16,23,34,.98),
+            rgba(21,30,43,.98)
+        );
+
     border: 1px solid var(--line);
     border-radius: 14px;
     overflow: hidden;
+
+    box-shadow: 0 8px 28px rgba(0,0,0,.16);
 }
 
 .leaderboard-header {
-    padding: 18px;
+    padding: 19px 20px;
     border-bottom: 1px solid var(--line);
 
     display: flex;
@@ -168,6 +183,7 @@
 .leaderboard-header h2 {
     margin: 0;
     font-size: 20px;
+    letter-spacing: -.2px;
 }
 
 .leaderboard-note {
@@ -194,15 +210,15 @@
 
 .league-table th,
 .league-table td {
-    padding: 13px 15px;
+    padding: 14px 16px;
     border-bottom: 1px solid var(--line);
 }
 
 .league-table th {
     color: var(--muted);
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: .04em;
+    letter-spacing: .6px;
     text-align: left;
     background: var(--panel2);
 }
@@ -220,8 +236,12 @@
     border-bottom: none;
 }
 
+.league-table tbody tr {
+    transition: background .15s ease;
+}
+
 .league-table tbody tr:hover {
-    background: rgba(255,255,255,.025);
+    background: rgba(88,166,255,.035);
 }
 
 
@@ -251,7 +271,7 @@
 }
 
 .player-link:hover {
-    color: var(--accent);
+    color: var(--accent2);
 }
 
 .player-meta {
@@ -299,7 +319,15 @@
 .share-bar-fill {
     display: block;
     height: 100%;
-    background: var(--accent);
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--accent),
+            var(--accent2)
+        );
+
+    border-radius: 99px;
 }
 
 
@@ -320,7 +348,7 @@
 .footer {
     color: var(--muted);
     text-align: center;
-    padding: 24px 0;
+    padding: 28px 0;
     font-size: 13px;
 }
 
@@ -367,6 +395,7 @@
     .league-table {
         min-width: 620px;
     }
+
 }
 
 </style>
@@ -385,7 +414,9 @@
 
     <div class="league-header">
 
-        <h1>NFL Analytics</h1>
+        <h1>
+            StackTheStats
+        </h1>
 
         <div
             class="season"
@@ -402,6 +433,10 @@
     ========================= -->
 
     <nav class="mainnav">
+
+        <a href="index.html">
+            HOME
+        </a>
 
         <a
             class="active"
@@ -502,7 +537,7 @@
 
 
     <div class="footer">
-        NFL offensive usage • regular season
+        StackTheStats · NFL offensive usage · regular season
     </div>
 
 
@@ -685,11 +720,6 @@ function formatPercentage(value) {
     if (!Number.isFinite(number)) {
         return "0.0%";
     }
-
-    /*
-        league.json stores rz_target_share
-        as a decimal, e.g. 0.25 = 25%.
-    */
 
     if (number <= 1) {
         number *= 100;

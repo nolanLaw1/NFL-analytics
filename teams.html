@@ -13,58 +13,6 @@
 <style>
 
 /* =========================
-   PAGE HEADER
-========================= */
-
-.page-header {
-    margin-bottom: 20px;
-}
-
-.page-header h1 {
-    margin: 0 0 6px 0;
-    font-size: 32px;
-    font-weight: 800;
-    letter-spacing: -.7px;
-}
-
-.season {
-    color: var(--muted);
-    font-size: 14px;
-}
-
-/* =========================
-   NAVIGATION
-========================= */
-
-.mainnav {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    border-bottom: 1px solid var(--line);
-    margin-bottom: 20px;
-}
-
-.mainnav a {
-    color: var(--muted);
-    background: transparent;
-    text-decoration: none;
-    font-weight: 700;
-    padding: 12px 15px;
-    transition: color .2s ease, border-color .2s ease;
-}
-
-.mainnav a:hover {
-    color: var(--text);
-    text-decoration: none;
-}
-
-.mainnav a.active {
-    color: var(--text);
-    border-bottom: 2px solid var(--accent);
-}
-
-/* =========================
    TEAM SELECTOR
 ========================= */
 
@@ -72,7 +20,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    margin: 16px 0 18px 0;
+    margin: 20px 0 18px;
 }
 
 .team-label {
@@ -84,8 +32,11 @@
 .team-select {
     appearance: none;
     -webkit-appearance: none;
+
     min-width: 210px;
+
     padding: 12px 38px 12px 14px;
+
     color: var(--text);
 
     background:
@@ -95,8 +46,10 @@
 
     border: 1px solid var(--line);
     border-radius: 10px;
+
     font-size: 14px;
     font-weight: 600;
+
     cursor: pointer;
 }
 
@@ -105,6 +58,7 @@
     border-color: var(--accent);
     box-shadow: 0 0 0 3px rgba(88,166,255,.10);
 }
+
 
 /* =========================
    SUMMARY
@@ -139,8 +93,9 @@
     font-weight: 800;
 }
 
+
 /* =========================
-   PANELS
+   TEAM PANELS
 ========================= */
 
 .team-panel {
@@ -153,18 +108,23 @@
 
     border: 1px solid var(--line);
     border-radius: 14px;
+
     overflow: hidden;
+
     margin-bottom: 18px;
+
     box-shadow: 0 8px 28px rgba(0,0,0,.16);
 }
 
 .team-panel-header {
     padding: 19px 20px;
+
     border-bottom: 1px solid var(--line);
 
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     gap: 12px;
 }
 
@@ -177,6 +137,7 @@
     color: var(--muted);
     font-size: 13px;
 }
+
 
 /* =========================
    TABLES
@@ -205,10 +166,15 @@
 .team-table th,
 .player-table th {
     color: var(--muted);
+
     font-size: 11px;
+
     text-transform: uppercase;
+
     letter-spacing: .6px;
+
     text-align: left;
+
     background: var(--panel2);
 }
 
@@ -245,6 +211,7 @@
     min-width: 950px;
 }
 
+
 /* =========================
    PLAYER
 ========================= */
@@ -279,6 +246,7 @@
     white-space: nowrap;
 }
 
+
 /* =========================
    SHARE BAR
 ========================= */
@@ -286,16 +254,22 @@
 .share-bar {
     width: 95px;
     height: 5px;
+
     margin-left: auto;
     margin-top: 6px;
+
     background: #252f3b;
+
     border-radius: 99px;
+
     overflow: hidden;
 }
 
 .share-bar-fill {
     display: block;
+
     height: 100%;
+
     background:
         linear-gradient(
             90deg,
@@ -303,6 +277,7 @@
             var(--accent2)
         );
 }
+
 
 /* =========================
    MESSAGE / FOOTER
@@ -320,6 +295,7 @@
     font-size: 13px;
 }
 
+
 /* =========================
    MOBILE
 ========================= */
@@ -327,16 +303,13 @@
 @media (max-width: 850px) {
 
     .summary-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
     }
 
 }
 
 @media (max-width: 650px) {
-
-    .page-header h1 {
-        font-size: 27px;
-    }
 
     .team-controls {
         display: block;
@@ -369,45 +342,58 @@
 
 </head>
 
+
 <body>
 
 <div class="site">
 
-    <div class="page-header">
 
-        <h1>StackTheStats</h1>
+    <!-- =========================
+         HEADER
+    ========================= -->
 
-        <div
-            class="season"
-            id="season"
-        >
-            Loading season...
-        </div>
+    <header class="header">
 
+        <a href="index.html" class="brand">
+            Stack<span>TheStats</span>
+        </a>
+
+        <nav class="nav">
+
+            <a href="index.html">
+                HOME
+            </a>
+
+            <a href="league.html">
+                LEAGUE
+            </a>
+
+            <a href="players.html">
+                PLAYERS
+            </a>
+
+            <a href="teams.html" class="active">
+                TEAMS
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- Keeps existing JavaScript working -->
+    <div
+        class="season"
+        id="season"
+        style="display:none;"
+    >
+        Loading season...
     </div>
 
-    <nav class="mainnav">
 
-        <a href="index.html">
-            HOME
-        </a>
-
-        <a href="league.html">
-            LEAGUE
-        </a>
-
-        <a href="players.html">
-            PLAYERS
-        </a>
-
-        <a
-            class="active"
-            href="teams.html"
-        >
-            TEAMS
-        </a>
-
-    </nav>
+    <!-- =========================
+         TEAM SELECTOR
+    ========================= -->
 
     <div class="team-controls">
 
@@ -425,16 +411,28 @@
 
     </div>
 
+
+    <!-- =========================
+         SUMMARY
+    ========================= -->
+
     <div
         class="summary-grid"
         id="summary"
     ></div>
 
+
+    <!-- =========================
+         DOWN SPLITS
+    ========================= -->
+
     <section class="team-panel">
 
         <div class="team-panel-header">
 
-            <h2>Down Splits</h2>
+            <h2>
+                Down Splits
+            </h2>
 
             <div
                 class="team-panel-note"
@@ -458,11 +456,18 @@
 
     </section>
 
+
+    <!-- =========================
+         PLAYER USAGE
+    ========================= -->
+
     <section class="team-panel">
 
         <div class="team-panel-header">
 
-            <h2>Player Usage</h2>
+            <h2>
+                Player Usage
+            </h2>
 
             <div class="team-panel-note">
                 QB / WR / RB / TE
@@ -483,11 +488,18 @@
 
     </section>
 
+
+    <!-- =========================
+         WEEKLY USAGE
+    ========================= -->
+
     <section class="team-panel">
 
         <div class="team-panel-header">
 
-            <h2>Weekly Usage</h2>
+            <h2>
+                Weekly Usage
+            </h2>
 
             <div class="team-panel-note">
                 Completed weeks only
@@ -508,11 +520,14 @@
 
     </section>
 
+
     <div class="footer">
         StackTheStats · NFL Analytics
     </div>
 
+
 </div>
+
 
 <script>
 
@@ -521,6 +536,7 @@ let TEAM_DATA = null;
 let PLAYER_DATA = null;
 
 let selectedTeam = "";
+
 
 const seasonEl =
     document.getElementById("season");
@@ -540,6 +556,11 @@ const playerTableEl =
 const weeklyTableEl =
     document.getElementById("weeklyTable");
 
+
+/* =========================
+   HELPERS
+========================= */
+
 function esc(value) {
 
     return String(value ?? "")
@@ -556,6 +577,7 @@ function esc(value) {
 
 }
 
+
 function formatNumber(value) {
 
     const number =
@@ -569,6 +591,7 @@ function formatNumber(value) {
 
 }
 
+
 function formatPercentage(value) {
 
     const number =
@@ -581,6 +604,7 @@ function formatPercentage(value) {
     return number.toFixed(2) + "%";
 
 }
+
 
 function getSelectedTeamData() {
 
@@ -597,6 +621,11 @@ function getSelectedTeamData() {
     ) || null;
 
 }
+
+
+/* =========================
+   TEAM DROPDOWN
+========================= */
 
 function renderTeamDropdown() {
 
@@ -618,6 +647,7 @@ function renderTeamDropdown() {
         return;
     }
 
+
     teams.forEach(team => {
 
         const option =
@@ -633,6 +663,7 @@ function renderTeamDropdown() {
 
     });
 
+
     selectedTeam =
         teams[0].team;
 
@@ -640,6 +671,11 @@ function renderTeamDropdown() {
         selectedTeam;
 
 }
+
+
+/* =========================
+   SUMMARY
+========================= */
 
 function renderSummary(team) {
 
@@ -653,6 +689,7 @@ function renderSummary(team) {
 
         return;
     }
+
 
     const cards = [
 
@@ -693,6 +730,7 @@ function renderSummary(team) {
 
     ];
 
+
     summaryEl.innerHTML =
         cards.map(card => `
 
@@ -712,12 +750,18 @@ function renderSummary(team) {
 
 }
 
+
+/* =========================
+   DOWN SPLITS
+========================= */
+
 function renderDownSplits(team) {
 
     const rows =
         Array.isArray(team?.down_splits)
             ? team.down_splits
             : [];
+
 
     if (!rows.length) {
 
@@ -728,7 +772,9 @@ function renderDownSplits(team) {
         `;
 
         return;
+
     }
+
 
     let html = `
 
@@ -751,17 +797,19 @@ function renderDownSplits(team) {
 
     `;
 
+
     rows.forEach(row => {
 
         const rate =
             Number(row.pass_rate || 0);
+
 
         html += `
 
             <tr>
 
                 <td>
-                    ${esc(row.down)}${getOrdinal(row.down)}
+                    ${esc(row.down)}
                 </td>
 
                 <td>
@@ -798,6 +846,7 @@ function renderDownSplits(team) {
 
     });
 
+
     html += `
 
             </tbody>
@@ -806,29 +855,23 @@ function renderDownSplits(team) {
 
     `;
 
+
     downTableEl.innerHTML =
         html;
 
 }
 
-function getOrdinal(number) {
 
-    const n =
-        Number(number);
-
-    if (n === 1) return "st";
-    if (n === 2) return "nd";
-    if (n === 3) return "rd";
-
-    return "th";
-
-}
+/* =========================
+   TEAM PLAYERS
+========================= */
 
 function getTeamPlayers() {
 
     if (!Array.isArray(PLAYER_DATA)) {
         return [];
     }
+
 
     const positions =
         new Set([
@@ -838,37 +881,59 @@ function getTeamPlayers() {
             "TE"
         ]);
 
+
     return PLAYER_DATA
+
         .filter(player => {
 
             if (!player) {
                 return false;
             }
 
-            if (player.team !== selectedTeam) {
+            if (
+                player.team !==
+                selectedTeam
+            ) {
                 return false;
             }
 
-            if (!positions.has(player.position)) {
+            if (
+                !positions.has(
+                    player.position
+                )
+            ) {
                 return false;
             }
+
 
             const attempts =
-                Number(player.attempts || 0);
+                Number(
+                    player.attempts ||
+                    player.pass_attempts ||
+                    0
+                );
 
             const targets =
-                Number(player.targets || 0);
+                Number(
+                    player.targets || 0
+                );
 
             const carries =
-                Number(player.carries || 0);
+                Number(
+                    player.carries || 0
+                );
 
             const receptions =
-                Number(player.receptions || 0);
+                Number(
+                    player.receptions || 0
+                );
 
             const rzTargets =
                 Number(
-                    player.red_zone_targets || 0
+                    player.red_zone_targets ||
+                    0
                 );
+
 
             return (
                 attempts > 0 ||
@@ -879,17 +944,28 @@ function getTeamPlayers() {
             );
 
         })
+
         .sort((a, b) => {
 
             const usageA =
-                Number(a.attempts || 0) +
+                Number(
+                    a.attempts ||
+                    a.pass_attempts ||
+                    0
+                ) +
                 Number(a.targets || 0) +
                 Number(a.carries || 0);
 
+
             const usageB =
-                Number(b.attempts || 0) +
+                Number(
+                    b.attempts ||
+                    b.pass_attempts ||
+                    0
+                ) +
                 Number(b.targets || 0) +
                 Number(b.carries || 0);
+
 
             return usageB - usageA;
 
@@ -897,10 +973,16 @@ function getTeamPlayers() {
 
 }
 
+
+/* =========================
+   PLAYER USAGE
+========================= */
+
 function renderPlayerUsage() {
 
     const players =
         getTeamPlayers();
+
 
     if (!players.length) {
 
@@ -912,6 +994,7 @@ function renderPlayerUsage() {
 
         return;
     }
+
 
     let html = `
 
@@ -939,43 +1022,68 @@ function renderPlayerUsage() {
 
     `;
 
+
     players.forEach(player => {
 
         const playerId =
             player.player_id || "";
+
 
         const playerName =
             player.player_name ||
             player.name ||
             "Unknown Player";
 
+
         const position =
             player.position || "";
 
+
         const attempts =
-            Number(player.attempts || 0);
+            Number(
+                player.attempts ||
+                player.pass_attempts ||
+                0
+            );
+
 
         const targets =
-            Number(player.targets || 0);
+            Number(
+                player.targets || 0
+            );
+
 
         const targetShare =
-            Number(player.target_share || 0);
+            Number(
+                player.target_share || 0
+            );
+
 
         const carries =
-            Number(player.carries || 0);
+            Number(
+                player.carries || 0
+            );
+
 
         const receptions =
-            Number(player.receptions || 0);
+            Number(
+                player.receptions || 0
+            );
+
 
         const rzTargets =
             Number(
-                player.red_zone_targets || 0
+                player.red_zone_targets ||
+                0
             );
+
 
         const rzShare =
             Number(
-                player.red_zone_target_share || 0
+                player.red_zone_target_share ||
+                0
             );
+
 
         const safeTargetShare =
             Math.min(
@@ -983,11 +1091,13 @@ function renderPlayerUsage() {
                 100
             );
 
+
         const safeRzShare =
             Math.min(
                 Math.max(rzShare, 0),
                 100
             );
+
 
         html += `
 
@@ -997,7 +1107,9 @@ function renderPlayerUsage() {
 
                     <a
                         class="player-link"
-                        href="player.html?id=${encodeURIComponent(playerId)}"
+                        href="player.html?id=${encodeURIComponent(
+                            playerId
+                        )}"
                     >
                         ${esc(playerName)}
                     </a>
@@ -1064,6 +1176,7 @@ function renderPlayerUsage() {
 
     });
 
+
     html += `
 
             </tbody>
@@ -1072,10 +1185,16 @@ function renderPlayerUsage() {
 
     `;
 
+
     playerTableEl.innerHTML =
         html;
 
 }
+
+
+/* =========================
+   WEEKLY
+========================= */
 
 function renderWeekly(team) {
 
@@ -1083,6 +1202,7 @@ function renderWeekly(team) {
         Array.isArray(team?.weekly)
             ? team.weekly
             : [];
+
 
     if (!rows.length) {
 
@@ -1093,7 +1213,9 @@ function renderWeekly(team) {
         `;
 
         return;
+
     }
+
 
     let html = `
 
@@ -1116,10 +1238,14 @@ function renderWeekly(team) {
 
     `;
 
+
     rows.forEach(row => {
 
         const rate =
-            Number(row.pass_rate || 0);
+            Number(
+                row.pass_rate || 0
+            );
+
 
         html += `
 
@@ -1163,6 +1289,7 @@ function renderWeekly(team) {
 
     });
 
+
     html += `
 
             </tbody>
@@ -1171,15 +1298,22 @@ function renderWeekly(team) {
 
     `;
 
+
     weeklyTableEl.innerHTML =
         html;
 
 }
 
+
+/* =========================
+   RENDER TEAM
+========================= */
+
 function renderTeam() {
 
     const team =
         getSelectedTeamData();
+
 
     if (!team) {
 
@@ -1210,6 +1344,7 @@ function renderTeam() {
         return;
     }
 
+
     renderSummary(team);
 
     renderDownSplits(team);
@@ -1219,6 +1354,11 @@ function renderTeam() {
     renderWeekly(team);
 
 }
+
+
+/* =========================
+   TEAM CHANGE
+========================= */
 
 teamSelect.addEventListener(
     "change",
@@ -1231,6 +1371,11 @@ teamSelect.addEventListener(
 
     }
 );
+
+
+/* =========================
+   LOAD DATA
+========================= */
 
 async function loadTeamData() {
 
@@ -1259,6 +1404,7 @@ async function loadTeamData() {
 
         ]);
 
+
         if (!teamResponse.ok) {
 
             throw new Error(
@@ -1266,6 +1412,7 @@ async function loadTeamData() {
             );
 
         }
+
 
         if (!playerResponse.ok) {
 
@@ -1275,14 +1422,27 @@ async function loadTeamData() {
 
         }
 
+
         TEAM_DATA =
             await teamResponse.json();
 
-        PLAYER_DATA =
+
+        const playerJson =
             await playerResponse.json();
+
+
+        PLAYER_DATA =
+            Array.isArray(playerJson)
+                ? playerJson
+                : (
+                    playerJson.players ||
+                    []
+                );
+
 
         seasonEl.textContent =
             `${TEAM_DATA.season} Season`;
+
 
         renderTeamDropdown();
 
@@ -1290,12 +1450,15 @@ async function loadTeamData() {
 
     }
 
+
     catch (error) {
 
         console.error(error);
 
+
         seasonEl.textContent =
             "Season unavailable";
+
 
         summaryEl.innerHTML = `
             <div class="message">
@@ -1303,17 +1466,20 @@ async function loadTeamData() {
             </div>
         `;
 
+
         downTableEl.innerHTML = `
             <div class="message">
                 Unable to load team data.
             </div>
         `;
 
+
         playerTableEl.innerHTML = `
             <div class="message">
                 Unable to load player data.
             </div>
         `;
+
 
         weeklyTableEl.innerHTML = `
             <div class="message">
@@ -1324,6 +1490,11 @@ async function loadTeamData() {
     }
 
 }
+
+
+/* =========================
+   START
+========================= */
 
 loadTeamData();
 

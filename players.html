@@ -4,833 +4,590 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NFL Analytics — Players</title>
-<link rel="stylesheet" href="styles.css">
+
+<title>StackTheStats | Players</title>
+
+<style>
+:root{
+    --bg:#080c12;
+    --panel:#101722;
+    --panel2:#151e2b;
+    --text:#f4f7fb;
+    --muted:#9aa6b2;
+    --line:#27313d;
+    --accent:#58a6ff;
+    --accent2:#79b8ff;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:
+        radial-gradient(circle at top left,rgba(88,166,255,.08),transparent 30%),
+        var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:32px 28px 55px;
+}
+
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    gap:20px;
+    margin-bottom:18px;
+}
+
+header h1{
+    margin:0;
+    font-size:32px;
+    letter-spacing:-.5px;
+}
+
+.season{
+    color:var(--muted);
+    font-size:14px;
+}
+
+.mainnav{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    border-bottom:1px solid var(--line);
+    margin-bottom:18px;
+}
+
+.mainnav a{
+    color:var(--muted);
+    text-decoration:none;
+    font-weight:700;
+    padding:12px 15px;
+    border-bottom:2px solid transparent;
+    transition:.15s;
+}
+
+.mainnav a:hover{
+    color:var(--text);
+}
+
+.mainnav a.active{
+    color:var(--text);
+    border-bottom-color:var(--accent);
+}
+
+.controls{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:16px;
+}
+
+.search,
+select{
+    background:var(--panel);
+    color:var(--text);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px;
+}
+
+.search{
+    flex:1;
+    min-width:220px;
+}
+
+select{
+    min-width:150px;
+}
+
+.panel{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow-x:auto;
+    box-shadow:0 8px 30px rgba(0,0,0,.12);
+}
+
+.panel-head{
+    padding:18px;
+    border-bottom:1px solid var(--line);
+}
+
+.panel-head h2{
+    margin:0;
+}
+
+.panel-head p{
+    margin:5px 0 0;
+    color:var(--muted);
+    font-size:13px;
+}
+
+table{
+    width:100%;
+    min-width:1050px;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    padding:13px 15px;
+    text-align:left;
+    border-bottom:1px solid var(--line);
+}
+
+th{
+    color:var(--muted);
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.4px;
+}
+
+tbody tr:hover{
+    background:rgba(88,166,255,.045);
+}
+
+.player-link{
+    color:var(--text);
+    text-decoration:none;
+    font-weight:700;
+}
+
+.player-link:hover{
+    color:var(--accent);
+}
+
+.meta{
+    display:block;
+    color:var(--muted);
+    font-size:12px;
+    margin-top:3px;
+}
+
+.rank{
+    color:var(--muted);
+    width:55px;
+}
+
+.share{
+    min-width:170px;
+}
+
+.bar{
+    height:5px;
+    background:#252f3b;
+    border-radius:99px;
+    margin-top:7px;
+    overflow:hidden;
+}
+
+.bar i{
+    display:block;
+    height:100%;
+    background:var(--accent);
+}
+
+.message{
+    padding:25px;
+    color:var(--muted);
+    text-align:center;
+}
+
+.footer{
+    color:var(--muted);
+    text-align:center;
+    padding:28px 0 0;
+    font-size:13px;
+}
+
+@media(max-width:650px){
+
+    .container{
+        padding:22px 18px 40px;
+    }
+
+    header{
+        align-items:flex-start;
+        flex-direction:column;
+        gap:5px;
+    }
+
+    header h1{
+        font-size:27px;
+    }
+
+    .mainnav a{
+        padding:11px 10px;
+        font-size:13px;
+    }
+
+    th,
+    td{
+        padding:11px 10px;
+        font-size:13px;
+    }
+
+    table{
+        min-width:1050px;
+    }
+}
+</style>
+
 </head>
 
 <body>
 
-<div class="site">
+<div class="container">
 
-    <div class="brand">
-        <h1>NFL Analytics</h1>
-        <div class="season" id="season"></div>
+<header>
+    <div>
+        <h1>StackTheStats</h1>
     </div>
 
-    <nav class="mainnav">
-        <a href="league.html">LEAGUE</a>
-        <a class="active" href="players.html">PLAYERS</a>
-        <a href="teams.html">TEAMS</a>
-    </nav>
+    <div class="season" id="seasonLabel">
+        2026 NFL Season
+    </div>
+</header>
 
-    <div class="controls">
+<nav class="mainnav">
+    <a href="index.html">HOME</a>
+    <a href="league.html">LEAGUE</a>
+    <a class="active" href="players.html">PLAYERS</a>
+    <a href="teams.html">TEAMS</a>
+</nav>
 
-        <input
-            id="search"
-            class="search"
-            placeholder="Search players..."
-            autocomplete="off"
-            style="flex:1;min-width:180px;"
-        >
+<div class="controls">
+    <input
+        id="search"
+        class="search"
+        type="text"
+        placeholder="Search players..."
+    >
 
-        <select id="position" class="filter">
-            <option value="ALL">All positions</option>
-            <option value="QB">QB</option>
-            <option value="RB">RB</option>
-            <option value="WR">WR</option>
-            <option value="TE">TE</option>
-        </select>
+    <select id="positionFilter">
+        <option value="ALL">All Positions</option>
+        <option value="QB">QB</option>
+        <option value="WR">WR</option>
+        <option value="RB">RB</option>
+        <option value="TE">TE</option>
+    </select>
 
-        <select id="team" class="filter">
-            <option value="ALL">All teams</option>
-        </select>
+    <select id="teamFilter">
+        <option value="ALL">All Teams</option>
+    </select>
+</div>
 
+<section class="panel">
+
+    <div class="panel-head">
+        <h2>Players</h2>
+        <p>2026 regular-season player usage</p>
     </div>
 
-    <section class="panel">
-
-        <div class="panelhead">
-            <h2>Players</h2>
-
-            <div class="note">
-                Click a column header to sort
-            </div>
+    <div id="tableWrap">
+        <div class="message">
+            Loading player data...
         </div>
-
-        <div id="table"></div>
-
-    </section>
-
-    <div class="footer">
-        Click a player for detail • Click column headers to sort
     </div>
+
+</section>
+
+<div class="footer">
+    StackTheStats · NFL Analytics · Built on the numbers.
+</div>
 
 </div>
 
-
 <script>
 
-let DATA = [];
+let players = [];
 
-let currentSort = "targets";
-let sortDirection = "desc";
+const searchInput = document.getElementById("search");
+const positionFilter = document.getElementById("positionFilter");
+const teamFilter = document.getElementById("teamFilter");
+const tableWrap = document.getElementById("tableWrap");
+const seasonLabel = document.getElementById("seasonLabel");
 
-const search = document.getElementById("search");
-const position = document.getElementById("position");
-const team = document.getElementById("team");
-const table = document.getElementById("table");
+function formatPercentage(value){
 
+    const number = Number(value);
 
-/* =========================================================
-   COLUMNS
-   ========================================================= */
-
-const COLUMNS = [
-
-    {
-        key: "name",
-        label: "Player",
-        type: "text"
-    },
-
-    {
-        key: "position",
-        label: "Position",
-        type: "text"
-    },
-
-    {
-        key: "team",
-        label: "Team",
-        type: "text"
-    },
-
-    /* QB PASSING */
-
-    {
-        key: "pass_attempts",
-        label: "Pass Attempts",
-        type: "number"
-    },
-
-    {
-        key: "completions",
-        label: "Completions",
-        type: "number"
-    },
-
-    {
-        key: "completion_pct",
-        label: "Completion %",
-        type: "percent"
-    },
-
-    {
-        key: "passing_yards",
-        label: "Passing Yards",
-        type: "number"
-    },
-
-    {
-        key: "passing_tds",
-        label: "Passing TDs",
-        type: "number"
-    },
-
-    {
-        key: "interceptions",
-        label: "INT",
-        type: "number"
-    },
-
-    {
-        key: "yards_per_attempt",
-        label: "Yards/Attempt",
-        type: "number"
-    },
-
-    {
-        key: "red_zone_pass_attempts",
-        label: "RZ Pass Attempts",
-        type: "number"
-    },
-
-    /* RECEIVING */
-
-    {
-        key: "targets",
-        label: "Targets",
-        type: "number"
-    },
-
-    {
-        key: "receptions",
-        label: "Receptions",
-        type: "number"
-    },
-
-    {
-        key: "receiving_yards",
-        label: "Receiving Yards",
-        type: "number"
-    },
-
-    {
-        key: "receiving_tds",
-        label: "Receiving TDs",
-        type: "number"
-    },
-
-    /* RUSHING */
-
-    {
-        key: "carries",
-        label: "Carries",
-        type: "number"
-    },
-
-    {
-        key: "rushing_yards",
-        label: "Rushing Yards",
-        type: "number"
-    },
-
-    {
-        key: "rushing_tds",
-        label: "Rushing TDs",
-        type: "number"
-    },
-
-    /* USAGE */
-
-    {
-        key: "target_share",
-        label: "Target Share",
-        type: "percent"
-    },
-
-    {
-        key: "red_zone_target_share",
-        label: "RZ Target Share",
-        type: "percent"
-    },
-
-    {
-        key: "red_zone_rushes",
-        label: "RZ Rushes",
-        type: "number"
-    },
-
-    {
-        key: "red_zone_rush_share",
-        label: "RZ Rush Share",
-        type: "percent"
+    if(!Number.isFinite(number)){
+        return "0.00%";
     }
 
-];
-
-
-/* =========================================================
-   POSITION COLUMNS
-   ========================================================= */
-
-const POSITION_COLUMNS = {
-
-    ALL: [
-        "name",
-        "position",
-        "team",
-        "targets",
-        "receptions",
-        "receiving_yards",
-        "receiving_tds",
-        "carries",
-        "rushing_yards",
-        "rushing_tds",
-        "target_share",
-        "red_zone_target_share",
-        "red_zone_rushes"
-    ],
-
-    QB: [
-        "name",
-        "position",
-        "team",
-
-        "pass_attempts",
-        "completions",
-        "completion_pct",
-        "passing_yards",
-        "passing_tds",
-        "interceptions",
-        "yards_per_attempt",
-        "red_zone_pass_attempts",
-
-        "carries",
-        "rushing_yards",
-        "rushing_tds",
-        "red_zone_rushes",
-        "red_zone_rush_share"
-    ],
-
-    RB: [
-        "name",
-        "position",
-        "team",
-        "targets",
-        "receptions",
-        "receiving_yards",
-        "receiving_tds",
-        "carries",
-        "rushing_yards",
-        "rushing_tds",
-        "target_share",
-        "red_zone_target_share",
-        "red_zone_rushes",
-        "red_zone_rush_share"
-    ],
-
-    WR: [
-        "name",
-        "position",
-        "team",
-        "targets",
-        "receptions",
-        "receiving_yards",
-        "receiving_tds",
-        "target_share",
-        "red_zone_target_share"
-    ],
-
-    TE: [
-        "name",
-        "position",
-        "team",
-        "targets",
-        "receptions",
-        "receiving_yards",
-        "receiving_tds",
-        "target_share",
-        "red_zone_target_share"
-    ]
-
-};
-
-
-/* =========================================================
-   HELPERS
-   ========================================================= */
-
-function esc(value) {
-
-    return String(value ?? "").replace(
-        /[&<>"']/g,
-        function(m) {
-            return {
-                "&": "&amp;",
-                "<": "&lt;",
-                ">": "&gt;",
-                '"': "&quot;",
-                "'": "&#39;"
-            }[m];
-        }
-    );
-
+    return number.toFixed(2) + "%";
 }
 
+function escapeHtml(value){
 
-function numberValue(value) {
-
-    const n = Number(value);
-
-    return Number.isFinite(n) ? n : 0;
-
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
 }
 
+function playerName(player){
 
-function formatPercent(value) {
-
-    return numberValue(value).toFixed(1) + "%";
-
+    return player.player_display_name ||
+           player.player_name ||
+           player.name ||
+           "Unknown";
 }
 
+function playerId(player){
 
-function displayValue(player, column) {
+    return player.player_id ||
+           player.gsis_id ||
+           "";
+}
 
-    if (column.type === "percent") {
+function teamName(player){
 
-        return formatPercent(
-            player[column.key]
-        );
+    return player.team || "";
+}
 
+function getTargetShare(player){
+
+    const value = Number(player.target_share);
+
+    if(!Number.isFinite(value)){
+        return 0;
     }
 
-    if (column.type === "number") {
+    return value <= 1 ? value * 100 : value;
+}
 
-        return numberValue(
-            player[column.key]
-        );
+function getRzTargetShare(player){
 
+    const value = Number(player.red_zone_target_share);
+
+    if(!Number.isFinite(value)){
+        return 0;
     }
 
-    return esc(
-        player[column.key] || ""
-    );
-
+    return value <= 1 ? value * 100 : value;
 }
 
+function render(){
 
-function getSortValue(player, column) {
+    const search = searchInput.value.trim().toLowerCase();
+    const position = positionFilter.value;
+    const team = teamFilter.value;
 
-    if (
-        column.type === "number" ||
-        column.type === "percent"
-    ) {
+    let filtered = players.filter(player => {
 
-        return numberValue(
-            player[column.key]
-        );
-
-    }
-
-    return String(
-        player[column.key] || ""
-    ).toLowerCase();
-
-}
-
-
-/* =========================================================
-   SORT
-   ========================================================= */
-
-function sortRows(rows) {
-
-    const column = COLUMNS.find(
-        function(c) {
-            return c.key === currentSort;
-        }
-    );
-
-    if (!column) {
-        return rows;
-    }
-
-    rows.sort(function(a, b) {
-
-        const aValue = getSortValue(a, column);
-        const bValue = getSortValue(b, column);
-
-        if (column.type === "text") {
-
-            const result =
-                aValue.localeCompare(bValue);
-
-            return sortDirection === "asc"
-                ? result
-                : -result;
-        }
-
-        if (aValue === bValue) {
-
-            return String(a.name || "")
-                .localeCompare(
-                    String(b.name || "")
-                );
-
-        }
-
-        return sortDirection === "desc"
-            ? bValue - aValue
-            : aValue - bValue;
-
-    });
-
-    return rows;
-
-}
-
-
-function sortArrow(key) {
-
-    if (currentSort !== key) {
-        return "";
-    }
-
-    return sortDirection === "desc"
-        ? " ↓"
-        : " ↑";
-
-}
-
-
-/* =========================================================
-   TEAMS
-   ========================================================= */
-
-function populateTeams() {
-
-    const teams = [
-        ...new Set(
-            DATA
-                .map(function(player) {
-                    return player.team;
-                })
-                .filter(Boolean)
-        )
-    ].sort();
-
-    teams.forEach(function(teamCode) {
-
-        const option =
-            document.createElement("option");
-
-        option.value = teamCode;
-        option.textContent = teamCode;
-
-        team.appendChild(option);
-
-    });
-
-}
-
-
-/* =========================================================
-   VISIBLE COLUMNS
-   ========================================================= */
-
-function getVisibleColumns() {
-
-    const keys =
-        POSITION_COLUMNS[position.value] ||
-        POSITION_COLUMNS.ALL;
-
-    return COLUMNS.filter(function(column) {
-
-        return keys.includes(column.key);
-
-    });
-
-}
-
-
-/* =========================================================
-   RENDER
-   ========================================================= */
-
-function render() {
-
-    const q =
-        search.value.trim().toLowerCase();
-
-    const pos = position.value;
-
-    const selectedTeam = team.value;
-
-
-    let rows = DATA.filter(function(player) {
-
-        const playerName =
-            String(player.name || "")
-                .toLowerCase();
+        const name = playerName(player).toLowerCase();
 
         const matchesSearch =
-            !q ||
-            playerName.includes(q);
+            !search ||
+            name.includes(search);
 
         const matchesPosition =
-            pos === "ALL" ||
-            player.position === pos;
+            position === "ALL" ||
+            player.position === position;
 
         const matchesTeam =
-            selectedTeam === "ALL" ||
-            player.team === selectedTeam;
+            team === "ALL" ||
+            teamName(player) === team;
 
-        return (
-            matchesSearch &&
-            matchesPosition &&
-            matchesTeam
-        );
-
+        return matchesSearch &&
+               matchesPosition &&
+               matchesTeam;
     });
 
+    filtered.sort((a,b) => {
 
-    const visibleColumns =
-        getVisibleColumns();
+        const aTargets = Number(a.targets) || 0;
+        const bTargets = Number(b.targets) || 0;
 
+        return bTargets - aTargets;
+    });
 
-    /* Make sure sort column is visible */
+    if(!filtered.length){
 
-    const sortVisible =
-        visibleColumns.some(function(column) {
-
-            return column.key === currentSort;
-
-        });
-
-
-    if (!sortVisible) {
-
-        const numericColumn =
-            visibleColumns.find(function(column) {
-
-                return (
-                    column.type === "number" ||
-                    column.type === "percent"
-                );
-
-            });
-
-        if (numericColumn) {
-
-            currentSort =
-                numericColumn.key;
-
-            sortDirection = "desc";
-
-        } else {
-
-            currentSort = "name";
-            sortDirection = "asc";
-
-        }
-
-    }
-
-
-    sortRows(rows);
-
-
-    if (!rows.length) {
-
-        table.innerHTML = `
-            <div style="
-                padding:20px;
-                color:#9aa6b2
-            ">
-                No players match your filters.
+        tableWrap.innerHTML = `
+            <div class="message">
+                No players found.
             </div>
         `;
 
         return;
-
     }
 
+    tableWrap.innerHTML = `
 
-    let html = `
         <table>
+
             <thead>
+
                 <tr>
-                    <th class="rank">#</th>
-    `;
-
-
-    visibleColumns.forEach(function(column) {
-
-        html += `
-            <th>
-                <button
-                    class="sort-button"
-                    data-sort="${column.key}"
-                >
-                    ${column.label}${sortArrow(column.key)}
-                </button>
-            </th>
-        `;
-
-    });
-
-
-    html += `
+                    <th>#</th>
+                    <th>Player</th>
+                    <th>Pos</th>
+                    <th>Team</th>
+                    <th>Targets</th>
+                    <th>Target Share</th>
+                    <th>Carries</th>
+                    <th>Receptions</th>
+                    <th>RZ Targets</th>
+                    <th>RZ Target Share</th>
                 </tr>
+
             </thead>
+
             <tbody>
-    `;
 
+                ${filtered.map((player,index) => {
 
-    rows.forEach(function(player, index) {
+                    const targetShare = getTargetShare(player);
+                    const rzShare = getRzTargetShare(player);
 
-        html += `
-            <tr>
+                    return `
 
-                <td class="rank">
-                    ${index + 1}
-                </td>
-        `;
+                    <tr>
 
+                        <td class="rank">
+                            ${index + 1}
+                        </td>
 
-        visibleColumns.forEach(function(column) {
+                        <td>
+                            <a
+                                class="player-link"
+                                href="player.html?id=${encodeURIComponent(playerId(player))}"
+                            >
+                                ${escapeHtml(playerName(player))}
+                            </a>
 
-            if (column.key === "name") {
+                            <span class="meta">
+                                View player profile
+                            </span>
+                        </td>
 
-                html += `
-                    <td>
+                        <td>
+                            ${escapeHtml(player.position || "")}
+                        </td>
 
-                        <a
-                            class="link"
-                            href="player.html?id=${encodeURIComponent(player.player_id)}"
-                        >
-                            ${esc(player.name)}
-                        </a>
+                        <td>
+                            ${escapeHtml(teamName(player))}
+                        </td>
 
-                        <span class="meta">
-                            ${esc(player.position)}
-                            ·
-                            ${esc(player.team || "")}
-                        </span>
+                        <td>
+                            ${Number(player.targets) || 0}
+                        </td>
 
-                    </td>
-                `;
+                        <td class="share">
 
-            } else {
+                            ${formatPercentage(targetShare)}
 
-                html += `
-                    <td>
-                        ${displayValue(player, column)}
-                    </td>
-                `;
+                            <div class="bar">
+                                <i style="width:${Math.min(targetShare,100)}%"></i>
+                            </div>
 
-            }
+                        </td>
 
-        });
+                        <td>
+                            ${Number(player.carries) || 0}
+                        </td>
 
+                        <td>
+                            ${Number(player.receptions) || 0}
+                        </td>
 
-        html += `
-            </tr>
-        `;
+                        <td>
+                            ${Number(player.red_zone_targets) || 0}
+                        </td>
 
-    });
+                        <td class="share">
 
+                            ${formatPercentage(rzShare)}
 
-    html += `
+                            <div class="bar">
+                                <i style="width:${Math.min(rzShare,100)}%"></i>
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    `;
+
+                }).join("")}
+
             </tbody>
+
         </table>
     `;
-
-
-    table.innerHTML = html;
-
-
-    document
-        .querySelectorAll(".sort-button")
-        .forEach(function(button) {
-
-            button.addEventListener(
-                "click",
-                function() {
-
-                    const key =
-                        button.dataset.sort;
-
-                    if (currentSort === key) {
-
-                        sortDirection =
-                            sortDirection === "desc"
-                                ? "asc"
-                                : "desc";
-
-                    } else {
-
-                        currentSort = key;
-
-                        const column =
-                            COLUMNS.find(
-                                function(c) {
-                                    return c.key === key;
-                                }
-                            );
-
-                        sortDirection =
-                            column.type === "text"
-                                ? "asc"
-                                : "desc";
-
-                    }
-
-                    render();
-
-                }
-            );
-
-        });
-
 }
 
+async function loadPlayers(){
 
-/* =========================================================
-   EVENTS
-   ========================================================= */
+    try{
 
-search.addEventListener(
-    "input",
-    render
-);
-
-position.addEventListener(
-    "change",
-    render
-);
-
-team.addEventListener(
-    "change",
-    render
-);
-
-
-/* =========================================================
-   LOAD DATA
-   ========================================================= */
-
-fetch("data/players.json")
-
-.then(function(response) {
-
-    if (!response.ok) {
-
-        throw new Error(
-            "HTTP " + response.status
+        const response = await fetch(
+            "data/players.json?v=" + Date.now()
         );
 
-    }
+        if(!response.ok){
+            throw new Error("Failed to load player data");
+        }
 
-    return response.json();
+        const data = await response.json();
 
-})
-
-.then(function(data) {
-
-    DATA =
-        Array.isArray(data)
+        players = Array.isArray(data)
             ? data
             : (data.players || []);
 
-    document.getElementById(
-        "season"
-    ).textContent =
-        (data.season || "") +
-        " Season";
+        if(data.season){
+            seasonLabel.textContent =
+                data.season + " NFL Season";
+        }
 
-    populateTeams();
+        const teams = [...new Set(
+            players
+                .map(player => teamName(player))
+                .filter(Boolean)
+        )].sort();
 
-    render();
+        teams.forEach(team => {
 
-})
+            const option = document.createElement("option");
 
-.catch(function(error) {
+            option.value = team;
+            option.textContent = team;
 
-    console.error(error);
+            teamFilter.appendChild(option);
+        });
 
-    table.innerHTML = `
-        <div style="
-            padding:20px;
-            color:#ff6b6b
-        ">
-            Unable to load player data:
-            ${esc(error.message)}
-        </div>
-    `;
+        render();
 
-});
+    }catch(error){
+
+        console.error(error);
+
+        tableWrap.innerHTML = `
+            <div class="message">
+                Unable to load player data.
+            </div>
+        `;
+    }
+}
+
+searchInput.addEventListener("input",render);
+positionFilter.addEventListener("change",render);
+teamFilter.addEventListener("change",render);
+
+loadPlayers();
 
 </script>
 

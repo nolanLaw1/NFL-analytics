@@ -2,26 +2,317 @@
 <html lang="en">
 
 <head>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>StackTheStats | Players</title>
+
 <link rel="stylesheet" href="styles.css">
+
+<style>
+
+/* =========================
+   PAGE HEADER
+========================= */
+
+.page-header {
+    margin-bottom: 20px;
+}
+
+.page-header h1 {
+    margin: 0 0 6px 0;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -.7px;
+}
+
+.season {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.mainnav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 20px;
+}
+
+.mainnav a {
+    color: var(--muted);
+    background: transparent;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 12px 15px;
+    transition: color .2s ease, border-color .2s ease;
+}
+
+.mainnav a:hover {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.mainnav a.active {
+    color: var(--text);
+    border-bottom: 2px solid var(--accent);
+}
+
+/* =========================
+   CONTROLS
+========================= */
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+}
+
+.search,
+.filter {
+    box-sizing: border-box;
+    min-height: 44px;
+    color: var(--text);
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 11px 13px;
+    font-size: 14px;
+}
+
+.search::placeholder {
+    color: var(--muted);
+}
+
+.search:focus,
+.filter:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(88,166,255,.10);
+}
+
+.filter {
+    min-width: 150px;
+}
+
+/* =========================
+   PANEL
+========================= */
+
+.panel {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(16,23,34,.98),
+            rgba(21,30,43,.98)
+        );
+
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 28px rgba(0,0,0,.16);
+}
+
+.panelhead {
+    padding: 19px 20px;
+    border-bottom: 1px solid var(--line);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.panelhead h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.note {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* =========================
+   TABLE
+========================= */
+
+#table {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1050px;
+}
+
+th,
+td {
+    padding: 13px 15px;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+}
+
+th {
+    color: var(--muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    text-align: left;
+    background: var(--panel2);
+}
+
+td {
+    font-size: 14px;
+}
+
+tbody tr {
+    transition: background .15s ease;
+}
+
+tbody tr:hover {
+    background: rgba(88,166,255,.035);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.rank {
+    width: 45px;
+    color: var(--muted);
+    font-weight: 700;
+}
+
+/* =========================
+   SORT BUTTON
+========================= */
+
+.sort-button {
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    padding: 0;
+    cursor: pointer;
+}
+
+.sort-button:hover {
+    color: var(--text);
+}
+
+/* =========================
+   PLAYER
+========================= */
+
+.link {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.link:hover {
+    color: var(--accent2);
+}
+
+.meta {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+    color: var(--muted);
+    text-align: center;
+    padding: 28px 0;
+    font-size: 13px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    .page-header h1 {
+        font-size: 27px;
+    }
+
+    .controls {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .search {
+        grid-column: 1 / -1;
+        width: 100% !important;
+    }
+
+    .filter {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .panelhead {
+        display: block;
+    }
+
+    .note {
+        margin-top: 5px;
+    }
+
+    table {
+        min-width: 1050px;
+    }
+
+}
+
+</style>
+
 </head>
 
 <body>
 
 <div class="site">
 
-    <div class="brand">
+    <div class="page-header">
+
         <h1>StackTheStats</h1>
+
         <div class="season" id="season"></div>
+
     </div>
 
     <nav class="mainnav">
+
         <a href="index.html">HOME</a>
+
         <a href="league.html">LEAGUE</a>
+
         <a class="active" href="players.html">PLAYERS</a>
+
         <a href="teams.html">TEAMS</a>
+
     </nav>
 
     <div class="controls">
@@ -51,11 +342,13 @@
     <section class="panel">
 
         <div class="panelhead">
+
             <h2>Players</h2>
 
             <div class="note">
                 Click a column header to sort
             </div>
+
         </div>
 
         <div id="table"></div>
@@ -68,7 +361,6 @@
 
 </div>
 
-
 <script>
 
 let DATA = [];
@@ -80,11 +372,6 @@ const search = document.getElementById("search");
 const position = document.getElementById("position");
 const team = document.getElementById("team");
 const table = document.getElementById("table");
-
-
-/* =========================================================
-   COLUMNS
-   ========================================================= */
 
 const COLUMNS = [
 
@@ -105,8 +392,6 @@ const COLUMNS = [
         label: "Team",
         type: "text"
     },
-
-    /* QB PASSING */
 
     {
         key: "pass_attempts",
@@ -156,8 +441,6 @@ const COLUMNS = [
         type: "number"
     },
 
-    /* RECEIVING */
-
     {
         key: "targets",
         label: "Targets",
@@ -182,8 +465,6 @@ const COLUMNS = [
         type: "number"
     },
 
-    /* RUSHING */
-
     {
         key: "carries",
         label: "Carries",
@@ -201,8 +482,6 @@ const COLUMNS = [
         label: "Rushing TDs",
         type: "number"
     },
-
-    /* USAGE */
 
     {
         key: "target_share",
@@ -230,11 +509,6 @@ const COLUMNS = [
 
 ];
 
-
-/* =========================================================
-   POSITION COLUMNS
-   ========================================================= */
-
 const POSITION_COLUMNS = {
 
     ALL: [
@@ -257,7 +531,6 @@ const POSITION_COLUMNS = {
         "name",
         "position",
         "team",
-
         "pass_attempts",
         "completions",
         "completion_pct",
@@ -266,7 +539,6 @@ const POSITION_COLUMNS = {
         "interceptions",
         "yards_per_attempt",
         "red_zone_pass_attempts",
-
         "carries",
         "rushing_yards",
         "rushing_tds",
@@ -317,11 +589,6 @@ const POSITION_COLUMNS = {
 
 };
 
-
-/* =========================================================
-   HELPERS
-   ========================================================= */
-
 function esc(value) {
 
     return String(value ?? "").replace(
@@ -339,7 +606,6 @@ function esc(value) {
 
 }
 
-
 function numberValue(value) {
 
     const n = Number(value);
@@ -348,13 +614,11 @@ function numberValue(value) {
 
 }
 
-
 function formatPercent(value) {
 
     return numberValue(value).toFixed(1) + "%";
 
 }
-
 
 function displayValue(player, column) {
 
@@ -380,7 +644,6 @@ function displayValue(player, column) {
 
 }
 
-
 function getSortValue(player, column) {
 
     if (
@@ -399,11 +662,6 @@ function getSortValue(player, column) {
     ).toLowerCase();
 
 }
-
-
-/* =========================================================
-   SORT
-   ========================================================= */
 
 function sortRows(rows) {
 
@@ -451,7 +709,6 @@ function sortRows(rows) {
 
 }
 
-
 function sortArrow(key) {
 
     if (currentSort !== key) {
@@ -463,11 +720,6 @@ function sortArrow(key) {
         : " ↑";
 
 }
-
-
-/* =========================================================
-   TEAMS
-   ========================================================= */
 
 function populateTeams() {
 
@@ -495,11 +747,6 @@ function populateTeams() {
 
 }
 
-
-/* =========================================================
-   VISIBLE COLUMNS
-   ========================================================= */
-
 function getVisibleColumns() {
 
     const keys =
@@ -514,11 +761,6 @@ function getVisibleColumns() {
 
 }
 
-
-/* =========================================================
-   RENDER
-   ========================================================= */
-
 function render() {
 
     const q =
@@ -527,7 +769,6 @@ function render() {
     const pos = position.value;
 
     const selectedTeam = team.value;
-
 
     let rows = DATA.filter(function(player) {
 
@@ -555,12 +796,8 @@ function render() {
 
     });
 
-
     const visibleColumns =
         getVisibleColumns();
-
-
-    /* Make sure sort column is visible */
 
     const sortVisible =
         visibleColumns.some(function(column) {
@@ -568,7 +805,6 @@ function render() {
             return column.key === currentSort;
 
         });
-
 
     if (!sortVisible) {
 
@@ -598,9 +834,7 @@ function render() {
 
     }
 
-
     sortRows(rows);
-
 
     if (!rows.length) {
 
@@ -617,14 +851,12 @@ function render() {
 
     }
 
-
     let html = `
         <table>
             <thead>
                 <tr>
                     <th class="rank">#</th>
     `;
-
 
     visibleColumns.forEach(function(column) {
 
@@ -641,13 +873,11 @@ function render() {
 
     });
 
-
     html += `
                 </tr>
             </thead>
             <tbody>
     `;
-
 
     rows.forEach(function(player, index) {
 
@@ -658,7 +888,6 @@ function render() {
                     ${index + 1}
                 </td>
         `;
-
 
         visibleColumns.forEach(function(column) {
 
@@ -695,22 +924,18 @@ function render() {
 
         });
 
-
         html += `
             </tr>
         `;
 
     });
 
-
     html += `
             </tbody>
         </table>
     `;
 
-
     table.innerHTML = html;
-
 
     document
         .querySelectorAll(".sort-button")
@@ -757,30 +982,11 @@ function render() {
 
 }
 
+search.addEventListener("input", render);
 
-/* =========================================================
-   EVENTS
-   ========================================================= */
+position.addEventListener("change", render);
 
-search.addEventListener(
-    "input",
-    render
-);
-
-position.addEventListener(
-    "change",
-    render
-);
-
-team.addEventListener(
-    "change",
-    render
-);
-
-
-/* =========================================================
-   LOAD DATA
-   ========================================================= */
+team.addEventListener("change", render);
 
 fetch("data/players.json")
 

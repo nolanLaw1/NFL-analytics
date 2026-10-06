@@ -360,6 +360,35 @@ function getWeekly(player) {
 
 
 /* =========================
+   RZ CARRIES
+   USE WEEKLY DATA
+========================= */
+
+function getRedZoneCarries(player) {
+
+    const weekly = getWeekly(player);
+
+    if (!weekly.length) {
+        return Number(player.red_zone_carries) || 0;
+    }
+
+    let total = 0;
+
+    for (const row of weekly) {
+
+        const value = Number(row.red_zone_carries);
+
+        if (Number.isFinite(value)) {
+            total += value;
+        }
+
+    }
+
+    return total;
+}
+
+
+/* =========================
    STAT CARD
 ========================= */
 
@@ -448,7 +477,7 @@ function buildStats(player) {
 
         html += statCard(
             "RZ Carries",
-            number(player.red_zone_carries)
+            number(getRedZoneCarries(player))
         );
 
     }
@@ -512,7 +541,7 @@ function buildStats(player) {
 
         html += statCard(
             "RZ Carries",
-            number(player.red_zone_carries)
+            number(getRedZoneCarries(player))
         );
 
     }
@@ -576,7 +605,7 @@ function buildStats(player) {
 
         html += statCard(
             "RZ Carries",
-            number(player.red_zone_carries)
+            number(getRedZoneCarries(player))
         );
 
     }

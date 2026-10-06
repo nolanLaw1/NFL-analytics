@@ -290,11 +290,16 @@
    PLAYER ID
 ========================= */
 
-const params = new URLSearchParams(window.location.search);
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
 
-const playerId = params.get("id");
+const playerId =
+    params.get("id");
 
-const content = document.getElementById("playerContent");
+const content =
+    document.getElementById("playerContent");
 
 
 /* =========================
@@ -318,6 +323,7 @@ function number(value) {
     }
 
     return n.toLocaleString();
+
 }
 
 
@@ -338,6 +344,7 @@ function percentage(value) {
     }
 
     return n.toFixed(1) + "%";
+
 }
 
 
@@ -356,6 +363,7 @@ function getWeekly(player) {
     }
 
     return [];
+
 }
 
 
@@ -363,7 +371,11 @@ function getWeekly(player) {
    STAT CARD
 ========================= */
 
-function statCard(label, value, sub = "") {
+function statCard(
+    label,
+    value,
+    sub = ""
+) {
 
     return `
         <div class="stat-card">
@@ -376,13 +388,15 @@ function statCard(label, value, sub = "") {
                 ${value}
             </div>
 
-            ${sub
-                ? `<div class="stat-card-sub">${sub}</div>`
-                : ""
+            ${
+                sub
+                    ? `<div class="stat-card-sub">${sub}</div>`
+                    : ""
             }
 
         </div>
     `;
+
 }
 
 
@@ -392,9 +406,11 @@ function statCard(label, value, sub = "") {
 
 function buildStats(player) {
 
-    const position = player.position;
+    const position =
+        player.position;
 
-    let html = `<div class="stat-grid">`;
+    let html =
+        `<div class="stat-grid">`;
 
 
     /* =========================
@@ -418,7 +434,10 @@ function buildStats(player) {
 
         html += statCard(
             "Pass TDs",
-            number(player.passing_touchdowns)
+            number(
+                player.passing_touchdowns ??
+                player.passing_tds
+            )
         );
 
         html += statCard(
@@ -428,12 +447,16 @@ function buildStats(player) {
 
         html += statCard(
             "RZ Pass Attempts",
-            number(player.red_zone_pass_attempts)
+            number(
+                player.red_zone_pass_attempts
+            )
         );
 
         html += statCard(
             "RZ Pass TDs",
-            number(player.red_zone_pass_touchdowns)
+            number(
+                player.red_zone_pass_touchdowns
+            )
         );
 
         html += statCard(
@@ -447,8 +470,11 @@ function buildStats(player) {
         );
 
         html += statCard(
-            "RZ Rushes",
-            number(player.red_zone_rushes)
+            "RZ Carries",
+            number(
+                player.red_zone_carries ??
+                player.red_zone_rushes
+            )
         );
 
     }
@@ -472,7 +498,10 @@ function buildStats(player) {
 
         html += statCard(
             "Rush TDs",
-            number(player.rushing_touchdowns)
+            number(
+                player.rushing_touchdowns ??
+                player.rushing_tds
+            )
         );
 
         html += statCard(
@@ -497,7 +526,10 @@ function buildStats(player) {
 
         html += statCard(
             "Receiving TDs",
-            number(player.receiving_touchdowns)
+            number(
+                player.receiving_touchdowns ??
+                player.receiving_tds
+            )
         );
 
         html += statCard(
@@ -507,17 +539,37 @@ function buildStats(player) {
 
         html += statCard(
             "RZ Target Share",
-            percentage(player.red_zone_target_share)
+            percentage(
+                player.red_zone_target_share
+            )
+        );
+
+        html += statCard(
+            "RZ Receptions",
+            number(
+                player.red_zone_receptions
+            )
+        );
+
+        html += statCard(
+            "RZ Receiving Yards",
+            number(
+                player.red_zone_receiving_yards
+            )
+        );
+
+        html += statCard(
+            "RZ Receiving TDs",
+            number(
+                player.red_zone_receiving_touchdowns
+            )
         );
 
         html += statCard(
             "RZ Carries",
-            number(player.red_zone_carries)
-        );
-
-        html += statCard(
-            "RZ Rushes",
-            number(player.red_zone_rushes)
+            number(
+                player.red_zone_carries
+            )
         );
 
     }
@@ -551,37 +603,52 @@ function buildStats(player) {
 
         html += statCard(
             "Receiving TDs",
-            number(player.receiving_touchdowns)
+            number(
+                player.receiving_touchdowns ??
+                player.receiving_tds
+            )
         );
 
         html += statCard(
             "RZ Targets",
-            number(player.red_zone_targets)
+            number(
+                player.red_zone_targets
+            )
         );
 
         html += statCard(
             "RZ Target Share",
-            percentage(player.red_zone_target_share)
+            percentage(
+                player.red_zone_target_share
+            )
         );
 
         html += statCard(
             "RZ Receptions",
-            number(player.red_zone_receptions)
+            number(
+                player.red_zone_receptions
+            )
         );
 
         html += statCard(
             "RZ Receiving Yards",
-            number(player.red_zone_receiving_yards)
+            number(
+                player.red_zone_receiving_yards
+            )
         );
 
         html += statCard(
             "RZ Receiving TDs",
-            number(player.red_zone_receiving_touchdowns)
+            number(
+                player.red_zone_receiving_touchdowns
+            )
         );
 
         html += statCard(
             "RZ Carries",
-            number(player.red_zone_carries)
+            number(
+                player.red_zone_carries
+            )
         );
 
     }
@@ -590,6 +657,7 @@ function buildStats(player) {
     html += `</div>`;
 
     return html;
+
 }
 
 
@@ -599,7 +667,8 @@ function buildStats(player) {
 
 function buildWeeklyTable(player) {
 
-    const weekly = getWeekly(player);
+    const weekly =
+        getWeekly(player);
 
 
     if (!weekly.length) {
@@ -609,19 +678,22 @@ function buildWeeklyTable(player) {
                 Weekly usage data is not available yet.
             </div>
         `;
+
     }
 
 
-    const completedWeeks = [...weekly]
-        .filter(row =>
-            row &&
-            row.week !== undefined
-        )
-        .sort(
-            (a, b) =>
-                Number(a.week) -
-                Number(b.week)
-        );
+    const completedWeeks =
+        [...weekly]
+            .filter(
+                row =>
+                    row &&
+                    row.week !== undefined
+            )
+            .sort(
+                (a, b) =>
+                    Number(a.week) -
+                    Number(b.week)
+            );
 
 
     if (!completedWeeks.length) {
@@ -631,6 +703,7 @@ function buildWeeklyTable(player) {
                 Weekly usage data is not available yet.
             </div>
         `;
+
     }
 
 
@@ -668,16 +741,21 @@ function buildWeeklyTable(player) {
                 </td>
 
                 <td class="share">
-                    ${percentage(row.red_zone_target_share)}
+                    ${percentage(
+                        row.red_zone_target_share
+                    )}
                 </td>
 
                 <td>
-                    ${number(row.red_zone_carries)}
+                    ${number(
+                        row.red_zone_carries
+                    )}
                 </td>
 
             </tr>
 
         `;
+
     }
 
 
@@ -692,25 +770,17 @@ function buildWeeklyTable(player) {
                     <tr>
 
                         <th>Week</th>
-
                         <th>Targets</th>
-
                         <th>Target Share</th>
-
                         <th>Carries</th>
-
                         <th>Receptions</th>
-
                         <th>RZ Targets</th>
-
                         <th>RZ Target Share</th>
-
                         <th>RZ Carries</th>
 
                     </tr>
 
                 </thead>
-
 
                 <tbody>
 
@@ -723,6 +793,7 @@ function buildWeeklyTable(player) {
         </div>
 
     `;
+
 }
 
 
@@ -741,17 +812,20 @@ async function loadPlayer() {
         `;
 
         return;
+
     }
 
 
     try {
 
-        const response = await fetch(
-            "data/players.json?ts=" + Date.now(),
-            {
-                cache: "no-store"
-            }
-        );
+        const response =
+            await fetch(
+                "data/players.json?ts=" +
+                Date.now(),
+                {
+                    cache: "no-store"
+                }
+            );
 
 
         if (!response.ok) {
@@ -763,14 +837,37 @@ async function loadPlayer() {
         }
 
 
-        const players = await response.json();
+        const raw =
+            await response.json();
 
 
-        const player = players.find(
-            p =>
-                String(p.player_id) ===
-                String(playerId)
-        );
+        /*
+         * Support both:
+         *
+         * [ {...}, {...} ]
+         *
+         * and:
+         *
+         * {
+         *   "season": 2026,
+         *   "players": [ ... ]
+         * }
+         */
+
+        const players =
+            Array.isArray(raw)
+                ? raw
+                : Array.isArray(raw.players)
+                    ? raw.players
+                    : [];
+
+
+        const player =
+            players.find(
+                p =>
+                    String(p.player_id) ===
+                    String(playerId)
+            );
 
 
         if (!player) {
@@ -782,6 +879,7 @@ async function loadPlayer() {
             `;
 
             return;
+
         }
 
 
@@ -863,7 +961,6 @@ async function loadPlayer() {
     catch (error) {
 
         console.error(error);
-
 
         content.innerHTML = `
 

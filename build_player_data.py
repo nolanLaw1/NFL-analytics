@@ -21,21 +21,20 @@ OUTPUT_FILE = DATA_DIR / "players.json"
 # HELPERS
 # ============================================================
 
-def first_existing(df, names, default=None):
+def get_column(df, possible_columns, required=True):
+    for column in possible_columns:
+        if column in df.columns:
+            return column
 
-    for name in names:
+    if required:
+        raise RuntimeError(
+            f"Could not find any of these columns: {possible_columns}"
+        )
 
-        if name in df.columns:
-            return name
-
-    return default
+    return None
 
 
-def clean_number(value):
-
-    if isinstance(value, (list, dict)):
-        return value
-
+def safe_number(value):
     if pd.isna(value):
         return 0
 
@@ -46,7 +45,7 @@ def clean_number(value):
 
 
 # ============================================================
-# LOAD PLAYER STATS
+# LOAD PLAYER DATA
 # ============================================================
 
 def load_player_stats():
@@ -56,20 +55,16 @@ def load_player_stats():
         f"stats_player/stats_player_week_{SEASON}.csv"
     )
 
-    print(
-        f"Downloading player statistics from {url}"
-    )
+    print(f"Downloading player statistics from {url}")
 
-    df = pd.read_csv(
+    stats = pd.read_csv(
         url,
         low_memory=False
     )
 
-    print(
-        f"Loaded {len(df):,} player-stat rows."
-    )
+    print(f"Loaded {len(stats):,} player-stat rows.")
 
-    return df
+    return stats
 
 
 # ============================================================
@@ -83,35 +78,30 @@ def load_pbp():
         f"pbp/play_by_play_{SEASON}.parquet"
     )
 
-    print(
-        f"Downloading play-by-play data from {url}"
-    )
+    print(f"Downloading play-by-play data from {url}")
 
     pbp = pd.read_parquet(url)
 
-    print(
-        f"Loaded {len(pbp):,} play-by-play rows."
-    )
+    print(f"Loaded {len(pbp):,} play-by-play rows.")
 
     return pbp
 
 
 # ============================================================
-# PLAYER TOTALS
+# PREP PLAYER STATS
 # ============================================================
 
-def build_player_totals(stats):
+def prepare_player_stats(stats):
 
-    player_id_col = first_existing(
+    player_id_col = get_column(
         stats,
         [
             "player_id",
-            "player_player_id",
             "gsis_id"
         ]
     )
 
-    name_col = first_existing(
+    name_col = get_column(
         stats,
         [
             "player_display_name",
@@ -120,40 +110,23 @@ def build_player_totals(stats):
         ]
     )
 
-    position_col = first_existing(
+    position_col = get_column(
         stats,
         [
             "position"
         ]
     )
 
-    team_col = first_existing(
+    team_col = get_column(
         stats,
         [
-            "recent_team",
             "team",
-            "posteam"
-        ]
+            "recent_team"
+        ],
+        required=False
     )
 
-    if not player_id_col:
-
-        raise RuntimeError(
-            "Could not find player ID column."
-        )
-
-    if not name_col:
-
-        raise RuntimeError(
-            "Could not find player name column."
-        )
-
-    if not position_col:
-
-        raise RuntimeError(
-            "Could not find position column."
-        )
-
+    stats = stats.copy()
 
     stats["player_id"] = (
         stats[player_id_col]
@@ -175,7 +148,6 @@ def build_player_totals(stats):
         .astype(str)
     )
 
-
     if team_col:
 
         stats["team"] = (
@@ -189,94 +161,115 @@ def build_player_totals(stats):
         stats["team"] = ""
 
 
+    # Only the statistics we actually use
     numeric_columns = [
-
-        "completions",
         "attempts",
+        "completions",
         "passing_yards",
         "passing_tds",
         "interceptions",
 
-        "sacks",
-        "sack_yards",
-
-        "passing_air_yards",
-        "passing_first_downs",
-        "passing_epa",
-
         "carries",
         "rushing_yards",
         "rushing_tds",
-        "rushing_first_downs",
-        "rushing_epa",
 
         "targets",
         "receptions",
         "receiving_yards",
-        "receiving_tds",
-        "receiving_air_yards",
-        "receiving_first_downs",
-        "receiving_epa",
-
-        "fantasy_points",
-        "fantasy_points_ppr",
-
-        "special_teams_tds",
+        "receiving_tds"
     ]
-
 
     for column in numeric_columns:
 
         if column not in stats.columns:
-
             stats[column] = 0
 
-        stats[column] = (
-            pd.to_numeric(
-                stats[column],
-                errors="coerce"
-            )
-            .fillna(0)
-        )
+        stats[column] = pd.to_numeric(
+            stats[column],
+            errors="coerce"
+        ).fillna(0)
 
+
+    return stats
+
+
+# ============================================================
+# BUILD PLAYER TOTALS
+# ============================================================
+
+def build_player_totals(stats):
 
     players = (
-        stats.groupby(
+        stats
+        .groupby(
             [
                 "player_id",
                 "player_name",
                 "name",
-                "position",
+                "position"
             ],
             dropna=False
         )
         .agg(
             team=(
                 "team",
-                lambda x: next(
+                lambda values: next(
                     (
-                        v
-                        for v in reversed(x.tolist())
-                        if v and v != "nan"
+                        str(value)
+                        for value in reversed(values.tolist())
+                        if str(value)
+                        not in ["", "nan", "None"]
                     ),
                     ""
                 )
             ),
-            **{
-                column: (column, "sum")
-                for column in numeric_columns
-            }
+
+            attempts=("attempts", "sum"),
+            completions=("completions", "sum"),
+            passing_yards=("passing_yards", "sum"),
+            passing_tds=("passing_tds", "sum"),
+            interceptions=("interceptions", "sum"),
+
+            carries=("carries", "sum"),
+            rushing_yards=("rushing_yards", "sum"),
+            rushing_tds=("rushing_tds", "sum"),
+
+            targets=("targets", "sum"),
+            receptions=("receptions", "sum"),
+            receiving_yards=("receiving_yards", "sum"),
+            receiving_tds=("receiving_tds", "sum")
         )
         .reset_index()
     )
 
 
-    # ========================================================
-    # NORMAL TARGET SHARE
-    # ========================================================
+    # Completion percentage
+    players["completion_pct"] = 0.0
 
+    valid = players["attempts"] > 0
+
+    players.loc[valid, "completion_pct"] = (
+        players.loc[valid, "completions"]
+        /
+        players.loc[valid, "attempts"]
+        * 100
+    )
+
+
+    # Yards per attempt
+    players["yards_per_attempt"] = 0.0
+
+    players.loc[valid, "yards_per_attempt"] = (
+        players.loc[valid, "passing_yards"]
+        /
+        players.loc[valid, "attempts"]
+    )
+
+
+    # Team targets
     team_targets = (
-        players.groupby(
+        players
+        .groupby(
             "team",
             as_index=False
         )["targets"]
@@ -296,37 +289,21 @@ def build_player_totals(stats):
     )
 
 
-    players["team_targets"] = (
-        pd.to_numeric(
-            players["team_targets"],
-            errors="coerce"
-        )
-        .fillna(0)
-    )
-
-
     players["target_share"] = 0.0
 
+    valid = players["team_targets"] > 0
 
-    valid_targets = (
-        players["team_targets"] > 0
+    players.loc[valid, "target_share"] = (
+        players.loc[valid, "targets"]
+        /
+        players.loc[valid, "team_targets"]
+        * 100
     )
 
 
-    players.loc[
-        valid_targets,
-        "target_share"
-    ] = (
-        players.loc[
-            valid_targets,
-            "targets"
-        ]
-        /
-        players.loc[
-            valid_targets,
-            "team_targets"
-        ]
-        * 100
+    players.drop(
+        columns=["team_targets"],
+        inplace=True
     )
 
 
@@ -339,6 +316,9 @@ def build_player_totals(stats):
 
 def prepare_pbp(pbp):
 
+    pbp = pbp.copy()
+
+
     # Regular season only
     if "season_type" in pbp.columns:
 
@@ -346,53 +326,38 @@ def prepare_pbp(pbp):
             pbp["season_type"] == "REG"
         ].copy()
 
-    else:
 
-        pbp = pbp.copy()
-
-
-    # Make sure required columns exist
-    required_defaults = {
-
+    # Make sure needed columns exist
+    defaults = {
         "pass_attempt": 0,
         "rush_attempt": 0,
-
         "receiver_player_id": "",
         "rusher_player_id": "",
-
+        "passer_player_id": "",
         "posteam": "",
-
-        "yardline_100": None,
-
+        "yardline_100": 999,
         "complete_pass": 0,
         "touchdown": 0,
-
         "receiving_yards": 0,
-        "yards_gained": 0,
-
-        "passer_player_id": "",
+        "yards_gained": 0
     }
 
 
-    for column, default in required_defaults.items():
+    for column, default in defaults.items():
 
         if column not in pbp.columns:
-
             pbp[column] = default
 
 
-    # Numeric columns
-
+    # Numeric
     for column in [
-
         "pass_attempt",
         "rush_attempt",
+        "yardline_100",
         "complete_pass",
         "touchdown",
-        "yardline_100",
         "receiving_yards",
-        "yards_gained",
-
+        "yards_gained"
     ]:
 
         pbp[column] = pd.to_numeric(
@@ -401,14 +366,12 @@ def prepare_pbp(pbp):
         ).fillna(0)
 
 
-    # IDs
-
+    # IDs / team
     for column in [
-
         "receiver_player_id",
         "rusher_player_id",
         "passer_player_id",
-
+        "posteam"
     ]:
 
         pbp[column] = (
@@ -418,14 +381,7 @@ def prepare_pbp(pbp):
         )
 
 
-    pbp["posteam"] = (
-        pbp["posteam"]
-        .fillna("")
-        .astype(str)
-    )
-
-
-    # Red zone
+    # Red zone = inside the 20
     pbp["red_zone"] = (
         pbp["yardline_100"] <= 20
     )
@@ -456,7 +412,6 @@ def calculate_red_zone_rushes(pbp):
         return pd.DataFrame(
             columns=[
                 "player_id",
-                "team",
                 "red_zone_rushes",
                 "team_red_zone_rushes"
             ]
@@ -465,21 +420,17 @@ def calculate_red_zone_rushes(pbp):
 
     rz["player_id"] = (
         rz["rusher_player_id"]
-        .astype(str)
     )
 
     rz["team"] = (
         rz["posteam"]
-        .astype(str)
     )
 
 
-    player_rushes = (
-        rz.groupby(
-            [
-                "player_id",
-                "team"
-            ],
+    player = (
+        rz
+        .groupby(
+            "player_id",
             as_index=False
         )
         .size()
@@ -491,8 +442,9 @@ def calculate_red_zone_rushes(pbp):
     )
 
 
-    team_rushes = (
-        rz.groupby(
+    team = (
+        rz
+        .groupby(
             "team",
             as_index=False
         )
@@ -505,11 +457,40 @@ def calculate_red_zone_rushes(pbp):
     )
 
 
-    return player_rushes.merge(
-        team_rushes,
+    player_team = (
+        rz[
+            [
+                "player_id",
+                "team"
+            ]
+        ]
+        .drop_duplicates(
+            "player_id"
+        )
+    )
+
+
+    result = player.merge(
+        player_team,
+        on="player_id",
+        how="left"
+    )
+
+
+    result = result.merge(
+        team,
         on="team",
         how="left"
     )
+
+
+    return result[
+        [
+            "player_id",
+            "red_zone_rushes",
+            "team_red_zone_rushes"
+        ]
+    ]
 
 
 # ============================================================
@@ -534,7 +515,6 @@ def calculate_red_zone_targets(pbp):
         return pd.DataFrame(
             columns=[
                 "player_id",
-                "team",
                 "red_zone_targets",
                 "team_red_zone_targets"
             ]
@@ -543,21 +523,17 @@ def calculate_red_zone_targets(pbp):
 
     rz["player_id"] = (
         rz["receiver_player_id"]
-        .astype(str)
     )
 
     rz["team"] = (
         rz["posteam"]
-        .astype(str)
     )
 
 
-    player_targets = (
-        rz.groupby(
-            [
-                "player_id",
-                "team"
-            ],
+    player = (
+        rz
+        .groupby(
+            "player_id",
             as_index=False
         )
         .size()
@@ -569,8 +545,9 @@ def calculate_red_zone_targets(pbp):
     )
 
 
-    team_targets = (
-        rz.groupby(
+    team = (
+        rz
+        .groupby(
             "team",
             as_index=False
         )
@@ -583,11 +560,40 @@ def calculate_red_zone_targets(pbp):
     )
 
 
-    return player_targets.merge(
-        team_targets,
+    player_team = (
+        rz[
+            [
+                "player_id",
+                "team"
+            ]
+        ]
+        .drop_duplicates(
+            "player_id"
+        )
+    )
+
+
+    result = player.merge(
+        player_team,
+        on="player_id",
+        how="left"
+    )
+
+
+    result = result.merge(
+        team,
         on="team",
         how="left"
     )
+
+
+    return result[
+        [
+            "player_id",
+            "red_zone_targets",
+            "team_red_zone_targets"
+        ]
+    ]
 
 
 # ============================================================
@@ -602,8 +608,6 @@ def calculate_red_zone_receiving(pbp):
         (pbp["red_zone"])
         &
         (pbp["receiver_player_id"] != "")
-        &
-        (pbp["posteam"] != "")
     ].copy()
 
 
@@ -621,57 +625,22 @@ def calculate_red_zone_receiving(pbp):
 
     rz["player_id"] = (
         rz["receiver_player_id"]
-        .astype(str)
     )
 
 
-    # --------------------------------------------------------
-    # RECEPTIONS
-    # --------------------------------------------------------
-
+    # Reception
     rz["rz_reception"] = (
-        rz["complete_pass"]
-        .eq(1)
-        .astype(int)
-    )
+        rz["complete_pass"] == 1
+    ).astype(int)
 
 
-    # --------------------------------------------------------
-    # RECEIVING YARDS
-    # --------------------------------------------------------
-
-    if "receiving_yards" in rz.columns:
-
-        rz["rz_receiving_yards"] = (
-            pd.to_numeric(
-                rz["receiving_yards"],
-                errors="coerce"
-            )
-            .fillna(0)
-        )
-
-    else:
-
-        rz["rz_receiving_yards"] = (
-            pd.to_numeric(
-                rz["yards_gained"],
-                errors="coerce"
-            )
-            .fillna(0)
-        )
-
-
-    # Only completed passes count as receiving yards
+    # Receiving yards
     rz["rz_receiving_yards"] = (
-        rz["rz_receiving_yards"]
-        * rz["rz_reception"]
+        rz["receiving_yards"]
     )
 
 
-    # --------------------------------------------------------
-    # RECEIVING TOUCHDOWNS
-    # --------------------------------------------------------
-
+    # Receiving TD
     rz["rz_receiving_td"] = (
         (
             rz["complete_pass"] == 1
@@ -684,7 +653,8 @@ def calculate_red_zone_receiving(pbp):
 
 
     result = (
-        rz.groupby(
+        rz
+        .groupby(
             "player_id",
             as_index=False
         )
@@ -693,10 +663,12 @@ def calculate_red_zone_receiving(pbp):
                 "rz_reception",
                 "sum"
             ),
+
             red_zone_receiving_yards=(
                 "rz_receiving_yards",
                 "sum"
             ),
+
             red_zone_receiving_touchdowns=(
                 "rz_receiving_td",
                 "sum"
@@ -736,7 +708,6 @@ def calculate_red_zone_passing(pbp):
 
     rz["player_id"] = (
         rz["passer_player_id"]
-        .astype(str)
     )
 
 
@@ -746,7 +717,8 @@ def calculate_red_zone_passing(pbp):
 
 
     result = (
-        rz.groupby(
+        rz
+        .groupby(
             "player_id",
             as_index=False
         )
@@ -755,6 +727,7 @@ def calculate_red_zone_passing(pbp):
                 "pass_attempt",
                 "sum"
             ),
+
             red_zone_pass_touchdowns=(
                 "rz_pass_td",
                 "sum"
@@ -772,58 +745,31 @@ def calculate_red_zone_passing(pbp):
 
 def add_red_zone_data(players, pbp):
 
-    # --------------------------------------------------------
-    # RUSHES
-    # --------------------------------------------------------
-
     rushes = calculate_red_zone_rushes(
         pbp
     )
 
-
     players = players.merge(
-        rushes[
-            [
-                "player_id",
-                "red_zone_rushes",
-                "team_red_zone_rushes"
-            ]
-        ],
+        rushes,
         on="player_id",
         how="left"
     )
 
-
-    # --------------------------------------------------------
-    # TARGETS
-    # --------------------------------------------------------
 
     targets = calculate_red_zone_targets(
         pbp
     )
 
-
     players = players.merge(
-        targets[
-            [
-                "player_id",
-                "red_zone_targets",
-                "team_red_zone_targets"
-            ]
-        ],
+        targets,
         on="player_id",
         how="left"
     )
 
 
-    # --------------------------------------------------------
-    # RECEIVING
-    # --------------------------------------------------------
-
     receiving = calculate_red_zone_receiving(
         pbp
     )
-
 
     players = players.merge(
         receiving,
@@ -832,14 +778,9 @@ def add_red_zone_data(players, pbp):
     )
 
 
-    # --------------------------------------------------------
-    # PASSING
-    # --------------------------------------------------------
-
     passing = calculate_red_zone_passing(
         pbp
     )
-
 
     players = players.merge(
         passing,
@@ -848,12 +789,8 @@ def add_red_zone_data(players, pbp):
     )
 
 
-    # --------------------------------------------------------
-    # DEFAULTS
-    # --------------------------------------------------------
-
-    new_columns = [
-
+    # Defaults
+    rz_columns = [
         "red_zone_rushes",
         "team_red_zone_rushes",
 
@@ -865,92 +802,53 @@ def add_red_zone_data(players, pbp):
         "red_zone_receiving_touchdowns",
 
         "red_zone_pass_attempts",
-        "red_zone_pass_touchdowns",
-
+        "red_zone_pass_touchdowns"
     ]
 
 
-    for column in new_columns:
+    for column in rz_columns:
 
         if column not in players.columns:
-
             players[column] = 0
 
-        players[column] = (
-            pd.to_numeric(
-                players[column],
-                errors="coerce"
-            )
-            .fillna(0)
-        )
+        players[column] = pd.to_numeric(
+            players[column],
+            errors="coerce"
+        ).fillna(0)
 
 
-    # --------------------------------------------------------
-    # RZ CARRIES
-    #
-    # Keep red_zone_rushes for compatibility,
-    # but expose red_zone_carries for the website.
-    # --------------------------------------------------------
-
+    # Website compatibility
     players["red_zone_carries"] = (
         players["red_zone_rushes"]
     )
 
 
-    # --------------------------------------------------------
-    # TEAM RZ TARGET SHARE
-    # --------------------------------------------------------
-
+    # RZ target share
     players["red_zone_target_share"] = 0.0
 
-
-    valid_targets = (
+    valid = (
         players["team_red_zone_targets"] > 0
     )
 
-
-    players.loc[
-        valid_targets,
-        "red_zone_target_share"
-    ] = (
-        players.loc[
-            valid_targets,
-            "red_zone_targets"
-        ]
+    players.loc[valid, "red_zone_target_share"] = (
+        players.loc[valid, "red_zone_targets"]
         /
-        players.loc[
-            valid_targets,
-            "team_red_zone_targets"
-        ]
+        players.loc[valid, "team_red_zone_targets"]
         * 100
     )
 
 
-    # --------------------------------------------------------
-    # TEAM RZ RUSH SHARE
-    # --------------------------------------------------------
-
+    # RZ rush share
     players["red_zone_rush_share"] = 0.0
 
-
-    valid_rushes = (
+    valid = (
         players["team_red_zone_rushes"] > 0
     )
 
-
-    players.loc[
-        valid_rushes,
-        "red_zone_rush_share"
-    ] = (
-        players.loc[
-            valid_rushes,
-            "red_zone_rushes"
-        ]
+    players.loc[valid, "red_zone_rush_share"] = (
+        players.loc[valid, "red_zone_rushes"]
         /
-        players.loc[
-            valid_rushes,
-            "team_red_zone_rushes"
-        ]
+        players.loc[valid, "team_red_zone_rushes"]
         * 100
     )
 
@@ -967,7 +865,10 @@ def build_weekly_usage(stats, pbp):
     weekly = []
 
 
-    # Regular season only
+    # --------------------------------------------------------
+    # REGULAR SEASON
+    # --------------------------------------------------------
+
     if "season_type" in stats.columns:
 
         weekly_stats = stats[
@@ -985,65 +886,76 @@ def build_weekly_usage(stats, pbp):
 
 
     # --------------------------------------------------------
-    # NORMALIZE IDS
+    # IDENTIFY PLAYER ID
     # --------------------------------------------------------
 
-    id_col = first_existing(
+    player_id_col = get_column(
         weekly_stats,
         [
             "player_id",
-            "player_player_id",
             "gsis_id"
         ]
     )
 
 
-    if not id_col:
+    # --------------------------------------------------------
+    # IDENTIFY TEAM
+    #
+    # This is the important fix.
+    # 2026 uses "team" in the file we're downloading.
+    # --------------------------------------------------------
 
-        return weekly
+    team_col = get_column(
+        weekly_stats,
+        [
+            "team",
+            "recent_team"
+        ]
+    )
 
 
     weekly_stats["player_id"] = (
-        weekly_stats[id_col]
+        weekly_stats[player_id_col]
+        .fillna("")
+        .astype(str)
+    )
+
+
+    weekly_stats["team"] = (
+        weekly_stats[team_col]
         .fillna("")
         .astype(str)
     )
 
 
     # --------------------------------------------------------
-    # NUMERIC FIELDS
+    # REQUIRED WEEKLY STATS
     # --------------------------------------------------------
 
     for column in [
-
         "targets",
         "carries",
         "receptions"
-
     ]:
 
         if column not in weekly_stats.columns:
-
             weekly_stats[column] = 0
 
-        weekly_stats[column] = (
-            pd.to_numeric(
-                weekly_stats[column],
-                errors="coerce"
-            )
-            .fillna(0)
-        )
+        weekly_stats[column] = pd.to_numeric(
+            weekly_stats[column],
+            errors="coerce"
+        ).fillna(0)
 
 
     # --------------------------------------------------------
-    # TEAM TARGETS BY WEEK
+    # TEAM TARGETS PER WEEK
     # --------------------------------------------------------
 
     team_week_targets = (
         weekly_stats
         .groupby(
             [
-                "recent_team",
+                "team",
                 "week"
             ],
             as_index=False
@@ -1060,53 +972,43 @@ def build_weekly_usage(stats, pbp):
     weekly_stats = weekly_stats.merge(
         team_week_targets,
         on=[
-            "recent_team",
+            "team",
             "week"
         ],
         how="left"
     )
 
 
-    weekly_stats["target_share"] = 0.0
+    # --------------------------------------------------------
+    # TARGET SHARE
+    # --------------------------------------------------------
 
+    weekly_stats["target_share"] = 0.0
 
     valid = (
         weekly_stats["team_targets"] > 0
     )
 
 
-    weekly_stats.loc[
-        valid,
-        "target_share"
-    ] = (
-        weekly_stats.loc[
-            valid,
-            "targets"
-        ]
+    weekly_stats.loc[valid, "target_share"] = (
+        weekly_stats.loc[valid, "targets"]
         /
-        weekly_stats.loc[
-            valid,
-            "team_targets"
-        ]
+        weekly_stats.loc[valid, "team_targets"]
         * 100
     )
 
 
     # --------------------------------------------------------
-    # RZ PBP WEEKLY
+    # RZ TARGETS BY PLAYER/WEEK
     # --------------------------------------------------------
 
-    rz_pbp = pbp[
-        pbp["red_zone"]
-    ].copy()
-
-
-    # RZ targets
     rz_targets = (
-        rz_pbp[
-            (rz_pbp["pass_attempt"] == 1)
+        pbp[
+            (pbp["red_zone"])
             &
-            (rz_pbp["receiver_player_id"] != "")
+            (pbp["pass_attempt"] == 1)
+            &
+            (pbp["receiver_player_id"] != "")
         ]
         .groupby(
             [
@@ -1125,12 +1027,17 @@ def build_weekly_usage(stats, pbp):
     )
 
 
-    # RZ carries
+    # --------------------------------------------------------
+    # RZ CARRIES BY PLAYER/WEEK
+    # --------------------------------------------------------
+
     rz_carries = (
-        rz_pbp[
-            (rz_pbp["rush_attempt"] == 1)
+        pbp[
+            (pbp["red_zone"])
             &
-            (rz_pbp["rusher_player_id"] != "")
+            (pbp["rush_attempt"] == 1)
+            &
+            (pbp["rusher_player_id"] != "")
         ]
         .groupby(
             [
@@ -1150,7 +1057,7 @@ def build_weekly_usage(stats, pbp):
 
 
     # --------------------------------------------------------
-    # BUILD PLAYER/WEEK ROWS
+    # BUILD WEEKLY ROWS
     # --------------------------------------------------------
 
     for _, row in weekly_stats.iterrows():
@@ -1164,82 +1071,55 @@ def build_weekly_usage(stats, pbp):
         )
 
 
-        target_row = rz_targets[
-            (
-                rz_targets["player_id"]
-                == player_id
-            )
+        target_match = rz_targets[
+            (rz_targets["player_id"] == player_id)
             &
-            (
-                rz_targets["week"]
-                == week
-            )
+            (rz_targets["week"] == week)
         ]
 
 
-        carry_row = rz_carries[
-            (
-                rz_carries["player_id"]
-                == player_id
-            )
+        carry_match = rz_carries[
+            (rz_carries["player_id"] == player_id)
             &
-            (
-                rz_carries["week"]
-                == week
-            )
+            (rz_carries["week"] == week)
         ]
 
 
-        red_zone_targets = (
-            int(
-                target_row.iloc[0]["red_zone_targets"]
+        red_zone_targets = 0
+
+        if not target_match.empty:
+
+            red_zone_targets = int(
+                target_match.iloc[0]["red_zone_targets"]
             )
-            if not target_row.empty
-            else 0
-        )
 
 
-        red_zone_carries = (
-            int(
-                carry_row.iloc[0]["red_zone_carries"]
+        red_zone_carries = 0
+
+        if not carry_match.empty:
+
+            red_zone_carries = int(
+                carry_match.iloc[0]["red_zone_carries"]
             )
-            if not carry_row.empty
-            else 0
-        )
 
 
-        # Team RZ targets
         team = str(
-            row.get(
-                "recent_team",
-                ""
-            )
+            row["team"]
         )
 
 
-        team_rz_targets = 0
-
-
-        if team:
-
-            team_rz_targets = int(
-                rz_pbp[
-                    (
-                        rz_pbp["posteam"]
-                        == team
-                    )
-                    &
-                    (
-                        rz_pbp["week"]
-                        == week
-                    )
-                    &
-                    (
-                        rz_pbp["pass_attempt"]
-                        == 1
-                    )
-                ].shape[0]
-            )
+        # Team RZ targets for that week
+        team_rz_targets = int(
+            pbp[
+                (pbp["red_zone"])
+                &
+                (pbp["pass_attempt"] == 1)
+                &
+                (pbp["posteam"] == team)
+                &
+                (pbp["week"] == week)
+            ].shape[0]
+        )
 
 
         red_zone_target_share = 0.0
@@ -1312,54 +1192,45 @@ def main():
     )
 
 
-    # --------------------------------------------------------
-    # LOAD
-    # --------------------------------------------------------
-
+    # Load data
     stats = load_player_stats()
 
     pbp = load_pbp()
 
 
-    # --------------------------------------------------------
-    # PREP PBP
-    # --------------------------------------------------------
+    # Prepare
+    stats = prepare_player_stats(
+        stats
+    )
 
     pbp = prepare_pbp(
         pbp
     )
 
 
-    # --------------------------------------------------------
-    # BUILD TOTALS
-    # --------------------------------------------------------
-
+    # Player totals
     players = build_player_totals(
         stats
     )
 
 
-    # --------------------------------------------------------
-    # RED-ZONE DATA
-    # --------------------------------------------------------
-
+    # Red-zone data
     players = add_red_zone_data(
         players,
         pbp
     )
 
 
-    # --------------------------------------------------------
-    # WEEKLY DATA
-    # --------------------------------------------------------
-
+    # Weekly data
     weekly = build_weekly_usage(
         stats,
         pbp
     )
 
 
-    # Convert weekly data into player lookup
+    # --------------------------------------------------------
+    # ATTACH WEEKLY DATA
+    # --------------------------------------------------------
 
     weekly_by_player = {}
 
@@ -1371,6 +1242,7 @@ def main():
         if player_id not in weekly_by_player:
 
             weekly_by_player[player_id] = []
+
 
         weekly_by_player[player_id].append(
             {
@@ -1392,31 +1264,32 @@ def main():
         )
 
 
-    # --------------------------------------------------------
-    # ATTACH WEEKLY
-    # --------------------------------------------------------
-
     players["weekly"] = players[
         "player_id"
     ].map(
-        lambda x: weekly_by_player.get(
-            str(x),
-            []
-        )
+        lambda player_id:
+            weekly_by_player.get(
+                str(player_id),
+                []
+            )
     )
 
 
     # --------------------------------------------------------
-    # REMOVE INTERNAL COLUMNS
+    # REMOVE INTERNAL FIELDS
     # --------------------------------------------------------
 
-    if "team_targets" in players.columns:
+    for column in [
+        "team_red_zone_rushes",
+        "team_red_zone_targets"
+    ]:
 
-        players = players.drop(
-            columns=[
-                "team_targets"
-            ]
-        )
+        if column in players.columns:
+
+            players.drop(
+                columns=[column],
+                inplace=True
+            )
 
 
     # --------------------------------------------------------
@@ -1437,17 +1310,20 @@ def main():
         ]:
             continue
 
-        players[column] = (
-            pd.to_numeric(
-                players[column],
-                errors="coerce"
-            )
-            .fillna(0)
+
+        players[column] = pd.to_numeric(
+            players[column],
+            errors="coerce"
+        ).fillna(0)
+
+
+        players[column] = players[column].apply(
+            safe_number
         )
 
 
     # --------------------------------------------------------
-    # OUTPUT
+    # BUILD JSON
     # --------------------------------------------------------
 
     output = []
@@ -1455,7 +1331,7 @@ def main():
 
     for _, row in players.iterrows():
 
-        item = {}
+        player = {}
 
 
         for column in players.columns:
@@ -1465,34 +1341,29 @@ def main():
 
             if column == "weekly":
 
-                item[column] = value
-
+                player[column] = value
                 continue
 
 
-            if pd.isna(value):
-
-                item[column] = 0
-
-                continue
-
-
-            item[column] = clean_number(
+            player[column] = safe_number(
                 value
             )
 
 
         output.append(
-            item
+            player
         )
+
+
+    result = {
+        "season": SEASON,
+        "players": output
+    }
 
 
     OUTPUT_FILE.write_text(
         json.dumps(
-            {
-                "season": SEASON,
-                "players": output
-            },
+            result,
             indent=2,
             allow_nan=False
         )
@@ -1503,40 +1374,21 @@ def main():
     print("========================================")
     print("PLAYER DATA BUILD COMPLETE")
     print("========================================")
-    print(
-        f"Season: {SEASON}"
-    )
-    print(
-        f"Players: {len(output):,}"
-    )
-    print(
-        "Added RZ carries: YES"
-    )
-    print(
-        "Added RZ receptions: YES"
-    )
-    print(
-        "Added RZ receiving yards: YES"
-    )
-    print(
-        "Added RZ receiving TDs: YES"
-    )
-    print(
-        "Added RZ pass attempts: YES"
-    )
-    print(
-        "Added RZ pass TDs: YES"
-    )
-    print(
-        f"Wrote: {OUTPUT_FILE}"
-    )
+    print(f"Season: {SEASON}")
+    print(f"Players: {len(output):,}")
+    print("RZ carries: YES")
+    print("RZ receptions: YES")
+    print("RZ receiving yards: YES")
+    print("RZ receiving TDs: YES")
+    print("RZ pass attempts: YES")
+    print("RZ pass TDs: YES")
+    print(f"Output: {OUTPUT_FILE}")
     print("========================================")
 
 
 # ============================================================
-# START
+# RUN
 # ============================================================
 
 if __name__ == "__main__":
-
     main()

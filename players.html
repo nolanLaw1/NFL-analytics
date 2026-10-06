@@ -12,67 +12,11 @@
 
 <style>
 
-/* =========================
-   PAGE HEADER
-========================= */
-
-.page-header {
-    margin-bottom: 20px;
-}
-
-.page-header h1 {
-    margin: 0 0 6px 0;
-    font-size: 32px;
-    font-weight: 800;
-    letter-spacing: -.7px;
-}
-
-.season {
-    color: var(--muted);
-    font-size: 14px;
-}
-
-/* =========================
-   NAVIGATION
-========================= */
-
-.mainnav {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    border-bottom: 1px solid var(--line);
-    margin-bottom: 20px;
-}
-
-.mainnav a {
-    color: var(--muted);
-    background: transparent;
-    text-decoration: none;
-    font-weight: 700;
-    padding: 12px 15px;
-    transition: color .2s ease, border-color .2s ease;
-}
-
-.mainnav a:hover {
-    color: var(--text);
-    text-decoration: none;
-}
-
-.mainnav a.active {
-    color: var(--text);
-    border-bottom: 2px solid var(--accent);
-}
-
-/* =========================
-   CONTROLS
-========================= */
-
 .controls {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 18px;
+    margin: 20px 0;
     flex-wrap: wrap;
 }
 
@@ -86,6 +30,11 @@
     border-radius: 10px;
     padding: 11px 13px;
     font-size: 14px;
+}
+
+.search {
+    flex: 1;
+    min-width: 180px;
 }
 
 .search::placeholder {
@@ -102,10 +51,6 @@
 .filter {
     min-width: 150px;
 }
-
-/* =========================
-   PANEL
-========================= */
 
 .panel {
     background:
@@ -141,30 +86,26 @@
     font-size: 13px;
 }
 
-/* =========================
-   TABLE
-========================= */
-
 #table {
     width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
 }
 
-table {
+#table table {
     width: 100%;
     border-collapse: collapse;
     min-width: 1050px;
 }
 
-th,
-td {
+#table th,
+#table td {
     padding: 13px 15px;
     border-bottom: 1px solid var(--line);
     white-space: nowrap;
 }
 
-th {
+#table th {
     color: var(--muted);
     font-size: 11px;
     text-transform: uppercase;
@@ -173,19 +114,19 @@ th {
     background: var(--panel2);
 }
 
-td {
+#table td {
     font-size: 14px;
 }
 
-tbody tr {
+#table tbody tr {
     transition: background .15s ease;
 }
 
-tbody tr:hover {
+#table tbody tr:hover {
     background: rgba(88,166,255,.035);
 }
 
-tbody tr:last-child td {
+#table tbody tr:last-child td {
     border-bottom: none;
 }
 
@@ -194,10 +135,6 @@ tbody tr:last-child td {
     color: var(--muted);
     font-weight: 700;
 }
-
-/* =========================
-   SORT BUTTON
-========================= */
 
 .sort-button {
     border: none;
@@ -216,10 +153,6 @@ tbody tr:last-child td {
     color: var(--text);
 }
 
-/* =========================
-   PLAYER
-========================= */
-
 .link {
     color: var(--text);
     text-decoration: none;
@@ -237,10 +170,6 @@ tbody tr:last-child td {
     margin-top: 4px;
 }
 
-/* =========================
-   FOOTER
-========================= */
-
 .footer {
     color: var(--muted);
     text-align: center;
@@ -248,15 +177,7 @@ tbody tr:last-child td {
     font-size: 13px;
 }
 
-/* =========================
-   MOBILE
-========================= */
-
 @media (max-width: 700px) {
-
-    .page-header h1 {
-        font-size: 27px;
-    }
 
     .controls {
         display: grid;
@@ -265,7 +186,7 @@ tbody tr:last-child td {
 
     .search {
         grid-column: 1 / -1;
-        width: 100% !important;
+        width: 100%;
     }
 
     .filter {
@@ -281,10 +202,6 @@ tbody tr:last-child td {
         margin-top: 5px;
     }
 
-    table {
-        min-width: 1050px;
-    }
-
 }
 
 </style>
@@ -295,25 +212,49 @@ tbody tr:last-child td {
 
 <div class="site">
 
-    <div class="page-header">
+    <!-- =========================
+         HEADER
+    ========================= -->
 
-        <h1>StackTheStats</h1>
+    <header class="header">
 
-        <div class="season" id="season"></div>
+        <a href="index.html" class="brand">
+            Stack<span>TheStats</span>
+        </a>
 
-    </div>
+        <nav class="nav">
 
-    <nav class="mainnav">
+            <a href="index.html">
+                HOME
+            </a>
 
-        <a href="index.html">HOME</a>
+            <a href="league.html">
+                LEAGUE
+            </a>
 
-        <a href="league.html">LEAGUE</a>
+            <a href="players.html" class="active">
+                PLAYERS
+            </a>
 
-        <a class="active" href="players.html">PLAYERS</a>
+            <a href="teams.html">
+                TEAMS
+            </a>
 
-        <a href="teams.html">TEAMS</a>
+        </nav>
 
-    </nav>
+    </header>
+
+    <!-- Keeps existing JavaScript working -->
+    <div
+        class="season"
+        id="season"
+        style="display:none;"
+    ></div>
+
+
+    <!-- =========================
+         CONTROLS
+    ========================= -->
 
     <div class="controls">
 
@@ -322,28 +263,54 @@ tbody tr:last-child td {
             class="search"
             placeholder="Search players..."
             autocomplete="off"
-            style="flex:1;min-width:180px;"
         >
 
         <select id="position" class="filter">
-            <option value="ALL">All positions</option>
-            <option value="QB">QB</option>
-            <option value="RB">RB</option>
-            <option value="WR">WR</option>
-            <option value="TE">TE</option>
+
+            <option value="ALL">
+                All positions
+            </option>
+
+            <option value="QB">
+                QB
+            </option>
+
+            <option value="RB">
+                RB
+            </option>
+
+            <option value="WR">
+                WR
+            </option>
+
+            <option value="TE">
+                TE
+            </option>
+
         </select>
 
         <select id="team" class="filter">
-            <option value="ALL">All teams</option>
+
+            <option value="ALL">
+                All teams
+            </option>
+
         </select>
 
     </div>
+
+
+    <!-- =========================
+         PLAYER TABLE
+    ========================= -->
 
     <section class="panel">
 
         <div class="panelhead">
 
-            <h2>Players</h2>
+            <h2>
+                Players
+            </h2>
 
             <div class="note">
                 Click a column header to sort
@@ -355,23 +322,39 @@ tbody tr:last-child td {
 
     </section>
 
+
     <div class="footer">
         StackTheStats · NFL Analytics · Built on the numbers.
     </div>
 
 </div>
 
+
 <script>
 
 let DATA = [];
 
 let currentSort = "targets";
+
 let sortDirection = "desc";
 
-const search = document.getElementById("search");
-const position = document.getElementById("position");
-const team = document.getElementById("team");
-const table = document.getElementById("table");
+
+const search =
+    document.getElementById("search");
+
+const position =
+    document.getElementById("position");
+
+const team =
+    document.getElementById("team");
+
+const table =
+    document.getElementById("table");
+
+
+/* =========================
+   COLUMNS
+========================= */
 
 const COLUMNS = [
 
@@ -509,6 +492,11 @@ const COLUMNS = [
 
 ];
 
+
+/* =========================
+   POSITION COLUMNS
+========================= */
+
 const POSITION_COLUMNS = {
 
     ALL: [
@@ -589,11 +577,17 @@ const POSITION_COLUMNS = {
 
 };
 
+
+/* =========================
+   HELPERS
+========================= */
+
 function esc(value) {
 
     return String(value ?? "").replace(
         /[&<>"']/g,
         function(m) {
+
             return {
                 "&": "&amp;",
                 "<": "&lt;",
@@ -601,24 +595,31 @@ function esc(value) {
                 '"': "&quot;",
                 "'": "&#39;"
             }[m];
+
         }
     );
 
 }
 
+
 function numberValue(value) {
 
     const n = Number(value);
 
-    return Number.isFinite(n) ? n : 0;
+    return Number.isFinite(n)
+        ? n
+        : 0;
 
 }
+
 
 function formatPercent(value) {
 
-    return numberValue(value).toFixed(1) + "%";
+    return numberValue(value)
+        .toFixed(1) + "%";
 
 }
+
 
 function displayValue(player, column) {
 
@@ -644,6 +645,7 @@ function displayValue(player, column) {
 
 }
 
+
 function getSortValue(player, column) {
 
     if (
@@ -663,13 +665,19 @@ function getSortValue(player, column) {
 
 }
 
+
+/* =========================
+   SORT
+========================= */
+
 function sortRows(rows) {
 
-    const column = COLUMNS.find(
-        function(c) {
-            return c.key === currentSort;
-        }
-    );
+    const column =
+        COLUMNS.find(
+            function(c) {
+                return c.key === currentSort;
+            }
+        );
 
     if (!column) {
         return rows;
@@ -677,8 +685,11 @@ function sortRows(rows) {
 
     rows.sort(function(a, b) {
 
-        const aValue = getSortValue(a, column);
-        const bValue = getSortValue(b, column);
+        const aValue =
+            getSortValue(a, column);
+
+        const bValue =
+            getSortValue(b, column);
 
         if (column.type === "text") {
 
@@ -688,6 +699,7 @@ function sortRows(rows) {
             return sortDirection === "asc"
                 ? result
                 : -result;
+
         }
 
         if (aValue === bValue) {
@@ -709,6 +721,7 @@ function sortRows(rows) {
 
 }
 
+
 function sortArrow(key) {
 
     if (currentSort !== key) {
@@ -720,6 +733,11 @@ function sortArrow(key) {
         : " ↑";
 
 }
+
+
+/* =========================
+   TEAMS
+========================= */
 
 function populateTeams() {
 
@@ -739,6 +757,7 @@ function populateTeams() {
             document.createElement("option");
 
         option.value = teamCode;
+
         option.textContent = teamCode;
 
         team.appendChild(option);
@@ -747,76 +766,110 @@ function populateTeams() {
 
 }
 
+
+/* =========================
+   VISIBLE COLUMNS
+========================= */
+
 function getVisibleColumns() {
 
     const keys =
-        POSITION_COLUMNS[position.value] ||
+        POSITION_COLUMNS[
+            position.value
+        ] ||
         POSITION_COLUMNS.ALL;
 
-    return COLUMNS.filter(function(column) {
+    return COLUMNS.filter(
+        function(column) {
 
-        return keys.includes(column.key);
+            return keys.includes(
+                column.key
+            );
 
-    });
+        }
+    );
 
 }
+
+
+/* =========================
+   RENDER
+========================= */
 
 function render() {
 
     const q =
-        search.value.trim().toLowerCase();
+        search.value
+            .trim()
+            .toLowerCase();
 
-    const pos = position.value;
+    const pos =
+        position.value;
 
-    const selectedTeam = team.value;
+    const selectedTeam =
+        team.value;
 
-    let rows = DATA.filter(function(player) {
 
-        const playerName =
-            String(player.name || "")
-                .toLowerCase();
+    let rows =
+        DATA.filter(function(player) {
 
-        const matchesSearch =
-            !q ||
-            playerName.includes(q);
+            const playerName =
+                String(
+                    player.name || ""
+                ).toLowerCase();
 
-        const matchesPosition =
-            pos === "ALL" ||
-            player.position === pos;
+            const matchesSearch =
+                !q ||
+                playerName.includes(q);
 
-        const matchesTeam =
-            selectedTeam === "ALL" ||
-            player.team === selectedTeam;
+            const matchesPosition =
+                pos === "ALL" ||
+                player.position === pos;
 
-        return (
-            matchesSearch &&
-            matchesPosition &&
-            matchesTeam
-        );
+            const matchesTeam =
+                selectedTeam === "ALL" ||
+                player.team === selectedTeam;
 
-    });
+            return (
+                matchesSearch &&
+                matchesPosition &&
+                matchesTeam
+            );
+
+        });
+
 
     const visibleColumns =
         getVisibleColumns();
 
+
     const sortVisible =
-        visibleColumns.some(function(column) {
+        visibleColumns.some(
+            function(column) {
 
-            return column.key === currentSort;
+                return (
+                    column.key ===
+                    currentSort
+                );
 
-        });
+            }
+        );
+
 
     if (!sortVisible) {
 
         const numericColumn =
-            visibleColumns.find(function(column) {
+            visibleColumns.find(
+                function(column) {
 
-                return (
-                    column.type === "number" ||
-                    column.type === "percent"
-                );
+                    return (
+                        column.type === "number" ||
+                        column.type === "percent"
+                    );
 
-            });
+                }
+            );
+
 
         if (numericColumn) {
 
@@ -828,20 +881,23 @@ function render() {
         } else {
 
             currentSort = "name";
+
             sortDirection = "asc";
 
         }
 
     }
 
+
     sortRows(rows);
+
 
     if (!rows.length) {
 
         table.innerHTML = `
             <div style="
                 padding:20px;
-                color:#9aa6b2
+                color:#9aa6b2;
             ">
                 No players match your filters.
             </div>
@@ -851,144 +907,230 @@ function render() {
 
     }
 
+
     let html = `
+
         <table>
+
             <thead>
+
                 <tr>
-                    <th class="rank">#</th>
+
+                    <th class="rank">
+                        #
+                    </th>
+
     `;
 
-    visibleColumns.forEach(function(column) {
 
-        html += `
-            <th>
-                <button
-                    class="sort-button"
-                    data-sort="${column.key}"
-                >
-                    ${column.label}${sortArrow(column.key)}
-                </button>
-            </th>
-        `;
+    visibleColumns.forEach(
+        function(column) {
 
-    });
+            html += `
+
+                <th>
+
+                    <button
+                        class="sort-button"
+                        data-sort="${column.key}"
+                    >
+                        ${column.label}${sortArrow(column.key)}
+                    </button>
+
+                </th>
+
+            `;
+
+        }
+    );
+
 
     html += `
+
                 </tr>
+
             </thead>
+
             <tbody>
+
     `;
 
-    rows.forEach(function(player, index) {
 
-        html += `
-            <tr>
+    rows.forEach(
+        function(player, index) {
 
-                <td class="rank">
-                    ${index + 1}
-                </td>
-        `;
+            html += `
 
-        visibleColumns.forEach(function(column) {
+                <tr>
 
-            if (column.key === "name") {
-
-                html += `
-                    <td>
-
-                        <a
-                            class="link"
-                            href="player.html?id=${encodeURIComponent(player.player_id)}"
-                        >
-                            ${esc(player.name)}
-                        </a>
-
-                        <span class="meta">
-                            ${esc(player.position)}
-                            ·
-                            ${esc(player.team || "")}
-                        </span>
-
+                    <td class="rank">
+                        ${index + 1}
                     </td>
-                `;
 
-            } else {
+            `;
 
-                html += `
-                    <td>
-                        ${displayValue(player, column)}
-                    </td>
-                `;
 
-            }
+            visibleColumns.forEach(
+                function(column) {
 
-        });
+                    if (
+                        column.key === "name"
+                    ) {
 
-        html += `
-            </tr>
-        `;
+                        html += `
 
-    });
+                            <td>
 
-    html += `
-            </tbody>
-        </table>
-    `;
+                                <a
+                                    class="link"
+                                    href="player.html?id=${encodeURIComponent(
+                                        player.player_id
+                                    )}"
+                                >
+                                    ${esc(player.name)}
+                                </a>
 
-    table.innerHTML = html;
+                                <span class="meta">
+                                    ${esc(player.position)}
+                                    ·
+                                    ${esc(player.team || "")}
+                                </span>
 
-    document
-        .querySelectorAll(".sort-button")
-        .forEach(function(button) {
+                            </td>
 
-            button.addEventListener(
-                "click",
-                function() {
-
-                    const key =
-                        button.dataset.sort;
-
-                    if (currentSort === key) {
-
-                        sortDirection =
-                            sortDirection === "desc"
-                                ? "asc"
-                                : "desc";
+                        `;
 
                     } else {
 
-                        currentSort = key;
+                        html += `
 
-                        const column =
-                            COLUMNS.find(
-                                function(c) {
-                                    return c.key === key;
-                                }
-                            );
+                            <td>
+                                ${displayValue(
+                                    player,
+                                    column
+                                )}
+                            </td>
 
-                        sortDirection =
-                            column.type === "text"
-                                ? "asc"
-                                : "desc";
+                        `;
 
                     }
-
-                    render();
 
                 }
             );
 
-        });
+
+            html += `
+
+                </tr>
+
+            `;
+
+        }
+    );
+
+
+    html += `
+
+            </tbody>
+
+        </table>
+
+    `;
+
+
+    table.innerHTML = html;
+
+
+    document
+        .querySelectorAll(".sort-button")
+        .forEach(
+            function(button) {
+
+                button.addEventListener(
+                    "click",
+                    function() {
+
+                        const key =
+                            button.dataset.sort;
+
+
+                        if (
+                            currentSort === key
+                        ) {
+
+                            sortDirection =
+                                sortDirection === "desc"
+                                    ? "asc"
+                                    : "desc";
+
+                        } else {
+
+                            currentSort = key;
+
+
+                            const column =
+                                COLUMNS.find(
+                                    function(c) {
+
+                                        return (
+                                            c.key ===
+                                            key
+                                        );
+
+                                    }
+                                );
+
+
+                            sortDirection =
+                                column.type === "text"
+                                    ? "asc"
+                                    : "desc";
+
+                        }
+
+
+                        render();
+
+                    }
+                );
+
+            }
+        );
 
 }
 
-search.addEventListener("input", render);
 
-position.addEventListener("change", render);
+/* =========================
+   FILTER EVENTS
+========================= */
 
-team.addEventListener("change", render);
+search.addEventListener(
+    "input",
+    render
+);
 
-fetch("data/players.json")
+position.addEventListener(
+    "change",
+    render
+);
+
+team.addEventListener(
+    "change",
+    render
+);
+
+
+/* =========================
+   LOAD PLAYER DATA
+========================= */
+
+fetch(
+    "data/players.json?ts=" +
+    Date.now(),
+    {
+        cache: "no-store"
+    }
+)
 
 .then(function(response) {
 
@@ -1011,11 +1153,13 @@ fetch("data/players.json")
             ? data
             : (data.players || []);
 
+
     document.getElementById(
         "season"
     ).textContent =
         (data.season || "") +
         " Season";
+
 
     populateTeams();
 
@@ -1028,13 +1172,17 @@ fetch("data/players.json")
     console.error(error);
 
     table.innerHTML = `
+
         <div style="
             padding:20px;
-            color:#ff6b6b
+            color:#ff6b6b;
         ">
+
             Unable to load player data:
             ${esc(error.message)}
+
         </div>
+
     `;
 
 });
@@ -1042,4 +1190,5 @@ fetch("data/players.json")
 </script>
 
 </body>
+
 </html>

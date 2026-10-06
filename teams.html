@@ -4,11 +4,7 @@
 <head>
 
 <meta charset="utf-8">
-
-<meta
-    name="viewport"
-    content="width=device-width,initial-scale=1"
->
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>StackTheStats | Teams</title>
 
@@ -17,17 +13,18 @@
 <style>
 
 /* =========================
-   TEAMS PAGE
+   PAGE HEADER
 ========================= */
 
-.team-header {
+.page-header {
     margin-bottom: 20px;
 }
 
-.team-header h1 {
+.page-header h1 {
     margin: 0 0 6px 0;
     font-size: 32px;
-    letter-spacing: -0.5px;
+    font-weight: 800;
+    letter-spacing: -.7px;
 }
 
 .season {
@@ -35,36 +32,37 @@
     font-size: 14px;
 }
 
-
 /* =========================
    NAVIGATION
 ========================= */
 
 .mainnav {
-    display: flex !important;
-    align-items: center !important;
-    gap: 8px !important;
-    flex-wrap: wrap !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 20px;
 }
 
 .mainnav a {
-    color: var(--muted) !important;
-    background: transparent !important;
-    text-decoration: none !important;
-    font-weight: 700 !important;
-    padding: 12px 15px !important;
+    color: var(--muted);
+    background: transparent;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 12px 15px;
+    transition: color .2s ease, border-color .2s ease;
 }
 
 .mainnav a:hover {
-    color: var(--text) !important;
-    text-decoration: none !important;
+    color: var(--text);
+    text-decoration: none;
 }
 
 .mainnav a.active {
-    color: var(--text) !important;
-    border-bottom: 2px solid var(--accent) !important;
+    color: var(--text);
+    border-bottom: 2px solid var(--accent);
 }
-
 
 /* =========================
    TEAM SELECTOR
@@ -74,7 +72,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    margin: 16px 0 14px 0;
+    margin: 16px 0 18px 0;
 }
 
 .team-label {
@@ -86,11 +84,8 @@
 .team-select {
     appearance: none;
     -webkit-appearance: none;
-
     min-width: 210px;
-
     padding: 12px 38px 12px 14px;
-
     color: var(--text);
 
     background:
@@ -100,28 +95,24 @@
 
     border: 1px solid var(--line);
     border-radius: 10px;
-
     font-size: 14px;
     font-weight: 600;
-
     cursor: pointer;
 }
 
 .team-select:focus {
     outline: none;
     border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(88,166,255,.10);
 }
 
-
 /* =========================
-   SUMMARY CARDS
+   SUMMARY
 ========================= */
 
 .summary-grid {
     display: grid;
-    grid-template-columns:
-        repeat(5, minmax(0, 1fr));
-
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 12px;
     margin-bottom: 18px;
 }
@@ -148,28 +139,32 @@
     font-weight: 800;
 }
 
-
 /* =========================
    PANELS
 ========================= */
 
 .team-panel {
-    background: var(--panel);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(16,23,34,.98),
+            rgba(21,30,43,.98)
+        );
+
     border: 1px solid var(--line);
     border-radius: 14px;
     overflow: hidden;
     margin-bottom: 18px;
+    box-shadow: 0 8px 28px rgba(0,0,0,.16);
 }
 
 .team-panel-header {
-    padding: 18px;
-
+    padding: 19px 20px;
     border-bottom: 1px solid var(--line);
 
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     gap: 12px;
 }
 
@@ -183,9 +178,8 @@
     font-size: 13px;
 }
 
-
 /* =========================
-   TABLE
+   TABLES
 ========================= */
 
 .table-wrap {
@@ -201,41 +195,49 @@
 }
 
 .team-table th,
-.team-table td {
+.team-table td,
+.player-table th,
+.player-table td {
     padding: 13px 15px;
     border-bottom: 1px solid var(--line);
 }
 
-.team-table th {
+.team-table th,
+.player-table th {
     color: var(--muted);
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: .04em;
+    letter-spacing: .6px;
     text-align: left;
     background: var(--panel2);
 }
 
-.team-table td {
+.team-table td,
+.player-table td {
     font-size: 14px;
 }
 
 .team-table th:not(:first-child),
-.team-table td:not(:first-child) {
+.team-table td:not(:first-child),
+.player-table th:not(:first-child),
+.player-table td:not(:first-child) {
     text-align: right;
 }
 
-.team-table tr:last-child td {
+.team-table tr:last-child td,
+.player-table tr:last-child td {
     border-bottom: none;
 }
 
-.team-table tbody tr:hover {
-    background: rgba(255,255,255,.025);
+.team-table tbody tr,
+.player-table tbody tr {
+    transition: background .15s ease;
 }
 
-
-/* =========================
-   TEAM PLAYER TABLE
-========================= */
+.team-table tbody tr:hover,
+.player-table tbody tr:hover {
+    background: rgba(88,166,255,.035);
+}
 
 .player-table {
     width: 100%;
@@ -243,41 +245,8 @@
     min-width: 950px;
 }
 
-.player-table th,
-.player-table td {
-    padding: 13px 15px;
-    border-bottom: 1px solid var(--line);
-}
-
-.player-table th {
-    color: var(--muted);
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: .04em;
-    text-align: left;
-    background: var(--panel2);
-}
-
-.player-table td {
-    font-size: 14px;
-}
-
-.player-table th:not(:first-child),
-.player-table td:not(:first-child) {
-    text-align: right;
-}
-
-.player-table tr:last-child td {
-    border-bottom: none;
-}
-
-.player-table tbody tr:hover {
-    background: rgba(255,255,255,.025);
-}
-
-
 /* =========================
-   PLAYER NAME
+   PLAYER
 ========================= */
 
 .player-cell {
@@ -292,29 +261,13 @@
 }
 
 .player-link:hover {
-    color: var(--accent);
+    color: var(--accent2);
 }
-
-.player-meta {
-    color: var(--muted);
-    font-size: 12px;
-    margin-top: 4px;
-}
-
-
-/* =========================
-   POSITION
-========================= */
 
 .position {
     color: var(--muted);
     font-weight: 700;
 }
-
-
-/* =========================
-   VALUES
-========================= */
 
 .value {
     font-weight: 700;
@@ -326,7 +279,6 @@
     white-space: nowrap;
 }
 
-
 /* =========================
    SHARE BAR
 ========================= */
@@ -334,26 +286,26 @@
 .share-bar {
     width: 95px;
     height: 5px;
-
     margin-left: auto;
     margin-top: 6px;
-
     background: #252f3b;
-
     border-radius: 99px;
-
     overflow: hidden;
 }
 
 .share-bar-fill {
     display: block;
     height: 100%;
-    background: var(--accent);
+    background:
+        linear-gradient(
+            90deg,
+            var(--accent),
+            var(--accent2)
+        );
 }
 
-
 /* =========================
-   MESSAGE
+   MESSAGE / FOOTER
 ========================= */
 
 .message {
@@ -361,6 +313,12 @@
     color: var(--muted);
 }
 
+.footer {
+    color: var(--muted);
+    text-align: center;
+    padding: 28px 0;
+    font-size: 13px;
+}
 
 /* =========================
    MOBILE
@@ -369,15 +327,14 @@
 @media (max-width: 850px) {
 
     .summary-grid {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
 }
 
 @media (max-width: 650px) {
 
-    .team-header h1 {
+    .page-header h1 {
         font-size: 27px;
     }
 
@@ -412,17 +369,11 @@
 
 </head>
 
-
 <body>
 
 <div class="site">
 
-
-    <!-- =========================
-         HEADER
-    ========================= -->
-
-    <div class="team-header">
+    <div class="page-header">
 
         <h1>StackTheStats</h1>
 
@@ -434,11 +385,6 @@
         </div>
 
     </div>
-
-
-    <!-- =========================
-         NAVIGATION
-    ========================= -->
 
     <nav class="mainnav">
 
@@ -463,11 +409,6 @@
 
     </nav>
 
-
-    <!-- =========================
-         TEAM SELECTOR
-    ========================= -->
-
     <div class="team-controls">
 
         <label
@@ -480,34 +421,20 @@
         <select
             id="teamSelect"
             class="team-select"
-        >
-        </select>
+        ></select>
 
     </div>
-
-
-    <!-- =========================
-         TEAM SUMMARY
-    ========================= -->
 
     <div
         class="summary-grid"
         id="summary"
-    >
-    </div>
-
-
-    <!-- =========================
-         DOWN SPLITS
-    ========================= -->
+    ></div>
 
     <section class="team-panel">
 
         <div class="team-panel-header">
 
-            <h2>
-                Down Splits
-            </h2>
+            <h2>Down Splits</h2>
 
             <div
                 class="team-panel-note"
@@ -517,7 +444,6 @@
             </div>
 
         </div>
-
 
         <div
             class="table-wrap"
@@ -532,25 +458,17 @@
 
     </section>
 
-
-    <!-- =========================
-         TEAM PLAYER USAGE
-    ========================= -->
-
     <section class="team-panel">
 
         <div class="team-panel-header">
 
-            <h2>
-                Player Usage
-            </h2>
+            <h2>Player Usage</h2>
 
             <div class="team-panel-note">
                 QB / WR / RB / TE
             </div>
 
         </div>
-
 
         <div
             class="table-wrap"
@@ -565,25 +483,17 @@
 
     </section>
 
-
-    <!-- =========================
-         WEEKLY TEAM USAGE
-    ========================= -->
-
     <section class="team-panel">
 
         <div class="team-panel-header">
 
-            <h2>
-                Weekly Usage
-            </h2>
+            <h2>Weekly Usage</h2>
 
             <div class="team-panel-note">
                 Completed weeks only
             </div>
 
         </div>
-
 
         <div
             class="table-wrap"
@@ -598,32 +508,19 @@
 
     </section>
 
-
     <div class="footer">
         StackTheStats · NFL Analytics
     </div>
 
-
 </div>
 
-
 <script>
-
-
-/* =========================
-   STATE
-========================= */
 
 let TEAM_DATA = null;
 
 let PLAYER_DATA = null;
 
 let selectedTeam = "";
-
-
-/* =========================
-   ELEMENTS
-========================= */
 
 const seasonEl =
     document.getElementById("season");
@@ -643,11 +540,6 @@ const playerTableEl =
 const weeklyTableEl =
     document.getElementById("weeklyTable");
 
-
-/* =========================
-   ESCAPE HTML
-========================= */
-
 function esc(value) {
 
     return String(value ?? "")
@@ -664,11 +556,6 @@ function esc(value) {
 
 }
 
-
-/* =========================
-   NUMBER FORMAT
-========================= */
-
 function formatNumber(value) {
 
     const number =
@@ -682,11 +569,6 @@ function formatNumber(value) {
 
 }
 
-
-/* =========================
-   PERCENTAGE
-========================= */
-
 function formatPercentage(value) {
 
     const number =
@@ -699,11 +581,6 @@ function formatPercentage(value) {
     return number.toFixed(2) + "%";
 
 }
-
-
-/* =========================
-   TEAM LOOKUP
-========================= */
 
 function getSelectedTeamData() {
 
@@ -721,11 +598,6 @@ function getSelectedTeamData() {
 
 }
 
-
-/* =========================
-   TEAM DROPDOWN
-========================= */
-
 function renderTeamDropdown() {
 
     const teams =
@@ -733,9 +605,7 @@ function renderTeamDropdown() {
             ? TEAM_DATA.teams
             : [];
 
-
     teamSelect.innerHTML = "";
-
 
     if (!teams.length) {
 
@@ -747,7 +617,6 @@ function renderTeamDropdown() {
 
         return;
     }
-
 
     teams.forEach(team => {
 
@@ -764,7 +633,6 @@ function renderTeamDropdown() {
 
     });
 
-
     selectedTeam =
         teams[0].team;
 
@@ -772,11 +640,6 @@ function renderTeamDropdown() {
         selectedTeam;
 
 }
-
-
-/* =========================
-   SUMMARY
-========================= */
 
 function renderSummary(team) {
 
@@ -790,7 +653,6 @@ function renderSummary(team) {
 
         return;
     }
-
 
     const cards = [
 
@@ -831,7 +693,6 @@ function renderSummary(team) {
 
     ];
 
-
     summaryEl.innerHTML =
         cards.map(card => `
 
@@ -851,18 +712,12 @@ function renderSummary(team) {
 
 }
 
-
-/* =========================
-   DOWN SPLITS
-========================= */
-
 function renderDownSplits(team) {
 
     const rows =
         Array.isArray(team?.down_splits)
             ? team.down_splits
             : [];
-
 
     if (!rows.length) {
 
@@ -875,7 +730,6 @@ function renderDownSplits(team) {
         return;
     }
 
-
     let html = `
 
         <table class="team-table">
@@ -884,21 +738,10 @@ function renderDownSplits(team) {
 
                 <tr>
 
-                    <th>
-                        Down
-                    </th>
-
-                    <th>
-                        Passes
-                    </th>
-
-                    <th>
-                        Runs
-                    </th>
-
-                    <th>
-                        Pass Rate
-                    </th>
+                    <th>Down</th>
+                    <th>Passes</th>
+                    <th>Runs</th>
+                    <th>Pass Rate</th>
 
                 </tr>
 
@@ -908,12 +751,10 @@ function renderDownSplits(team) {
 
     `;
 
-
     rows.forEach(row => {
 
         const rate =
             Number(row.pass_rate || 0);
-
 
         html += `
 
@@ -957,7 +798,6 @@ function renderDownSplits(team) {
 
     });
 
-
     html += `
 
             </tbody>
@@ -966,16 +806,10 @@ function renderDownSplits(team) {
 
     `;
 
-
     downTableEl.innerHTML =
         html;
 
 }
-
-
-/* =========================
-   ORDINAL
-========================= */
 
 function getOrdinal(number) {
 
@@ -990,19 +824,11 @@ function getOrdinal(number) {
 
 }
 
-
-/* =========================
-   PLAYER DATA
-========================= */
-
 function getTeamPlayers() {
 
-    if (
-        !Array.isArray(PLAYER_DATA)
-    ) {
+    if (!Array.isArray(PLAYER_DATA)) {
         return [];
     }
-
 
     const positions =
         new Set([
@@ -1011,7 +837,6 @@ function getTeamPlayers() {
             "RB",
             "TE"
         ]);
-
 
     return PLAYER_DATA
         .filter(player => {
@@ -1072,16 +897,10 @@ function getTeamPlayers() {
 
 }
 
-
-/* =========================
-   PLAYER USAGE TABLE
-========================= */
-
 function renderPlayerUsage() {
 
     const players =
         getTeamPlayers();
-
 
     if (!players.length) {
 
@@ -1094,7 +913,6 @@ function renderPlayerUsage() {
         return;
     }
 
-
     let html = `
 
         <table class="player-table">
@@ -1103,41 +921,15 @@ function renderPlayerUsage() {
 
                 <tr>
 
-                    <th>
-                        Player
-                    </th>
-
-                    <th>
-                        Pos
-                    </th>
-
-                    <th>
-                        Pass Att
-                    </th>
-
-                    <th>
-                        Targets
-                    </th>
-
-                    <th>
-                        Target Share
-                    </th>
-
-                    <th>
-                        Carries
-                    </th>
-
-                    <th>
-                        Receptions
-                    </th>
-
-                    <th>
-                        RZ Targets
-                    </th>
-
-                    <th>
-                        RZ Target Share
-                    </th>
+                    <th>Player</th>
+                    <th>Pos</th>
+                    <th>Pass Att</th>
+                    <th>Targets</th>
+                    <th>Target Share</th>
+                    <th>Carries</th>
+                    <th>Receptions</th>
+                    <th>RZ Targets</th>
+                    <th>RZ Target Share</th>
 
                 </tr>
 
@@ -1147,54 +939,43 @@ function renderPlayerUsage() {
 
     `;
 
-
     players.forEach(player => {
 
         const playerId =
             player.player_id || "";
-
 
         const playerName =
             player.player_name ||
             player.name ||
             "Unknown Player";
 
-
         const position =
             player.position || "";
-
 
         const attempts =
             Number(player.attempts || 0);
 
-
         const targets =
             Number(player.targets || 0);
-
 
         const targetShare =
             Number(player.target_share || 0);
 
-
         const carries =
             Number(player.carries || 0);
 
-
         const receptions =
             Number(player.receptions || 0);
-
 
         const rzTargets =
             Number(
                 player.red_zone_targets || 0
             );
 
-
         const rzShare =
             Number(
                 player.red_zone_target_share || 0
             );
-
 
         const safeTargetShare =
             Math.min(
@@ -1202,13 +983,11 @@ function renderPlayerUsage() {
                 100
             );
 
-
         const safeRzShare =
             Math.min(
                 Math.max(rzShare, 0),
                 100
             );
-
 
         html += `
 
@@ -1225,21 +1004,17 @@ function renderPlayerUsage() {
 
                 </td>
 
-
                 <td class="position">
                     ${esc(position)}
                 </td>
-
 
                 <td class="value">
                     ${formatNumber(attempts)}
                 </td>
 
-
                 <td class="value">
                     ${formatNumber(targets)}
                 </td>
-
 
                 <td class="share-value">
 
@@ -1256,21 +1031,17 @@ function renderPlayerUsage() {
 
                 </td>
 
-
                 <td class="value">
                     ${formatNumber(carries)}
                 </td>
-
 
                 <td class="value">
                     ${formatNumber(receptions)}
                 </td>
 
-
                 <td class="value">
                     ${formatNumber(rzTargets)}
                 </td>
-
 
                 <td class="share-value">
 
@@ -1293,7 +1064,6 @@ function renderPlayerUsage() {
 
     });
 
-
     html += `
 
             </tbody>
@@ -1302,16 +1072,10 @@ function renderPlayerUsage() {
 
     `;
 
-
     playerTableEl.innerHTML =
         html;
 
 }
-
-
-/* =========================
-   WEEKLY TEAM USAGE
-========================= */
 
 function renderWeekly(team) {
 
@@ -1319,7 +1083,6 @@ function renderWeekly(team) {
         Array.isArray(team?.weekly)
             ? team.weekly
             : [];
-
 
     if (!rows.length) {
 
@@ -1332,7 +1095,6 @@ function renderWeekly(team) {
         return;
     }
 
-
     let html = `
 
         <table class="team-table">
@@ -1341,21 +1103,10 @@ function renderWeekly(team) {
 
                 <tr>
 
-                    <th>
-                        Week
-                    </th>
-
-                    <th>
-                        Passes
-                    </th>
-
-                    <th>
-                        Runs
-                    </th>
-
-                    <th>
-                        Pass Rate
-                    </th>
+                    <th>Week</th>
+                    <th>Passes</th>
+                    <th>Runs</th>
+                    <th>Pass Rate</th>
 
                 </tr>
 
@@ -1365,12 +1116,10 @@ function renderWeekly(team) {
 
     `;
 
-
     rows.forEach(row => {
 
         const rate =
             Number(row.pass_rate || 0);
-
 
         html += `
 
@@ -1414,7 +1163,6 @@ function renderWeekly(team) {
 
     });
 
-
     html += `
 
             </tbody>
@@ -1423,22 +1171,15 @@ function renderWeekly(team) {
 
     `;
 
-
     weeklyTableEl.innerHTML =
         html;
 
 }
 
-
-/* =========================
-   RENDER TEAM
-========================= */
-
 function renderTeam() {
 
     const team =
         getSelectedTeamData();
-
 
     if (!team) {
 
@@ -1469,7 +1210,6 @@ function renderTeam() {
         return;
     }
 
-
     renderSummary(team);
 
     renderDownSplits(team);
@@ -1479,11 +1219,6 @@ function renderTeam() {
     renderWeekly(team);
 
 }
-
-
-/* =========================
-   TEAM CHANGE
-========================= */
 
 teamSelect.addEventListener(
     "change",
@@ -1496,11 +1231,6 @@ teamSelect.addEventListener(
 
     }
 );
-
-
-/* =========================
-   LOAD DATA
-========================= */
 
 async function loadTeamData() {
 
@@ -1529,7 +1259,6 @@ async function loadTeamData() {
 
         ]);
 
-
         if (!teamResponse.ok) {
 
             throw new Error(
@@ -1537,7 +1266,6 @@ async function loadTeamData() {
             );
 
         }
-
 
         if (!playerResponse.ok) {
 
@@ -1547,18 +1275,14 @@ async function loadTeamData() {
 
         }
 
-
         TEAM_DATA =
             await teamResponse.json();
-
 
         PLAYER_DATA =
             await playerResponse.json();
 
-
         seasonEl.textContent =
             `${TEAM_DATA.season} Season`;
-
 
         renderTeamDropdown();
 
@@ -1566,15 +1290,12 @@ async function loadTeamData() {
 
     }
 
-
     catch (error) {
 
         console.error(error);
 
-
         seasonEl.textContent =
             "Season unavailable";
-
 
         summaryEl.innerHTML = `
             <div class="message">
@@ -1582,20 +1303,17 @@ async function loadTeamData() {
             </div>
         `;
 
-
         downTableEl.innerHTML = `
             <div class="message">
                 Unable to load team data.
             </div>
         `;
 
-
         playerTableEl.innerHTML = `
             <div class="message">
                 Unable to load player data.
             </div>
         `;
-
 
         weeklyTableEl.innerHTML = `
             <div class="message">
@@ -1606,11 +1324,6 @@ async function loadTeamData() {
     }
 
 }
-
-
-/* =========================
-   START
-========================= */
 
 loadTeamData();
 

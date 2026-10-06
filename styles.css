@@ -15,7 +15,6 @@
 
 html {
     background: var(--bg);
-    scroll-behavior: smooth;
 }
 
 body {
@@ -24,14 +23,14 @@ body {
 
     background:
         radial-gradient(
-            circle at top right,
-            rgba(88,166,255,.10),
-            transparent 35%
+            circle at top left,
+            rgba(88,166,255,.07),
+            transparent 32%
         ),
         radial-gradient(
-            circle at top left,
-            rgba(88,166,255,.06),
-            transparent 30%
+            circle at top right,
+            rgba(88,166,255,.035),
+            transparent 28%
         ),
         var(--bg);
 
@@ -43,14 +42,8 @@ body {
         sans-serif;
 }
 
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-
 /* =========================
-   HOMEPAGE SITE CONTAINER
+   MAIN CONTAINER
 ========================= */
 
 .container,
@@ -60,17 +53,14 @@ a {
     padding: 28px 28px 60px;
 }
 
-
 /* =========================
-   HEADER
-   EXACT HOMEPAGE STYLE
+   HOME-STYLE HEADER
 ========================= */
 
 .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     gap: 25px;
 
     padding-bottom: 25px;
@@ -78,30 +68,13 @@ a {
     border-bottom: 1px solid var(--line);
 }
 
-
-/* Support old page wrapper */
-
 .brand {
-    display: block;
-
-    margin: 0;
-}
-
-.brand h1 {
-    margin: 0;
+    color: var(--text);
+    text-decoration: none;
 
     font-size: 25px;
     font-weight: 800;
 
-    letter-spacing: -0.5px;
-}
-
-
-/* Homepage uses plain text inside .brand */
-
-.header .brand {
-    font-size: 25px;
-    font-weight: 800;
     letter-spacing: -0.5px;
 }
 
@@ -109,25 +82,16 @@ a {
     color: var(--accent);
 }
 
-.season {
-    color: var(--muted);
-}
-
-
-/* =========================
-   NAV
-   EXACT HOMEPAGE STYLE
-========================= */
-
 .nav {
     display: flex;
     align-items: center;
-
     gap: 25px;
 }
 
 .nav a {
     color: var(--muted);
+
+    text-decoration: none;
 
     font-size: 14px;
     font-weight: 700;
@@ -142,24 +106,19 @@ a {
     color: var(--text);
 }
 
-
 /* =========================
-   OLD NAV COMPATIBILITY
+   OLD NAV SUPPORT
 ========================= */
 
 .mainnav {
     display: flex;
     align-items: center;
-
-    gap: 25px;
-
+    gap: 8px;
     flex-wrap: wrap;
 
-    margin: 0;
-
-    padding: 0 0 25px;
-
     border-bottom: 1px solid var(--line);
+
+    margin-bottom: 20px;
 }
 
 .mainnav a {
@@ -169,16 +128,13 @@ a {
 
     border: 0;
 
-    padding: 0;
+    padding: 12px 15px;
 
     text-decoration: none;
 
-    font-size: 14px;
     font-weight: 700;
 
-    letter-spacing: .5px;
-
-    transition: .2s ease;
+    transition: color .15s ease;
 }
 
 .mainnav a:hover,
@@ -186,50 +142,67 @@ a {
     color: var(--text);
 }
 
-.mainnav a.active {
-    border-bottom: 0;
-}
-
-
 /* =========================
-   SUB NAVIGATION
+   PAGE HEADER
 ========================= */
 
-.subnav {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-
-    margin-bottom: 10px;
+.page-header {
+    margin-bottom: 20px;
 }
 
-.subnav button {
+.page-header h1 {
+    margin: 0 0 6px 0;
+
+    font-size: 32px;
+    font-weight: 800;
+
+    letter-spacing: -.7px;
+}
+
+.season,
+.muted,
+.meta,
+.note {
+    color: var(--muted);
+}
+
+/* =========================
+   SECTION TOGGLE
+========================= */
+
+.section-toggle {
+    display: flex;
+    gap: 8px;
+
+    margin: 20px 0;
+}
+
+.section-toggle button {
+    background: var(--panel);
+
     color: var(--muted);
 
-    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 8px;
 
-    border: 0;
-
-    padding: 12px 15px;
+    padding: 9px 14px;
 
     font-weight: 700;
 
     cursor: pointer;
 }
 
-.subnav button:hover {
+.section-toggle button:hover {
     color: var(--text);
 }
 
-.subnav button.active {
+.section-toggle button.active {
     color: var(--text);
-
-    border-bottom: 2px solid var(--accent);
+    border-color: var(--accent);
 }
-
 
 /* =========================
-   METRIC BUTTONS
+   METRIC BAR
 ========================= */
 
 .metricbar {
@@ -237,43 +210,35 @@ a {
     gap: 8px;
     flex-wrap: wrap;
 
-    margin-bottom: 14px;
+    margin-bottom: 18px;
 }
 
 .metricbar button {
-    color: var(--muted);
-
     background: var(--panel);
 
-    border: 1px solid var(--line);
-    border-radius: 10px;
+    color: var(--muted);
 
-    padding: 11px 15px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+
+    padding: 9px 14px;
 
     font-weight: 700;
 
     cursor: pointer;
-
-    transition:
-        background .15s ease,
-        border-color .15s ease,
-        color .15s ease;
 }
 
 .metricbar button:hover {
     color: var(--text);
-
-    border-color: #3a4654;
 }
 
 .metricbar button.active {
     color: var(--text);
 
-    background: var(--panel2);
-
     border-color: var(--accent);
-}
 
+    background: var(--panel2);
+}
 
 /* =========================
    CONTROLS
@@ -281,45 +246,32 @@ a {
 
 .controls {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     flex-wrap: wrap;
 
-    margin: 14px 0;
+    margin-bottom: 18px;
 }
 
-.search,
-.filter {
-    color: var(--text);
-
+select,
+input {
     background: var(--panel);
 
+    color: var(--text);
+
     border: 1px solid var(--line);
-    border-radius: 10px;
+    border-radius: 7px;
 
-    padding: 12px;
+    padding: 9px 11px;
 
-    font: inherit;
+    font-size: 14px;
 }
 
-.search {
-    flex: 1;
-    min-width: 220px;
-}
-
-.search::placeholder {
-    color: var(--muted);
-}
-
-.search:focus,
-.filter:focus {
+select:focus,
+input:focus {
     outline: none;
 
     border-color: var(--accent);
-
-    box-shadow:
-        0 0 0 2px rgba(88,166,255,.08);
 }
-
 
 /* =========================
    PANELS
@@ -329,32 +281,20 @@ a {
     background: var(--panel);
 
     border: 1px solid var(--line);
-    border-radius: 14px;
 
-    overflow-x: auto;
+    border-radius: 10px;
 
-    box-shadow:
-        0 8px 30px rgba(0,0,0,.12);
-}
-
-.panelhead {
     padding: 18px;
 
-    border-bottom: 1px solid var(--line);
+    margin-bottom: 18px;
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    gap: 12px;
+    overflow-x: auto;
 }
 
-.panelhead h2 {
-    margin: 0;
-
-    font-size: 20px;
+.panel h2,
+.panel h3 {
+    margin-top: 0;
 }
-
 
 /* =========================
    TABLES
@@ -362,69 +302,63 @@ a {
 
 table {
     width: 100%;
+
     border-collapse: collapse;
-}
 
-th,
-td {
-    padding: 13px 15px;
-
-    text-align: left;
-
-    border-bottom: 1px solid var(--line);
+    font-size: 14px;
 }
 
 th {
     color: var(--muted);
 
-    background: var(--panel2);
-
     font-size: 12px;
+    font-weight: 700;
 
     text-transform: uppercase;
 
-    letter-spacing: .04em;
+    letter-spacing: .4px;
+
+    text-align: left;
+
+    padding: 11px 10px;
+
+    border-bottom: 1px solid var(--line);
+
+    white-space: nowrap;
 }
 
-tbody tr {
-    transition: background .12s ease;
+td {
+    padding: 12px 10px;
+
+    border-bottom: 1px solid rgba(38,50,66,.65);
+
+    white-space: nowrap;
 }
 
 tbody tr:hover {
     background: rgba(255,255,255,.025);
 }
 
-tbody tr:last-child td {
-    border-bottom: none;
-}
-
-
 /* =========================
-   PLAYER / TEXT LINKS
+   LINKS
 ========================= */
 
+a {
+    color: inherit;
+}
+
 .link {
-    color: var(--text);
+    color: var(--accent);
 
     text-decoration: none;
 
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .link:hover {
     color: var(--accent2);
+    text-decoration: underline;
 }
-
-.meta {
-    display: block;
-
-    font-size: 12px;
-
-    margin-top: 3px;
-
-    color: var(--muted);
-}
-
 
 /* =========================
    RANK
@@ -433,38 +367,36 @@ tbody tr:last-child td {
 .rank {
     color: var(--muted);
 
-    width: 60px;
-}
+    font-weight: 700;
 
+    width: 45px;
+}
 
 /* =========================
    SHARE
 ========================= */
 
 .share {
-    min-width: 170px;
+    min-width: 130px;
 }
 
 .bar {
     height: 5px;
 
-    background: #252f3b;
+    margin-top: 5px;
 
-    border-radius: 99px;
+    background: var(--panel2);
 
-    margin-top: 7px;
+    border-radius: 5px;
 
     overflow: hidden;
 }
 
-.bar i {
-    display: block;
-
+.bar > div {
     height: 100%;
 
     background: var(--accent);
 }
-
 
 /* =========================
    GRID / CARDS
@@ -474,33 +406,62 @@ tbody tr:last-child td {
     display: grid;
 
     grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(190px, 1fr)
-        );
+        repeat(auto-fit, minmax(180px, 1fr));
 
     gap: 12px;
 }
 
 .card {
-    background: var(--panel2);
+    background: var(--panel);
 
     border: 1px solid var(--line);
-    border-radius: 12px;
 
-    padding: 16px;
+    border-radius: 9px;
 
-    transition:
-        border-color .15s ease,
-        transform .15s ease;
+    padding: 15px;
 }
 
-.card:hover {
-    border-color: #354252;
+.card h3 {
+    margin: 0 0 5px;
 
-    transform: translateY(-1px);
+    font-size: 13px;
+
+    color: var(--muted);
 }
 
+.card .value {
+    font-size: 24px;
+
+    font-weight: 800;
+}
+
+/* =========================
+   SORT BUTTONS
+========================= */
+
+.sort-button {
+    background: transparent;
+
+    color: var(--muted);
+
+    border: 0;
+
+    cursor: pointer;
+
+    font-weight: 700;
+}
+
+.sort-button:hover {
+    color: var(--text);
+}
+
+/* =========================
+   WIDE TABLES
+========================= */
+
+.panel table {
+    min-width: 900px;
+}
 
 /* =========================
    FOOTER
@@ -509,131 +470,54 @@ tbody tr:last-child td {
 .footer {
     color: var(--muted);
 
+    font-size: 12px;
+
     text-align: center;
 
-    padding: 24px;
-
-    font-size: 13px;
+    margin-top: 35px;
 }
-
-
-/* =========================
-   SORT BUTTONS
-========================= */
-
-.sort-button {
-    appearance: none;
-    -webkit-appearance: none;
-
-    background: none !important;
-
-    border: none !important;
-
-    box-shadow: none !important;
-
-    color: inherit;
-
-    font: inherit;
-
-    font-weight: 700;
-
-    padding: 0;
-    margin: 0;
-
-    cursor: pointer;
-
-    text-align: left;
-}
-
-.sort-button:hover {
-    color: var(--accent);
-}
-
-
-/* =========================
-   WIDE TABLES
-========================= */
-
-.panel table {
-    min-width: 1200px;
-}
-
 
 /* =========================
    MOBILE
 ========================= */
 
-@media (max-width: 750px) {
+@media (max-width: 650px) {
 
     .container,
     .site {
-        padding-left: 22px;
-        padding-right: 22px;
+        padding: 22px 18px 40px;
     }
 
     .header {
-        flex-direction: column;
         align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 18px;
     }
 
     .nav {
         width: 100%;
-        justify-content: space-between;
-        gap: 10px;
+
+        gap: 18px;
+
+        flex-wrap: wrap;
     }
 
-    .mainnav {
-        width: 100%;
-        justify-content: space-between;
-        gap: 10px;
-
-        padding-bottom: 25px;
+    .brand {
+        font-size: 24px;
     }
 
-    .brand h1,
-    .header .brand {
-        font-size: 25px;
+    .panel {
+        padding: 14px;
     }
 
-    .panelhead {
-        align-items: flex-start;
-        flex-direction: column;
+    table {
+        font-size: 13px;
     }
 
     th,
     td {
-        padding: 11px 9px;
-        font-size: 13px;
-    }
-
-    .share {
-        min-width: 130px;
-    }
-
-    .panel {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .panel table {
-        min-width: 1200px;
-    }
-}
-
-
-/* =========================
-   EXTRA SMALL PHONES
-========================= */
-
-@media (max-width: 450px) {
-
-    .nav,
-    .mainnav {
-        gap: 14px;
-    }
-
-    .nav a,
-    .mainnav a {
-        font-size: 12px;
+        padding: 10px 8px;
     }
 }

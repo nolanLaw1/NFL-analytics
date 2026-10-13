@@ -59,10 +59,24 @@
         "targets": 46
       },
       {
+        "player_id": "00-0031381",
+        "name": "D.Adams",
+        "position": "WR",
+        "team": "LA",
+        "targets": 45
+      },
+      {
         "player_id": "00-0040667",
         "name": "M.Golden",
         "position": "WR",
         "team": "GB",
+        "targets": 45
+      },
+      {
+        "player_id": "00-0039075",
+        "name": "P.Nacua",
+        "position": "WR",
+        "team": "LA",
         "targets": 45
       },
       {
@@ -99,13 +113,6 @@
         "position": "WR",
         "team": "CAR",
         "targets": 39
-      },
-      {
-        "player_id": "00-0031381",
-        "name": "D.Adams",
-        "position": "WR",
-        "team": "LA",
-        "targets": 38
       },
       {
         "player_id": "00-0036900",
@@ -210,6 +217,13 @@
         "name": "E.Egbuka",
         "position": "WR",
         "team": "TB",
+        "targets": 33
+      },
+      {
+        "player_id": "00-0037840",
+        "name": "K.Williams",
+        "position": "RB",
+        "team": "LA",
         "targets": 33
       },
       {
@@ -409,6 +423,13 @@
         "targets": 26
       },
       {
+        "player_id": "00-0037261",
+        "name": "K.Shakir",
+        "position": "WR",
+        "team": "BUF",
+        "targets": 26
+      },
+      {
         "player_id": "00-0036894",
         "name": "P.Freiermuth",
         "position": "TE",
@@ -444,13 +465,6 @@
         "targets": 25
       },
       {
-        "player_id": "00-0037840",
-        "name": "K.Williams",
-        "position": "RB",
-        "team": "LA",
-        "targets": 25
-      },
-      {
         "player_id": "00-0039066",
         "name": "M.Mayer",
         "position": "TE",
@@ -479,17 +493,17 @@
         "targets": 25
       },
       {
+        "player_id": "00-0033110",
+        "name": "T.Higbee",
+        "position": "TE",
+        "team": "LA",
+        "targets": 25
+      },
+      {
         "player_id": "00-0040126",
         "name": "C.Loveland",
         "position": "TE",
         "team": "CHI",
-        "targets": 23
-      },
-      {
-        "player_id": "00-0037261",
-        "name": "K.Shakir",
-        "position": "WR",
-        "team": "BUF",
         "targets": 23
       },
       {
@@ -511,6 +525,13 @@
         "name": "D.Douglas",
         "position": "WR",
         "team": "NE",
+        "targets": 22
+      },
+      {
+        "player_id": "00-0038933",
+        "name": "D.Kincaid",
+        "position": "TE",
+        "team": "BUF",
         "targets": 22
       },
       {
@@ -584,13 +605,6 @@
         "targets": 21
       },
       {
-        "player_id": "00-0039075",
-        "name": "P.Nacua",
-        "position": "WR",
-        "team": "LA",
-        "targets": 21
-      },
-      {
         "player_id": "00-0036550",
         "name": "R.Bateman",
         "position": "WR",
@@ -661,13 +675,6 @@
         "targets": 20
       },
       {
-        "player_id": "00-0038933",
-        "name": "D.Kincaid",
-        "position": "TE",
-        "team": "BUF",
-        "targets": 19
-      },
-      {
         "player_id": "00-0031610",
         "name": "D.Waller",
         "position": "TE",
@@ -696,6 +703,13 @@
         "targets": 19
       },
       {
+        "player_id": "00-0039901",
+        "name": "K.Coleman",
+        "position": "WR",
+        "team": "BUF",
+        "targets": 19
+      },
+      {
         "player_id": "00-0032951",
         "name": "L.Treadwell",
         "position": "WR",
@@ -714,13 +728,6 @@
         "name": "R.Shaheed",
         "position": "WR",
         "team": "SEA",
-        "targets": 19
-      },
-      {
-        "player_id": "00-0033110",
-        "name": "T.Higbee",
-        "position": "TE",
-        "team": "LA",
         "targets": 19
       },
       {
@@ -805,13 +812,6 @@
         "name": "J.Noel",
         "position": "WR",
         "team": "HOU",
-        "targets": 17
-      },
-      {
-        "player_id": "00-0039901",
-        "name": "K.Coleman",
-        "position": "WR",
-        "team": "BUF",
         "targets": 17
       },
       {
@@ -1165,10 +1165,24 @@
         "targets": 11
       },
       {
+        "player_id": "00-0039738",
+        "name": "B.Corum",
+        "position": "RB",
+        "team": "LA",
+        "targets": 11
+      },
+      {
         "player_id": "00-0036555",
         "name": "C.Hubbard",
         "position": "RB",
         "team": "CAR",
+        "targets": 11
+      },
+      {
+        "player_id": "00-0037248",
+        "name": "J.Cook",
+        "position": "RB",
+        "team": "BUF",
         "targets": 11
       },
       {
@@ -1204,13 +1218,6 @@
         "name": "C.Douglas",
         "position": "WR",
         "team": "MIA",
-        "targets": 10
-      },
-      {
-        "player_id": "00-0037248",
-        "name": "J.Cook",
-        "position": "RB",
-        "team": "BUF",
         "targets": 10
       },
       {
@@ -1256,6 +1263,13 @@
         "targets": 10
       },
       {
+        "player_id": "00-0035537",
+        "name": "T.Johnson",
+        "position": "RB",
+        "team": "BUF",
+        "targets": 10
+      },
+      {
         "player_id": "00-0040237",
         "name": "T.Johnson",
         "position": "WR",
@@ -1277,10 +1291,24 @@
         "targets": 9
       },
       {
+        "player_id": "00-0039074",
+        "name": "D.Allen",
+        "position": "TE",
+        "team": "LA",
+        "targets": 9
+      },
+      {
         "player_id": "00-0032764",
         "name": "D.Henry",
         "position": "RB",
         "team": "BAL",
+        "targets": 9
+      },
+      {
+        "player_id": "00-0035689",
+        "name": "D.Knox",
+        "position": "TE",
+        "team": "BUF",
         "targets": 9
       },
       {
@@ -1424,13 +1452,6 @@
         "targets": 7
       },
       {
-        "player_id": "00-0039738",
-        "name": "B.Corum",
-        "position": "RB",
-        "team": "LA",
-        "targets": 7
-      },
-      {
         "player_id": "00-0040705",
         "name": "C.Dike",
         "position": "WR",
@@ -1445,8 +1466,8 @@
         "targets": 7
       },
       {
-        "player_id": "00-0039074",
-        "name": "D.Allen",
+        "player_id": "00-0036244",
+        "name": "C.Parkinson",
         "position": "TE",
         "team": "LA",
         "targets": 7
@@ -1599,13 +1620,6 @@
         "targets": 6
       },
       {
-        "player_id": "00-0035689",
-        "name": "D.Knox",
-        "position": "TE",
-        "team": "BUF",
-        "targets": 6
-      },
-      {
         "player_id": "00-0032775",
         "name": "D.Robinson",
         "position": "WR",
@@ -1690,13 +1704,6 @@
         "targets": 6
       },
       {
-        "player_id": "00-0035537",
-        "name": "T.Johnson",
-        "position": "RB",
-        "team": "BUF",
-        "targets": 6
-      },
-      {
         "player_id": "00-0041524",
         "name": "W.Kacmarek",
         "position": "TE",
@@ -1722,13 +1729,6 @@
         "name": "C.Donaldson",
         "position": "RB",
         "team": "NO",
-        "targets": 5
-      },
-      {
-        "player_id": "00-0036244",
-        "name": "C.Parkinson",
-        "position": "TE",
-        "team": "LA",
         "targets": 5
       },
       {
@@ -1984,6 +1984,13 @@
         "targets": 4
       },
       {
+        "player_id": "00-0036849",
+        "name": "T.Atwell",
+        "position": "WR",
+        "team": "LA",
+        "targets": 4
+      },
+      {
         "player_id": "00-0038555",
         "name": "T.Bigsby",
         "position": "RB",
@@ -2180,13 +2187,6 @@
         "targets": 3
       },
       {
-        "player_id": "00-0036849",
-        "name": "T.Atwell",
-        "position": "WR",
-        "team": "LA",
-        "targets": 3
-      },
-      {
         "player_id": "00-0033375",
         "name": "T.Patrick",
         "position": "WR",
@@ -2369,10 +2369,24 @@
         "targets": 2
       },
       {
+        "player_id": "00-0039875",
+        "name": "R.Davis",
+        "position": "RB",
+        "team": "BUF",
+        "targets": 2
+      },
+      {
         "player_id": "00-0036187",
         "name": "R.Gilliam",
         "position": "RB",
         "team": "NE",
+        "targets": 2
+      },
+      {
+        "player_id": "00-0041443",
+        "name": "S.Bell",
+        "position": "WR",
+        "team": "BUF",
         "targets": 2
       },
       {
@@ -2579,13 +2593,6 @@
         "targets": 1
       },
       {
-        "player_id": "00-0039875",
-        "name": "R.Davis",
-        "position": "RB",
-        "team": "BUF",
-        "targets": 1
-      },
-      {
         "player_id": "00-0037557",
         "name": "R.Rivers",
         "position": "RB",
@@ -2656,6 +2663,13 @@
         "position": "RB",
         "team": "MIN",
         "carries": 97
+      },
+      {
+        "player_id": "00-0037248",
+        "name": "J.Cook",
+        "position": "RB",
+        "team": "BUF",
+        "carries": 95
       },
       {
         "player_id": "00-0040122",
@@ -2735,17 +2749,17 @@
         "carries": 71
       },
       {
-        "player_id": "00-0037248",
-        "name": "J.Cook",
-        "position": "RB",
-        "team": "BUF",
-        "carries": 70
-      },
-      {
         "player_id": "00-0037228",
         "name": "J.Warren",
         "position": "RB",
         "team": "PIT",
+        "carries": 70
+      },
+      {
+        "player_id": "00-0037840",
+        "name": "K.Williams",
+        "position": "RB",
+        "team": "LA",
         "carries": 70
       },
       {
@@ -2812,13 +2826,6 @@
         "carries": 57
       },
       {
-        "player_id": "00-0037840",
-        "name": "K.Williams",
-        "position": "RB",
-        "team": "LA",
-        "carries": 54
-      },
-      {
         "player_id": "00-0035685",
         "name": "D.Montgomery",
         "position": "RB",
@@ -2868,6 +2875,13 @@
         "carries": 40
       },
       {
+        "player_id": "00-0039738",
+        "name": "B.Corum",
+        "position": "RB",
+        "team": "LA",
+        "carries": 38
+      },
+      {
         "player_id": "00-0041052",
         "name": "K.Black",
         "position": "RB",
@@ -2894,13 +2908,6 @@
         "position": "RB",
         "team": "MIA",
         "carries": 34
-      },
-      {
-        "player_id": "00-0039738",
-        "name": "B.Corum",
-        "position": "RB",
-        "team": "LA",
-        "carries": 33
       },
       {
         "player_id": "00-0038454",
@@ -3288,6 +3295,13 @@
         "carries": 4
       },
       {
+        "player_id": "00-0039875",
+        "name": "R.Davis",
+        "position": "RB",
+        "team": "BUF",
+        "carries": 4
+      },
+      {
         "player_id": "00-0033921",
         "name": "C.Godwin",
         "position": "WR",
@@ -3313,6 +3327,13 @@
         "name": "P.Freiermuth",
         "position": "TE",
         "team": "PIT",
+        "carries": 3
+      },
+      {
+        "player_id": "00-0039075",
+        "name": "P.Nacua",
+        "position": "WR",
+        "team": "LA",
         "carries": 3
       },
       {
@@ -3439,13 +3460,6 @@
         "name": "Q.Johnston",
         "position": "WR",
         "team": "LAC",
-        "carries": 2
-      },
-      {
-        "player_id": "00-0039875",
-        "name": "R.Davis",
-        "position": "RB",
-        "team": "BUF",
         "carries": 2
       },
       {
@@ -3666,13 +3680,6 @@
         "carries": 1
       },
       {
-        "player_id": "00-0039075",
-        "name": "P.Nacua",
-        "position": "WR",
-        "team": "LA",
-        "carries": 1
-      },
-      {
         "player_id": "00-0038606",
         "name": "P.Washington",
         "position": "WR",
@@ -3759,6 +3766,13 @@
         "receptions": 31
       },
       {
+        "player_id": "00-0039075",
+        "name": "P.Nacua",
+        "position": "WR",
+        "team": "LA",
+        "receptions": 31
+      },
+      {
         "player_id": "00-0040128",
         "name": "T.Warren",
         "position": "TE",
@@ -3778,6 +3792,13 @@
         "position": "WR",
         "team": "ARI",
         "receptions": 29
+      },
+      {
+        "player_id": "00-0031381",
+        "name": "D.Adams",
+        "position": "WR",
+        "team": "LA",
+        "receptions": 27
       },
       {
         "player_id": "00-0037238",
@@ -3805,6 +3826,13 @@
         "name": "J.Gibbs",
         "position": "RB",
         "team": "DET",
+        "receptions": 27
+      },
+      {
+        "player_id": "00-0037840",
+        "name": "K.Williams",
+        "position": "RB",
+        "team": "LA",
         "receptions": 27
       },
       {
@@ -3934,13 +3962,6 @@
         "receptions": 22
       },
       {
-        "player_id": "00-0031381",
-        "name": "D.Adams",
-        "position": "WR",
-        "team": "LA",
-        "receptions": 22
-      },
-      {
         "player_id": "00-0034753",
         "name": "M.Andrews",
         "position": "TE",
@@ -3983,13 +4004,6 @@
         "receptions": 21
       },
       {
-        "player_id": "00-0037840",
-        "name": "K.Williams",
-        "position": "RB",
-        "team": "LA",
-        "receptions": 21
-      },
-      {
         "player_id": "00-0039066",
         "name": "M.Mayer",
         "position": "TE",
@@ -4008,6 +4022,13 @@
         "name": "R.Harvey",
         "position": "RB",
         "team": "DEN",
+        "receptions": 20
+      },
+      {
+        "player_id": "00-0033110",
+        "name": "T.Higbee",
+        "position": "TE",
+        "team": "LA",
         "receptions": 20
       },
       {
@@ -4137,6 +4158,13 @@
         "receptions": 18
       },
       {
+        "player_id": "00-0037261",
+        "name": "K.Shakir",
+        "position": "WR",
+        "team": "BUF",
+        "receptions": 18
+      },
+      {
         "player_id": "00-0040784",
         "name": "Q.Judkins",
         "position": "RB",
@@ -4183,6 +4211,13 @@
         "name": "D.Boston",
         "position": "WR",
         "team": "CLE",
+        "receptions": 16
+      },
+      {
+        "player_id": "00-0038933",
+        "name": "D.Kincaid",
+        "position": "TE",
+        "team": "BUF",
         "receptions": 16
       },
       {
@@ -4235,13 +4270,6 @@
         "receptions": 15
       },
       {
-        "player_id": "00-0038933",
-        "name": "D.Kincaid",
-        "position": "TE",
-        "team": "BUF",
-        "receptions": 15
-      },
-      {
         "player_id": "00-0033090",
         "name": "H.Henry",
         "position": "TE",
@@ -4263,8 +4291,8 @@
         "receptions": 15
       },
       {
-        "player_id": "00-0037261",
-        "name": "K.Shakir",
+        "player_id": "00-0039901",
+        "name": "K.Coleman",
         "position": "WR",
         "team": "BUF",
         "receptions": 15
@@ -4298,13 +4326,6 @@
         "receptions": 15
       },
       {
-        "player_id": "00-0033110",
-        "name": "T.Higbee",
-        "position": "TE",
-        "team": "LA",
-        "receptions": 15
-      },
-      {
         "player_id": "00-0036275",
         "name": "D.Swift",
         "position": "RB",
@@ -4312,24 +4333,10 @@
         "receptions": 14
       },
       {
-        "player_id": "00-0039901",
-        "name": "K.Coleman",
-        "position": "WR",
-        "team": "BUF",
-        "receptions": 14
-      },
-      {
         "player_id": "00-0041032",
         "name": "K.Sadiq",
         "position": "TE",
         "team": "NYJ",
-        "receptions": 14
-      },
-      {
-        "player_id": "00-0039075",
-        "name": "P.Nacua",
-        "position": "WR",
-        "team": "LA",
         "receptions": 14
       },
       {
@@ -4662,6 +4669,13 @@
         "receptions": 10
       },
       {
+        "player_id": "00-0035537",
+        "name": "T.Johnson",
+        "position": "RB",
+        "team": "BUF",
+        "receptions": 10
+      },
+      {
         "player_id": "00-0039890",
         "name": "A.Mitchell",
         "position": "WR",
@@ -4830,6 +4844,13 @@
         "receptions": 7
       },
       {
+        "player_id": "00-0039738",
+        "name": "B.Corum",
+        "position": "RB",
+        "team": "LA",
+        "receptions": 7
+      },
+      {
         "player_id": "00-0041523",
         "name": "C.Douglas",
         "position": "WR",
@@ -4858,10 +4879,24 @@
         "receptions": 7
       },
       {
+        "player_id": "00-0035689",
+        "name": "D.Knox",
+        "position": "TE",
+        "team": "BUF",
+        "receptions": 7
+      },
+      {
         "player_id": "00-0035685",
         "name": "D.Montgomery",
         "position": "RB",
         "team": "HOU",
+        "receptions": 7
+      },
+      {
+        "player_id": "00-0037248",
+        "name": "J.Cook",
+        "position": "RB",
+        "team": "BUF",
         "receptions": 7
       },
       {
@@ -4942,10 +4977,10 @@
         "receptions": 6
       },
       {
-        "player_id": "00-0035689",
-        "name": "D.Knox",
+        "player_id": "00-0039074",
+        "name": "D.Allen",
         "position": "TE",
-        "team": "BUF",
+        "team": "LA",
         "receptions": 6
       },
       {
@@ -4967,13 +5002,6 @@
         "name": "G.Bartholomew",
         "position": "TE",
         "team": "MIN",
-        "receptions": 6
-      },
-      {
-        "player_id": "00-0037248",
-        "name": "J.Cook",
-        "position": "RB",
-        "team": "BUF",
         "receptions": 6
       },
       {
@@ -5009,13 +5037,6 @@
         "name": "T.Badie",
         "position": "RB",
         "team": "DEN",
-        "receptions": 6
-      },
-      {
-        "player_id": "00-0035537",
-        "name": "T.Johnson",
-        "position": "RB",
-        "team": "BUF",
         "receptions": 6
       },
       {
@@ -5243,13 +5264,6 @@
         "receptions": 5
       },
       {
-        "player_id": "00-0039738",
-        "name": "B.Corum",
-        "position": "RB",
-        "team": "LA",
-        "receptions": 4
-      },
-      {
         "player_id": "00-0037091",
         "name": "B.Melton",
         "position": "WR",
@@ -5264,8 +5278,8 @@
         "receptions": 4
       },
       {
-        "player_id": "00-0039074",
-        "name": "D.Allen",
+        "player_id": "00-0036244",
+        "name": "C.Parkinson",
         "position": "TE",
         "team": "LA",
         "receptions": 4
@@ -5474,13 +5488,6 @@
         "receptions": 3
       },
       {
-        "player_id": "00-0036244",
-        "name": "C.Parkinson",
-        "position": "TE",
-        "team": "LA",
-        "receptions": 3
-      },
-      {
         "player_id": "00-0039407",
         "name": "D.Laube",
         "position": "RB",
@@ -5604,6 +5611,13 @@
         "name": "S.Roush",
         "position": "TE",
         "team": "CHI",
+        "receptions": 3
+      },
+      {
+        "player_id": "00-0036849",
+        "name": "T.Atwell",
+        "position": "WR",
+        "team": "LA",
         "receptions": 3
       },
       {
@@ -5831,17 +5845,17 @@
         "receptions": 2
       },
       {
+        "player_id": "00-0039875",
+        "name": "R.Davis",
+        "position": "RB",
+        "team": "BUF",
+        "receptions": 2
+      },
+      {
         "player_id": "00-0041070",
         "name": "R.Virgil",
         "position": "WR",
         "team": "ARI",
-        "receptions": 2
-      },
-      {
-        "player_id": "00-0036849",
-        "name": "T.Atwell",
-        "position": "WR",
-        "team": "LA",
         "receptions": 2
       },
       {
@@ -6167,13 +6181,6 @@
         "receptions": 1
       },
       {
-        "player_id": "00-0039875",
-        "name": "R.Davis",
-        "position": "RB",
-        "team": "BUF",
-        "receptions": 1
-      },
-      {
         "player_id": "00-0036187",
         "name": "R.Gilliam",
         "position": "RB",
@@ -6314,6 +6321,13 @@
         "receptions": 0
       },
       {
+        "player_id": "00-0041443",
+        "name": "S.Bell",
+        "position": "WR",
+        "team": "BUF",
+        "receptions": 0
+      },
+      {
         "player_id": "00-0039518",
         "name": "T.Welch",
         "position": "TE",
@@ -6365,6 +6379,13 @@
         "receiving_yards": 474
       },
       {
+        "player_id": "00-0031381",
+        "name": "D.Adams",
+        "position": "WR",
+        "team": "LA",
+        "receiving_yards": 441
+      },
+      {
         "player_id": "00-0036410",
         "name": "T.Higgins",
         "position": "WR",
@@ -6384,13 +6405,6 @@
         "position": "WR",
         "team": "GB",
         "receiving_yards": 397
-      },
-      {
-        "player_id": "00-0031381",
-        "name": "D.Adams",
-        "position": "WR",
-        "team": "LA",
-        "receiving_yards": 390
       },
       {
         "player_id": "00-0040124",
@@ -6426,6 +6440,13 @@
         "position": "WR",
         "team": "JAX",
         "receiving_yards": 352
+      },
+      {
+        "player_id": "00-0039075",
+        "name": "P.Nacua",
+        "position": "WR",
+        "team": "LA",
+        "receiving_yards": 337
       },
       {
         "player_id": "00-0041037",
@@ -6491,6 +6512,13 @@
         "receiving_yards": 284
       },
       {
+        "player_id": "00-0038933",
+        "name": "D.Kincaid",
+        "position": "TE",
+        "team": "BUF",
+        "receiving_yards": 277
+      },
+      {
         "player_id": "00-0037240",
         "name": "J.Williams",
         "position": "WR",
@@ -6517,13 +6545,6 @@
         "position": "WR",
         "team": "CHI",
         "receiving_yards": 273
-      },
-      {
-        "player_id": "00-0038933",
-        "name": "D.Kincaid",
-        "position": "TE",
-        "team": "BUF",
-        "receiving_yards": 270
       },
       {
         "player_id": "00-0033288",
@@ -6587,6 +6608,13 @@
         "position": "TE",
         "team": "NO",
         "receiving_yards": 248
+      },
+      {
+        "player_id": "00-0037261",
+        "name": "K.Shakir",
+        "position": "WR",
+        "team": "BUF",
+        "receiving_yards": 246
       },
       {
         "player_id": "00-0030506",
@@ -6673,6 +6701,20 @@
         "receiving_yards": 225
       },
       {
+        "player_id": "00-0039901",
+        "name": "K.Coleman",
+        "position": "WR",
+        "team": "BUF",
+        "receiving_yards": 224
+      },
+      {
+        "player_id": "00-0033110",
+        "name": "T.Higbee",
+        "position": "TE",
+        "team": "LA",
+        "receiving_yards": 224
+      },
+      {
         "player_id": "00-0039491",
         "name": "J.Coker",
         "position": "WR",
@@ -6692,13 +6734,6 @@
         "position": "WR",
         "team": "KC",
         "receiving_yards": 219
-      },
-      {
-        "player_id": "00-0039901",
-        "name": "K.Coleman",
-        "position": "WR",
-        "team": "BUF",
-        "receiving_yards": 217
       },
       {
         "player_id": "00-0040122",
@@ -6757,11 +6792,11 @@
         "receiving_yards": 202
       },
       {
-        "player_id": "00-0039075",
-        "name": "P.Nacua",
-        "position": "WR",
+        "player_id": "00-0037840",
+        "name": "K.Williams",
+        "position": "RB",
         "team": "LA",
-        "receiving_yards": 199
+        "receiving_yards": 200
       },
       {
         "player_id": "00-0039410",
@@ -6855,13 +6890,6 @@
         "receiving_yards": 176
       },
       {
-        "player_id": "00-0037840",
-        "name": "K.Williams",
-        "position": "RB",
-        "team": "LA",
-        "receiving_yards": 173
-      },
-      {
         "player_id": "00-0039066",
         "name": "M.Mayer",
         "position": "TE",
@@ -6881,13 +6909,6 @@
         "position": "TE",
         "team": "PIT",
         "receiving_yards": 169
-      },
-      {
-        "player_id": "00-0037261",
-        "name": "K.Shakir",
-        "position": "WR",
-        "team": "BUF",
-        "receiving_yards": 166
       },
       {
         "player_id": "00-0038994",
@@ -7002,13 +7023,6 @@
         "receiving_yards": 141
       },
       {
-        "player_id": "00-0033110",
-        "name": "T.Higbee",
-        "position": "TE",
-        "team": "LA",
-        "receiving_yards": 141
-      },
-      {
         "player_id": "00-0041489",
         "name": "G.Bernard",
         "position": "WR",
@@ -7062,6 +7076,13 @@
         "name": "D.Washington",
         "position": "TE",
         "team": "PIT",
+        "receiving_yards": 131
+      },
+      {
+        "player_id": "00-0035537",
+        "name": "T.Johnson",
+        "position": "RB",
+        "team": "BUF",
         "receiving_yards": 131
       },
       {
@@ -7464,6 +7485,13 @@
         "receiving_yards": 74
       },
       {
+        "player_id": "00-0039738",
+        "name": "B.Corum",
+        "position": "RB",
+        "team": "LA",
+        "receiving_yards": 73
+      },
+      {
         "player_id": "00-0035644",
         "name": "N.Fant",
         "position": "TE",
@@ -7562,6 +7590,13 @@
         "receiving_yards": 63
       },
       {
+        "player_id": "00-0039074",
+        "name": "D.Allen",
+        "position": "TE",
+        "team": "LA",
+        "receiving_yards": 63
+      },
+      {
         "player_id": "00-0040737",
         "name": "T.Ferguson",
         "position": "TE",
@@ -7602,13 +7637,6 @@
         "position": "WR",
         "team": "SF",
         "receiving_yards": 60
-      },
-      {
-        "player_id": "00-0035537",
-        "name": "T.Johnson",
-        "position": "RB",
-        "team": "BUF",
-        "receiving_yards": 59
       },
       {
         "player_id": "00-0038046",
@@ -7863,13 +7891,6 @@
         "receiving_yards": 40
       },
       {
-        "player_id": "00-0039074",
-        "name": "D.Allen",
-        "position": "TE",
-        "team": "LA",
-        "receiving_yards": 39
-      },
-      {
         "player_id": "00-0040236",
         "name": "K.Monangai",
         "position": "RB",
@@ -7889,6 +7910,13 @@
         "position": "TE",
         "team": "MIN",
         "receiving_yards": 37
+      },
+      {
+        "player_id": "00-0035689",
+        "name": "D.Knox",
+        "position": "TE",
+        "team": "BUF",
+        "receiving_yards": 36
       },
       {
         "player_id": "00-0037093",
@@ -7916,6 +7944,13 @@
         "name": "O.Hampton",
         "position": "RB",
         "team": "LAC",
+        "receiving_yards": 35
+      },
+      {
+        "player_id": "00-0039875",
+        "name": "R.Davis",
+        "position": "RB",
+        "team": "BUF",
         "receiving_yards": 35
       },
       {
@@ -7982,10 +8017,24 @@
         "receiving_yards": 31
       },
       {
+        "player_id": "00-0037248",
+        "name": "J.Cook",
+        "position": "RB",
+        "team": "BUF",
+        "receiving_yards": 31
+      },
+      {
         "player_id": "00-0037755",
         "name": "J.Woods",
         "position": "TE",
         "team": "NYJ",
+        "receiving_yards": 31
+      },
+      {
+        "player_id": "00-0036849",
+        "name": "T.Atwell",
+        "position": "WR",
+        "team": "LA",
         "receiving_yards": 31
       },
       {
@@ -8007,13 +8056,6 @@
         "name": "D.Bellinger",
         "position": "TE",
         "team": "TEN",
-        "receiving_yards": 30
-      },
-      {
-        "player_id": "00-0035689",
-        "name": "D.Knox",
-        "position": "TE",
-        "team": "BUF",
         "receiving_yards": 30
       },
       {
@@ -8087,13 +8129,6 @@
         "receiving_yards": 28
       },
       {
-        "player_id": "00-0036849",
-        "name": "T.Atwell",
-        "position": "WR",
-        "team": "LA",
-        "receiving_yards": 27
-      },
-      {
         "player_id": "00-0035676",
         "name": "A.Brown",
         "position": "WR",
@@ -8143,17 +8178,17 @@
         "receiving_yards": 24
       },
       {
+        "player_id": "00-0036244",
+        "name": "C.Parkinson",
+        "position": "TE",
+        "team": "LA",
+        "receiving_yards": 24
+      },
+      {
         "player_id": "00-0035631",
         "name": "D.Sample",
         "position": "TE",
         "team": "CIN",
-        "receiving_yards": 24
-      },
-      {
-        "player_id": "00-0037248",
-        "name": "J.Cook",
-        "position": "RB",
-        "team": "BUF",
         "receiving_yards": 24
       },
       {
@@ -8248,25 +8283,11 @@
         "receiving_yards": 21
       },
       {
-        "player_id": "00-0036244",
-        "name": "C.Parkinson",
-        "position": "TE",
-        "team": "LA",
-        "receiving_yards": 21
-      },
-      {
         "player_id": "00-0041512",
         "name": "J.Price",
         "position": "RB",
         "team": "SEA",
         "receiving_yards": 21
-      },
-      {
-        "player_id": "00-0039738",
-        "name": "B.Corum",
-        "position": "RB",
-        "team": "LA",
-        "receiving_yards": 20
       },
       {
         "player_id": "00-0038619",
@@ -8745,13 +8766,6 @@
         "receiving_yards": 4
       },
       {
-        "player_id": "00-0039875",
-        "name": "R.Davis",
-        "position": "RB",
-        "team": "BUF",
-        "receiving_yards": 4
-      },
-      {
         "player_id": "00-0036187",
         "name": "R.Gilliam",
         "position": "RB",
@@ -8920,6 +8934,13 @@
         "receiving_yards": 0
       },
       {
+        "player_id": "00-0041443",
+        "name": "S.Bell",
+        "position": "WR",
+        "team": "BUF",
+        "receiving_yards": 0
+      },
+      {
         "player_id": "00-0039518",
         "name": "T.Welch",
         "position": "TE",
@@ -8964,6 +8985,13 @@
         "rushing_yards": 537
       },
       {
+        "player_id": "00-0037248",
+        "name": "J.Cook",
+        "position": "RB",
+        "team": "BUF",
+        "rushing_yards": 532
+      },
+      {
         "player_id": "00-0039139",
         "name": "J.Gibbs",
         "position": "RB",
@@ -8976,13 +9004,6 @@
         "position": "RB",
         "team": "BAL",
         "rushing_yards": 476
-      },
-      {
-        "player_id": "00-0037248",
-        "name": "J.Cook",
-        "position": "RB",
-        "team": "BUF",
-        "rushing_yards": 421
       },
       {
         "player_id": "00-0033293",
@@ -9027,6 +9048,13 @@
         "rushing_yards": 349
       },
       {
+        "player_id": "00-0037840",
+        "name": "K.Williams",
+        "position": "RB",
+        "team": "LA",
+        "rushing_yards": 343
+      },
+      {
         "player_id": "00-0040236",
         "name": "K.Monangai",
         "position": "RB",
@@ -9045,13 +9073,6 @@
         "name": "C.Skattebo",
         "position": "RB",
         "team": "NYG",
-        "rushing_yards": 294
-      },
-      {
-        "player_id": "00-0037840",
-        "name": "K.Williams",
-        "position": "RB",
-        "team": "LA",
         "rushing_yards": 294
       },
       {
@@ -9167,6 +9188,13 @@
         "rushing_yards": 182
       },
       {
+        "player_id": "00-0039738",
+        "name": "B.Corum",
+        "position": "RB",
+        "team": "LA",
+        "rushing_yards": 181
+      },
+      {
         "player_id": "00-0038120",
         "name": "B.Hall",
         "position": "RB",
@@ -9179,13 +9207,6 @@
         "position": "RB",
         "team": "NE",
         "rushing_yards": 163
-      },
-      {
-        "player_id": "00-0039738",
-        "name": "B.Corum",
-        "position": "RB",
-        "team": "LA",
-        "rushing_yards": 162
       },
       {
         "player_id": "00-0040583",
@@ -9699,6 +9720,13 @@
         "rushing_yards": 11
       },
       {
+        "player_id": "00-0039075",
+        "name": "P.Nacua",
+        "position": "WR",
+        "team": "LA",
+        "rushing_yards": 11
+      },
+      {
         "player_id": "00-0041051",
         "name": "Z.Thomas",
         "position": "WR",
@@ -9755,6 +9783,13 @@
         "rushing_yards": 8
       },
       {
+        "player_id": "00-0039875",
+        "name": "R.Davis",
+        "position": "RB",
+        "team": "BUF",
+        "rushing_yards": 8
+      },
+      {
         "player_id": "00-0036554",
         "name": "N.Collins",
         "position": "WR",
@@ -9787,13 +9822,6 @@
         "name": "N.Adkins",
         "position": "TE",
         "team": "DEN",
-        "rushing_yards": 6
-      },
-      {
-        "player_id": "00-0039875",
-        "name": "R.Davis",
-        "position": "RB",
-        "team": "BUF",
         "rushing_yards": 6
       },
       {
@@ -9951,13 +9979,6 @@
         "rushing_yards": 2
       },
       {
-        "player_id": "00-0039075",
-        "name": "P.Nacua",
-        "position": "WR",
-        "team": "LA",
-        "rushing_yards": 2
-      },
-      {
         "player_id": "00-0039793",
         "name": "A.Barner",
         "position": "TE",
@@ -10062,6 +10083,13 @@
         "name": "C.Lamb",
         "position": "WR",
         "team": "DAL",
+        "receiving_tds": 4
+      },
+      {
+        "player_id": "00-0031381",
+        "name": "D.Adams",
+        "position": "WR",
+        "team": "LA",
         "receiving_tds": 4
       },
       {
@@ -10226,13 +10254,6 @@
         "receiving_tds": 2
       },
       {
-        "player_id": "00-0031381",
-        "name": "D.Adams",
-        "position": "WR",
-        "team": "LA",
-        "receiving_tds": 2
-      },
-      {
         "player_id": "00-0038621",
         "name": "D.Douglas",
         "position": "WR",
@@ -10307,6 +10328,13 @@
         "name": "J.Williams",
         "position": "WR",
         "team": "DET",
+        "receiving_tds": 2
+      },
+      {
+        "player_id": "00-0039901",
+        "name": "K.Coleman",
+        "position": "WR",
+        "team": "BUF",
         "receiving_tds": 2
       },
       {
@@ -10786,13 +10814,6 @@
         "receiving_tds": 1
       },
       {
-        "player_id": "00-0039901",
-        "name": "K.Coleman",
-        "position": "WR",
-        "team": "BUF",
-        "receiving_tds": 1
-      },
-      {
         "player_id": "00-0041529",
         "name": "K.Coleman",
         "position": "WR",
@@ -10937,6 +10958,13 @@
         "name": "P.Bryant",
         "position": "WR",
         "team": "DEN",
+        "receiving_tds": 1
+      },
+      {
+        "player_id": "00-0039075",
+        "name": "P.Nacua",
+        "position": "WR",
+        "team": "LA",
         "receiving_tds": 1
       },
       {
@@ -12284,13 +12312,6 @@
         "receiving_tds": 0
       },
       {
-        "player_id": "00-0039075",
-        "name": "P.Nacua",
-        "position": "WR",
-        "team": "LA",
-        "receiving_tds": 0
-      },
-      {
         "player_id": "00-0033376",
         "name": "P.Ricard",
         "position": "RB",
@@ -12421,6 +12442,13 @@
         "name": "S.Barkley",
         "position": "RB",
         "team": "PHI",
+        "receiving_tds": 0
+      },
+      {
+        "player_id": "00-0041443",
+        "name": "S.Bell",
+        "position": "WR",
+        "team": "BUF",
         "receiving_tds": 0
       },
       {
@@ -12692,6 +12720,13 @@
         "rushing_tds": 5
       },
       {
+        "player_id": "00-0037248",
+        "name": "J.Cook",
+        "position": "RB",
+        "team": "BUF",
+        "rushing_tds": 5
+      },
+      {
         "player_id": "00-0038542",
         "name": "Bi.Robinson",
         "position": "RB",
@@ -12720,6 +12755,13 @@
         "rushing_tds": 4
       },
       {
+        "player_id": "00-0037840",
+        "name": "K.Williams",
+        "position": "RB",
+        "team": "LA",
+        "rushing_tds": 4
+      },
+      {
         "player_id": "00-0036555",
         "name": "C.Hubbard",
         "position": "RB",
@@ -12727,24 +12769,10 @@
         "rushing_tds": 3
       },
       {
-        "player_id": "00-0037248",
-        "name": "J.Cook",
-        "position": "RB",
-        "team": "BUF",
-        "rushing_tds": 3
-      },
-      {
         "player_id": "00-0040236",
         "name": "K.Monangai",
         "position": "RB",
         "team": "CHI",
-        "rushing_tds": 3
-      },
-      {
-        "player_id": "00-0037840",
-        "name": "K.Williams",
-        "position": "RB",
-        "team": "LA",
         "rushing_tds": 3
       },
       {
@@ -12857,6 +12885,13 @@
         "name": "A.Barner",
         "position": "TE",
         "team": "SEA",
+        "rushing_tds": 1
+      },
+      {
+        "player_id": "00-0039738",
+        "name": "B.Corum",
+        "position": "RB",
+        "team": "LA",
         "rushing_tds": 1
       },
       {
@@ -13074,13 +13109,6 @@
         "name": "B.Brown",
         "position": "WR",
         "team": "NO",
-        "rushing_tds": 0
-      },
-      {
-        "player_id": "00-0039738",
-        "name": "B.Corum",
-        "position": "RB",
-        "team": "LA",
         "rushing_tds": 0
       },
       {
@@ -13845,6 +13873,15 @@
         "rz_target_share": 0.2258
       },
       {
+        "player_id": "00-0031381",
+        "name": "D.Adams",
+        "position": "WR",
+        "team": "LA",
+        "red_zone_targets": 7,
+        "team_rz_targets": 25,
+        "rz_target_share": 0.28
+      },
+      {
         "player_id": "00-0036900",
         "name": "J.Chase",
         "position": "WR",
@@ -14093,8 +14130,8 @@
         "position": "WR",
         "team": "BUF",
         "red_zone_targets": 5,
-        "team_rz_targets": 18,
-        "rz_target_share": 0.2778
+        "team_rz_targets": 22,
+        "rz_target_share": 0.2273
       },
       {
         "player_id": "00-0036894",
@@ -14167,15 +14204,6 @@
         "red_zone_targets": 4,
         "team_rz_targets": 25,
         "rz_target_share": 0.16
-      },
-      {
-        "player_id": "00-0031381",
-        "name": "D.Adams",
-        "position": "WR",
-        "team": "LA",
-        "red_zone_targets": 4,
-        "team_rz_targets": 15,
-        "rz_target_share": 0.2667
       },
       {
         "player_id": "00-0040024",
@@ -14304,6 +14332,15 @@
         "rz_target_share": 0.1081
       },
       {
+        "player_id": "00-0039901",
+        "name": "K.Coleman",
+        "position": "WR",
+        "team": "BUF",
+        "red_zone_targets": 4,
+        "team_rz_targets": 22,
+        "rz_target_share": 0.1818
+      },
+      {
         "player_id": "00-0032464",
         "name": "K.Raymond",
         "position": "WR",
@@ -14311,6 +14348,15 @@
         "red_zone_targets": 4,
         "team_rz_targets": 28,
         "rz_target_share": 0.1429
+      },
+      {
+        "player_id": "00-0037840",
+        "name": "K.Williams",
+        "position": "RB",
+        "team": "LA",
+        "red_zone_targets": 4,
+        "team_rz_targets": 25,
+        "rz_target_share": 0.16
       },
       {
         "player_id": "00-0034829",
@@ -14329,6 +14375,15 @@
         "red_zone_targets": 4,
         "team_rz_targets": 24,
         "rz_target_share": 0.1667
+      },
+      {
+        "player_id": "00-0039075",
+        "name": "P.Nacua",
+        "position": "WR",
+        "team": "LA",
+        "red_zone_targets": 4,
+        "team_rz_targets": 25,
+        "rz_target_share": 0.16
       },
       {
         "player_id": "00-0040784",
@@ -14439,13 +14494,22 @@
         "rz_target_share": 0.125
       },
       {
+        "player_id": "00-0035689",
+        "name": "D.Knox",
+        "position": "TE",
+        "team": "BUF",
+        "red_zone_targets": 3,
+        "team_rz_targets": 22,
+        "rz_target_share": 0.1364
+      },
+      {
         "player_id": "00-0034827",
         "name": "D.Moore",
         "position": "WR",
         "team": "BUF",
         "red_zone_targets": 3,
-        "team_rz_targets": 18,
-        "rz_target_share": 0.1667
+        "team_rz_targets": 22,
+        "rz_target_share": 0.1364
       },
       {
         "player_id": "00-0034383",
@@ -14527,15 +14591,6 @@
         "red_zone_targets": 3,
         "team_rz_targets": 39,
         "rz_target_share": 0.0769
-      },
-      {
-        "player_id": "00-0039901",
-        "name": "K.Coleman",
-        "position": "WR",
-        "team": "BUF",
-        "red_zone_targets": 3,
-        "team_rz_targets": 18,
-        "rz_target_share": 0.1667
       },
       {
         "player_id": "00-0041547",
@@ -14682,6 +14737,15 @@
         "rz_target_share": 0.1111
       },
       {
+        "player_id": "00-0039738",
+        "name": "B.Corum",
+        "position": "RB",
+        "team": "LA",
+        "red_zone_targets": 2,
+        "team_rz_targets": 25,
+        "rz_target_share": 0.08
+      },
+      {
         "player_id": "00-0041067",
         "name": "B.Lance",
         "position": "WR",
@@ -14732,8 +14796,8 @@
         "position": "TE",
         "team": "LA",
         "red_zone_targets": 2,
-        "team_rz_targets": 15,
-        "rz_target_share": 0.1333
+        "team_rz_targets": 25,
+        "rz_target_share": 0.08
       },
       {
         "player_id": "00-0034351",
@@ -14745,13 +14809,13 @@
         "rz_target_share": 0.1429
       },
       {
-        "player_id": "00-0035689",
-        "name": "D.Knox",
+        "player_id": "00-0038933",
+        "name": "D.Kincaid",
         "position": "TE",
         "team": "BUF",
         "red_zone_targets": 2,
-        "team_rz_targets": 18,
-        "rz_target_share": 0.1111
+        "team_rz_targets": 22,
+        "rz_target_share": 0.0909
       },
       {
         "player_id": "00-0032775",
@@ -14840,8 +14904,8 @@
         "position": "RB",
         "team": "BUF",
         "red_zone_targets": 2,
-        "team_rz_targets": 18,
-        "rz_target_share": 0.1111
+        "team_rz_targets": 22,
+        "rz_target_share": 0.0909
       },
       {
         "player_id": "00-0037741",
@@ -14914,15 +14978,6 @@
         "red_zone_targets": 2,
         "team_rz_targets": 11,
         "rz_target_share": 0.1818
-      },
-      {
-        "player_id": "00-0037840",
-        "name": "K.Williams",
-        "position": "RB",
-        "team": "LA",
-        "red_zone_targets": 2,
-        "team_rz_targets": 15,
-        "rz_target_share": 0.1333
       },
       {
         "player_id": "00-0039915",
@@ -15092,8 +15147,8 @@
         "position": "TE",
         "team": "LA",
         "red_zone_targets": 2,
-        "team_rz_targets": 15,
-        "rz_target_share": 0.1333
+        "team_rz_targets": 25,
+        "rz_target_share": 0.08
       },
       {
         "player_id": "00-0036410",
@@ -15222,15 +15277,6 @@
         "rz_target_share": 0.04
       },
       {
-        "player_id": "00-0039738",
-        "name": "B.Corum",
-        "position": "RB",
-        "team": "LA",
-        "red_zone_targets": 1,
-        "team_rz_targets": 15,
-        "rz_target_share": 0.0667
-      },
-      {
         "player_id": "00-0036862",
         "name": "B.Skowronek",
         "position": "WR",
@@ -15357,6 +15403,15 @@
         "rz_target_share": 0.0909
       },
       {
+        "player_id": "00-0039074",
+        "name": "D.Allen",
+        "position": "TE",
+        "team": "LA",
+        "red_zone_targets": 1,
+        "team_rz_targets": 25,
+        "rz_target_share": 0.04
+      },
+      {
         "player_id": "00-0038115",
         "name": "D.Bellinger",
         "position": "TE",
@@ -15382,15 +15437,6 @@
         "red_zone_targets": 1,
         "team_rz_targets": 20,
         "rz_target_share": 0.05
-      },
-      {
-        "player_id": "00-0038933",
-        "name": "D.Kincaid",
-        "position": "TE",
-        "team": "BUF",
-        "red_zone_targets": 1,
-        "team_rz_targets": 18,
-        "rz_target_share": 0.0556
       },
       {
         "player_id": "00-0035640",
@@ -15596,8 +15642,8 @@
         "position": "WR",
         "team": "BUF",
         "red_zone_targets": 1,
-        "team_rz_targets": 18,
-        "rz_target_share": 0.0556
+        "team_rz_targets": 22,
+        "rz_target_share": 0.0455
       },
       {
         "player_id": "00-0039146",
@@ -15695,8 +15741,8 @@
         "position": "WR",
         "team": "LA",
         "red_zone_targets": 1,
-        "team_rz_targets": 15,
-        "rz_target_share": 0.0667
+        "team_rz_targets": 25,
+        "rz_target_share": 0.04
       },
       {
         "player_id": "00-0041032",
@@ -15780,15 +15826,6 @@
         "rz_target_share": 0.0909
       },
       {
-        "player_id": "00-0039075",
-        "name": "P.Nacua",
-        "position": "WR",
-        "team": "LA",
-        "red_zone_targets": 1,
-        "team_rz_targets": 15,
-        "rz_target_share": 0.0667
-      },
-      {
         "player_id": "00-0037545",
         "name": "R.Shaheed",
         "position": "WR",
@@ -15814,6 +15851,15 @@
         "red_zone_targets": 1,
         "team_rz_targets": 37,
         "rz_target_share": 0.027
+      },
+      {
+        "player_id": "00-0041443",
+        "name": "S.Bell",
+        "position": "WR",
+        "team": "BUF",
+        "red_zone_targets": 1,
+        "team_rz_targets": 22,
+        "rz_target_share": 0.0455
       },
       {
         "player_id": "00-0033526",
@@ -15848,8 +15894,8 @@
         "position": "TE",
         "team": "LA",
         "red_zone_targets": 1,
-        "team_rz_targets": 15,
-        "rz_target_share": 0.0667
+        "team_rz_targets": 25,
+        "rz_target_share": 0.04
       },
       {
         "player_id": "00-0039868",
@@ -15884,8 +15930,8 @@
         "position": "RB",
         "team": "BUF",
         "red_zone_targets": 1,
-        "team_rz_targets": 18,
-        "rz_target_share": 0.0556
+        "team_rz_targets": 22,
+        "rz_target_share": 0.0455
       },
       {
         "player_id": "00-0039847",
@@ -15929,8 +15975,8 @@
         "position": "WR",
         "team": "LA",
         "red_zone_targets": 1,
-        "team_rz_targets": 15,
-        "rz_target_share": 0.0667
+        "team_rz_targets": 25,
+        "rz_target_share": 0.04
       },
       {
         "player_id": "00-0030061",
@@ -15993,11 +16039,25 @@
         "red_zone_carries": 19
       },
       {
+        "player_id": "00-0037248",
+        "name": "J.Cook",
+        "position": "RB",
+        "team": "BUF",
+        "red_zone_carries": 18
+      },
+      {
         "player_id": "00-0035261",
         "name": "T.Pollard",
         "position": "RB",
         "team": "TEN",
         "red_zone_carries": 18
+      },
+      {
+        "player_id": "00-0037840",
+        "name": "K.Williams",
+        "position": "RB",
+        "team": "LA",
+        "red_zone_carries": 17
       },
       {
         "player_id": "00-0040122",
@@ -16040,20 +16100,6 @@
         "position": "RB",
         "team": "LAC",
         "red_zone_carries": 14
-      },
-      {
-        "player_id": "00-0037248",
-        "name": "J.Cook",
-        "position": "RB",
-        "team": "BUF",
-        "red_zone_carries": 13
-      },
-      {
-        "player_id": "00-0037840",
-        "name": "K.Williams",
-        "position": "RB",
-        "team": "LA",
-        "red_zone_carries": 13
       },
       {
         "player_id": "00-0039361",
@@ -16420,6 +16466,13 @@
         "red_zone_carries": 2
       },
       {
+        "player_id": "00-0039075",
+        "name": "P.Nacua",
+        "position": "WR",
+        "team": "LA",
+        "red_zone_carries": 2
+      },
+      {
         "player_id": "00-0037557",
         "name": "R.Rivers",
         "position": "RB",
@@ -16466,6 +16519,13 @@
         "name": "B.Brown",
         "position": "WR",
         "team": "NO",
+        "red_zone_carries": 1
+      },
+      {
+        "player_id": "00-0039738",
+        "name": "B.Corum",
+        "position": "RB",
+        "team": "LA",
         "red_zone_carries": 1
       },
       {
@@ -16543,13 +16603,6 @@
         "name": "L.Nichols",
         "position": "RB",
         "team": "PIT",
-        "red_zone_carries": 1
-      },
-      {
-        "player_id": "00-0039075",
-        "name": "P.Nacua",
-        "position": "WR",
-        "team": "LA",
         "red_zone_carries": 1
       },
       {
@@ -16744,6 +16797,13 @@
         "red_zone_receptions": 4
       },
       {
+        "player_id": "00-0031381",
+        "name": "D.Adams",
+        "position": "WR",
+        "team": "LA",
+        "red_zone_receptions": 4
+      },
+      {
         "player_id": "00-0039491",
         "name": "J.Coker",
         "position": "WR",
@@ -16776,6 +16836,13 @@
         "name": "K.Walker",
         "position": "RB",
         "team": "KC",
+        "red_zone_receptions": 4
+      },
+      {
+        "player_id": "00-0037840",
+        "name": "K.Williams",
+        "position": "RB",
+        "team": "LA",
         "red_zone_receptions": 4
       },
       {
@@ -16996,6 +17063,13 @@
         "red_zone_receptions": 3
       },
       {
+        "player_id": "00-0039075",
+        "name": "P.Nacua",
+        "position": "WR",
+        "team": "LA",
+        "red_zone_receptions": 3
+      },
+      {
         "player_id": "00-0037816",
         "name": "R.Doubs",
         "position": "WR",
@@ -17063,13 +17137,6 @@
         "name": "C.Otton",
         "position": "TE",
         "team": "TB",
-        "red_zone_receptions": 2
-      },
-      {
-        "player_id": "00-0031381",
-        "name": "D.Adams",
-        "position": "WR",
-        "team": "LA",
         "red_zone_receptions": 2
       },
       {
@@ -17206,6 +17273,13 @@
         "red_zone_receptions": 2
       },
       {
+        "player_id": "00-0039901",
+        "name": "K.Coleman",
+        "position": "WR",
+        "team": "BUF",
+        "red_zone_receptions": 2
+      },
+      {
         "player_id": "00-0036919",
         "name": "K.Gainwell",
         "position": "RB",
@@ -17217,13 +17291,6 @@
         "name": "K.Shakir",
         "position": "WR",
         "team": "BUF",
-        "red_zone_receptions": 2
-      },
-      {
-        "player_id": "00-0037840",
-        "name": "K.Williams",
-        "position": "RB",
-        "team": "LA",
         "red_zone_receptions": 2
       },
       {
@@ -17500,6 +17567,13 @@
         "red_zone_receptions": 1
       },
       {
+        "player_id": "00-0039074",
+        "name": "D.Allen",
+        "position": "TE",
+        "team": "LA",
+        "red_zone_receptions": 1
+      },
+      {
         "player_id": "00-0038621",
         "name": "D.Douglas",
         "position": "WR",
@@ -17752,13 +17826,6 @@
         "red_zone_receptions": 1
       },
       {
-        "player_id": "00-0039901",
-        "name": "K.Coleman",
-        "position": "WR",
-        "team": "BUF",
-        "red_zone_receptions": 1
-      },
-      {
         "player_id": "00-0041529",
         "name": "K.Coleman",
         "position": "WR",
@@ -17889,13 +17956,6 @@
         "name": "P.Bryant",
         "position": "WR",
         "team": "DEN",
-        "red_zone_receptions": 1
-      },
-      {
-        "player_id": "00-0039075",
-        "name": "P.Nacua",
-        "position": "WR",
-        "team": "LA",
         "red_zone_receptions": 1
       },
       {
@@ -18260,6 +18320,13 @@
         "name": "R.Virgil",
         "position": "WR",
         "team": "ARI",
+        "red_zone_receptions": 0
+      },
+      {
+        "player_id": "00-0041443",
+        "name": "S.Bell",
+        "position": "WR",
+        "team": "BUF",
         "red_zone_receptions": 0
       },
       {
@@ -18517,6 +18584,13 @@
         "red_zone_receiving_yards": 29
       },
       {
+        "player_id": "00-0037840",
+        "name": "K.Williams",
+        "position": "RB",
+        "team": "LA",
+        "red_zone_receiving_yards": 29
+      },
+      {
         "player_id": "00-0036894",
         "name": "P.Freiermuth",
         "position": "TE",
@@ -18584,6 +18658,13 @@
         "name": "B.Strange",
         "position": "TE",
         "team": "JAX",
+        "red_zone_receiving_yards": 25
+      },
+      {
+        "player_id": "00-0031381",
+        "name": "D.Adams",
+        "position": "WR",
+        "team": "LA",
         "red_zone_receiving_yards": 25
       },
       {
@@ -18762,25 +18843,11 @@
         "red_zone_receiving_yards": 17
       },
       {
-        "player_id": "00-0037840",
-        "name": "K.Williams",
-        "position": "RB",
-        "team": "LA",
-        "red_zone_receiving_yards": 17
-      },
-      {
         "player_id": "00-0040128",
         "name": "T.Warren",
         "position": "TE",
         "team": "IND",
         "red_zone_receiving_yards": 17
-      },
-      {
-        "player_id": "00-0031381",
-        "name": "D.Adams",
-        "position": "WR",
-        "team": "LA",
-        "red_zone_receiving_yards": 16
       },
       {
         "player_id": "00-0038933",
@@ -18858,6 +18925,13 @@
         "position": "TE",
         "team": "ARI",
         "red_zone_receiving_yards": 15
+      },
+      {
+        "player_id": "00-0039075",
+        "name": "P.Nacua",
+        "position": "WR",
+        "team": "LA",
+        "red_zone_receiving_yards": 14
       },
       {
         "player_id": "00-0036875",
@@ -18983,6 +19057,13 @@
         "name": "J.Lane",
         "position": "WR",
         "team": "BAL",
+        "red_zone_receiving_yards": 11
+      },
+      {
+        "player_id": "00-0039901",
+        "name": "K.Coleman",
+        "position": "WR",
+        "team": "BUF",
         "red_zone_receiving_yards": 11
       },
       {
@@ -19483,13 +19564,6 @@
         "red_zone_receiving_yards": 4
       },
       {
-        "player_id": "00-0039901",
-        "name": "K.Coleman",
-        "position": "WR",
-        "team": "BUF",
-        "red_zone_receiving_yards": 4
-      },
-      {
         "player_id": "00-0041032",
         "name": "K.Sadiq",
         "position": "TE",
@@ -19516,6 +19590,13 @@
         "position": "WR",
         "team": "LV",
         "red_zone_receiving_yards": 4
+      },
+      {
+        "player_id": "00-0039074",
+        "name": "D.Allen",
+        "position": "TE",
+        "team": "LA",
+        "red_zone_receiving_yards": 3
       },
       {
         "player_id": "00-0033576",
@@ -19655,13 +19736,6 @@
         "name": "K.Mitchell",
         "position": "RB",
         "team": "LAC",
-        "red_zone_receiving_yards": 1
-      },
-      {
-        "player_id": "00-0039075",
-        "name": "P.Nacua",
-        "position": "WR",
-        "team": "LA",
         "red_zone_receiving_yards": 1
       },
       {
@@ -19924,6 +19998,13 @@
         "red_zone_receiving_yards": 0
       },
       {
+        "player_id": "00-0041443",
+        "name": "S.Bell",
+        "position": "WR",
+        "team": "BUF",
+        "red_zone_receiving_yards": 0
+      },
+      {
         "player_id": "00-0041558",
         "name": "S.Roush",
         "position": "TE",
@@ -20091,6 +20172,13 @@
         "name": "C.White",
         "position": "WR",
         "team": "LV",
+        "red_zone_receiving_tds": 3
+      },
+      {
+        "player_id": "00-0031381",
+        "name": "D.Adams",
+        "position": "WR",
+        "team": "LA",
         "red_zone_receiving_tds": 3
       },
       {
@@ -20374,13 +20462,6 @@
         "red_zone_receiving_tds": 1
       },
       {
-        "player_id": "00-0031381",
-        "name": "D.Adams",
-        "position": "WR",
-        "team": "LA",
-        "red_zone_receiving_tds": 1
-      },
-      {
         "player_id": "00-0038621",
         "name": "D.Douglas",
         "position": "WR",
@@ -20619,6 +20700,13 @@
         "red_zone_receiving_tds": 1
       },
       {
+        "player_id": "00-0039901",
+        "name": "K.Coleman",
+        "position": "WR",
+        "team": "BUF",
+        "red_zone_receiving_tds": 1
+      },
+      {
         "player_id": "00-0041529",
         "name": "K.Coleman",
         "position": "WR",
@@ -20749,6 +20837,13 @@
         "name": "P.Bryant",
         "position": "WR",
         "team": "DEN",
+        "red_zone_receiving_tds": 1
+      },
+      {
+        "player_id": "00-0039075",
+        "name": "P.Nacua",
+        "position": "WR",
+        "team": "LA",
         "red_zone_receiving_tds": 1
       },
       {
@@ -21067,6 +21162,13 @@
         "red_zone_receiving_tds": 0
       },
       {
+        "player_id": "00-0039074",
+        "name": "D.Allen",
+        "position": "TE",
+        "team": "LA",
+        "red_zone_receiving_tds": 0
+      },
+      {
         "player_id": "00-0038115",
         "name": "D.Bellinger",
         "position": "TE",
@@ -21375,13 +21477,6 @@
         "red_zone_receiving_tds": 0
       },
       {
-        "player_id": "00-0039901",
-        "name": "K.Coleman",
-        "position": "WR",
-        "team": "BUF",
-        "red_zone_receiving_tds": 0
-      },
-      {
         "player_id": "00-0041547",
         "name": "K.Concepcion",
         "position": "WR",
@@ -21515,13 +21610,6 @@
         "red_zone_receiving_tds": 0
       },
       {
-        "player_id": "00-0039075",
-        "name": "P.Nacua",
-        "position": "WR",
-        "team": "LA",
-        "red_zone_receiving_tds": 0
-      },
-      {
         "player_id": "00-0040784",
         "name": "Q.Judkins",
         "position": "RB",
@@ -21589,6 +21677,13 @@
         "name": "R.Virgil",
         "position": "WR",
         "team": "ARI",
+        "red_zone_receiving_tds": 0
+      },
+      {
+        "player_id": "00-0041443",
+        "name": "S.Bell",
+        "position": "WR",
+        "team": "BUF",
         "red_zone_receiving_tds": 0
       },
       {
@@ -21762,6 +21857,13 @@
         "red_zone_rushing_yards": 91
       },
       {
+        "player_id": "00-0037248",
+        "name": "J.Cook",
+        "position": "RB",
+        "team": "BUF",
+        "red_zone_rushing_yards": 64
+      },
+      {
         "player_id": "00-0038542",
         "name": "Bi.Robinson",
         "position": "RB",
@@ -21797,25 +21899,18 @@
         "red_zone_rushing_yards": 48
       },
       {
+        "player_id": "00-0037840",
+        "name": "K.Williams",
+        "position": "RB",
+        "team": "LA",
+        "red_zone_rushing_yards": 48
+      },
+      {
         "player_id": "00-0035261",
         "name": "T.Pollard",
         "position": "RB",
         "team": "TEN",
         "red_zone_rushing_yards": 47
-      },
-      {
-        "player_id": "00-0037248",
-        "name": "J.Cook",
-        "position": "RB",
-        "team": "BUF",
-        "red_zone_rushing_yards": 46
-      },
-      {
-        "player_id": "00-0037840",
-        "name": "K.Williams",
-        "position": "RB",
-        "team": "LA",
-        "red_zone_rushing_yards": 42
       },
       {
         "player_id": "00-0036555",
@@ -22091,6 +22186,13 @@
         "red_zone_rushing_yards": 11
       },
       {
+        "player_id": "00-0039075",
+        "name": "P.Nacua",
+        "position": "WR",
+        "team": "LA",
+        "red_zone_rushing_yards": 11
+      },
+      {
         "player_id": "00-0036875",
         "name": "R.Stevenson",
         "position": "RB",
@@ -22308,13 +22410,6 @@
         "red_zone_rushing_yards": 2
       },
       {
-        "player_id": "00-0039075",
-        "name": "P.Nacua",
-        "position": "WR",
-        "team": "LA",
-        "red_zone_rushing_yards": 2
-      },
-      {
         "player_id": "00-0039793",
         "name": "A.Barner",
         "position": "TE",
@@ -22326,6 +22421,13 @@
         "name": "A.Dillon",
         "position": "RB",
         "team": "CAR",
+        "red_zone_rushing_yards": 1
+      },
+      {
+        "player_id": "00-0039738",
+        "name": "B.Corum",
+        "position": "RB",
+        "team": "LA",
         "red_zone_rushing_yards": 1
       },
       {
@@ -22450,6 +22552,13 @@
         "red_zone_rushing_tds": 5
       },
       {
+        "player_id": "00-0037248",
+        "name": "J.Cook",
+        "position": "RB",
+        "team": "BUF",
+        "red_zone_rushing_tds": 5
+      },
+      {
         "player_id": "00-0036223",
         "name": "J.Taylor",
         "position": "RB",
@@ -22461,6 +22570,13 @@
         "name": "Br.Robinson",
         "position": "RB",
         "team": "ATL",
+        "red_zone_rushing_tds": 4
+      },
+      {
+        "player_id": "00-0037840",
+        "name": "K.Williams",
+        "position": "RB",
+        "team": "LA",
         "red_zone_rushing_tds": 4
       },
       {
@@ -22482,20 +22598,6 @@
         "name": "D.Swift",
         "position": "RB",
         "team": "CHI",
-        "red_zone_rushing_tds": 3
-      },
-      {
-        "player_id": "00-0037248",
-        "name": "J.Cook",
-        "position": "RB",
-        "team": "BUF",
-        "red_zone_rushing_tds": 3
-      },
-      {
-        "player_id": "00-0037840",
-        "name": "K.Williams",
-        "position": "RB",
-        "team": "LA",
         "red_zone_rushing_tds": 3
       },
       {
@@ -22608,6 +22710,13 @@
         "name": "B.Allen",
         "position": "RB",
         "team": "NYJ",
+        "red_zone_rushing_tds": 1
+      },
+      {
+        "player_id": "00-0039738",
+        "name": "B.Corum",
+        "position": "RB",
+        "team": "LA",
         "red_zone_rushing_tds": 1
       },
       {

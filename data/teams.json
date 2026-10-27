@@ -609,34 +609,34 @@
     },
     {
       "team": "DAL",
-      "pass_rate": 0.6746666666666666,
-      "rz_pass_rate": 0.5362318840579711,
-      "trailing_pass_rate": 0.6929133858267716,
-      "leading_pass_rate": 0.6271186440677966,
-      "two_minute_pass_rate": 0.8363636363636363,
+      "pass_rate": 0.6363636363636364,
+      "rz_pass_rate": 0.5,
+      "trailing_pass_rate": 0.6643356643356644,
+      "leading_pass_rate": 0.5465116279069767,
+      "two_minute_pass_rate": 0.84375,
       "down_splits": [
         {
-          "pass": 99,
-          "runs": 69,
-          "pass_rate": 0.5892857142857143,
+          "pass": 109,
+          "runs": 88,
+          "pass_rate": 0.5532994923857868,
           "down": 1
         },
         {
-          "pass": 87,
-          "runs": 40,
-          "pass_rate": 0.6850393700787402,
+          "pass": 97,
+          "runs": 52,
+          "pass_rate": 0.6510067114093959,
           "down": 2
         },
         {
-          "pass": 60,
-          "runs": 12,
-          "pass_rate": 0.8333333333333334,
+          "pass": 67,
+          "runs": 18,
+          "pass_rate": 0.788235294117647,
           "down": 3
         },
         {
           "pass": 7,
-          "runs": 1,
-          "pass_rate": 0.875,
+          "runs": 2,
+          "pass_rate": 0.7777777777777778,
           "down": 4
         }
       ],
@@ -676,6 +676,12 @@
           "runs": 15,
           "pass_rate": 0.7857142857142857,
           "week": 6
+        },
+        {
+          "pass": 27,
+          "runs": 38,
+          "pass_rate": 0.4153846153846154,
+          "week": 7
         }
       ]
     },
@@ -1893,34 +1899,34 @@
     },
     {
       "team": "PHI",
-      "pass_rate": 0.6206896551724138,
-      "rz_pass_rate": 0.36363636363636365,
-      "trailing_pass_rate": 0.6842105263157895,
+      "pass_rate": 0.6170731707317073,
+      "rz_pass_rate": 0.34545454545454546,
+      "trailing_pass_rate": 0.6609442060085837,
       "leading_pass_rate": 0.5686274509803921,
-      "two_minute_pass_rate": 0.875,
+      "two_minute_pass_rate": 0.86,
       "down_splits": [
         {
-          "pass": 63,
-          "runs": 73,
-          "pass_rate": 0.4632352941176471,
+          "pass": 72,
+          "runs": 93,
+          "pass_rate": 0.43636363636363634,
           "down": 1
         },
         {
-          "pass": 79,
-          "runs": 40,
-          "pass_rate": 0.6638655462184874,
+          "pass": 93,
+          "runs": 44,
+          "pass_rate": 0.6788321167883211,
           "down": 2
         },
         {
-          "pass": 66,
-          "runs": 17,
-          "pass_rate": 0.7951807228915663,
+          "pass": 77,
+          "runs": 18,
+          "pass_rate": 0.8105263157894737,
           "down": 3
         },
         {
-          "pass": 8,
+          "pass": 11,
           "runs": 2,
-          "pass_rate": 0.8,
+          "pass_rate": 0.8461538461538461,
           "down": 4
         }
       ],
@@ -1960,6 +1966,12 @@
           "runs": 13,
           "pass_rate": 0.7868852459016393,
           "week": 6
+        },
+        {
+          "pass": 37,
+          "runs": 25,
+          "pass_rate": 0.5967741935483871,
+          "week": 7
         }
       ]
     },

@@ -8192,17 +8192,17 @@
         "receiving_yards": 245
       },
       {
-        "player_id": "00-0033908",
-        "name": "C.Kupp",
-        "position": "WR",
-        "team": "SEA",
-        "receiving_yards": 238
-      },
-      {
         "player_id": "00-0037809",
         "name": "C.Okonkwo",
         "position": "TE",
         "team": "WAS",
+        "receiving_yards": 239
+      },
+      {
+        "player_id": "00-0033908",
+        "name": "C.Kupp",
+        "position": "WR",
+        "team": "SEA",
         "receiving_yards": 238
       },
       {

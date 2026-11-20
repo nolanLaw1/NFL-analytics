@@ -6,7 +6,7 @@
       "player_name": "",
       "name": "",
       "position": "",
-      "team": "NYG",
+      "team": "IND",
       "attempts": 0,
       "completions": 0,
       "passing_yards": 0,
@@ -125,6 +125,16 @@
         },
         {
           "week": 10,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
@@ -2544,7 +2554,7 @@
       "red_zone_pass_attempts": 0,
       "red_zone_pass_touchdowns": 0,
       "red_zone_carries": 0,
-      "red_zone_target_share": 19.230769230769234,
+      "red_zone_target_share": 18.51851851851852,
       "red_zone_rush_share": 0,
       "weekly": [
         {
@@ -4257,6 +4267,16 @@
         },
         {
           "week": 10,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
@@ -8260,6 +8280,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
         }
       ]
     },
@@ -8297,6 +8327,16 @@
       "weekly": [
         {
           "week": 1,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
@@ -9103,13 +9143,13 @@
       "carries": 0,
       "rushing_yards": 0,
       "rushing_tds": 0,
-      "targets": 32,
+      "targets": 33,
       "receptions": 19,
       "receiving_yards": 239,
       "receiving_tds": 1,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 16.580310880829018,
+      "target_share": 15.068493150684931,
       "red_zone_rushes": 0,
       "red_zone_targets": 4,
       "red_zone_receptions": 3,
@@ -9118,7 +9158,7 @@
       "red_zone_pass_attempts": 0,
       "red_zone_pass_touchdowns": 0,
       "red_zone_carries": 0,
-      "red_zone_target_share": 15.384615384615385,
+      "red_zone_target_share": 14.814814814814813,
       "red_zone_rush_share": 0,
       "weekly": [
         {
@@ -9219,6 +9259,16 @@
           "receptions": 3,
           "red_zone_targets": 1,
           "red_zone_target_share": 100.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 1,
+          "target_share": 3.8,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
           "red_zone_carries": 0
         }
       ]
@@ -10985,7 +11035,7 @@
       "receiving_tds": 1,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 3.1088082901554404,
+      "target_share": 2.73972602739726,
       "red_zone_rushes": 0,
       "red_zone_targets": 1,
       "red_zone_receptions": 1,
@@ -10994,7 +11044,7 @@
       "red_zone_pass_attempts": 0,
       "red_zone_pass_touchdowns": 0,
       "red_zone_carries": 0,
-      "red_zone_target_share": 3.8461538461538463,
+      "red_zone_target_share": 3.7037037037037033,
       "red_zone_rush_share": 0,
       "weekly": [
         {
@@ -11335,6 +11385,16 @@
         },
         {
           "week": 10,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
@@ -12915,7 +12975,7 @@
       "receiving_tds": 0,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 0.5181347150259068,
+      "target_share": 0.45662100456621,
       "red_zone_rushes": 0,
       "red_zone_targets": 0,
       "red_zone_receptions": 0,
@@ -14611,7 +14671,7 @@
       "receiving_tds": 0,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 0.6557377049180327,
+      "target_share": 0.6042296072507553,
       "red_zone_rushes": 0,
       "red_zone_targets": 0,
       "red_zone_receptions": 0,
@@ -17200,6 +17260,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
         }
       ]
     },
@@ -18859,6 +18929,16 @@
         },
         {
           "week": 10,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
@@ -20585,13 +20665,13 @@
       "carries": 0,
       "rushing_yards": 0,
       "rushing_tds": 0,
-      "targets": 49,
-      "receptions": 36,
-      "receiving_yards": 375,
+      "targets": 50,
+      "receptions": 37,
+      "receiving_yards": 386,
       "receiving_tds": 1,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 16.065573770491802,
+      "target_share": 15.105740181268882,
       "red_zone_rushes": 0,
       "red_zone_targets": 6,
       "red_zone_receptions": 4,
@@ -20600,7 +20680,7 @@
       "red_zone_pass_attempts": 0,
       "red_zone_pass_touchdowns": 0,
       "red_zone_carries": 0,
-      "red_zone_target_share": 14.634146341463413,
+      "red_zone_target_share": 13.953488372093023,
       "red_zone_rush_share": 0,
       "weekly": [
         {
@@ -20691,6 +20771,16 @@
           "receptions": 1,
           "red_zone_targets": 1,
           "red_zone_target_share": 33.3,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 1,
+          "target_share": 3.8,
+          "carries": 0,
+          "receptions": 1,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
           "red_zone_carries": 0
         }
       ]
@@ -25066,6 +25156,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
         }
       ]
     },
@@ -27411,13 +27511,13 @@
       "carries": 0,
       "rushing_yards": 0,
       "rushing_tds": 0,
-      "targets": 14,
-      "receptions": 11,
-      "receiving_yards": 72,
+      "targets": 15,
+      "receptions": 12,
+      "receiving_yards": 80,
       "receiving_tds": 3,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 4.590163934426229,
+      "target_share": 4.531722054380665,
       "red_zone_rushes": 0,
       "red_zone_targets": 4,
       "red_zone_receptions": 3,
@@ -27426,7 +27526,7 @@
       "red_zone_pass_attempts": 0,
       "red_zone_pass_touchdowns": 0,
       "red_zone_carries": 0,
-      "red_zone_target_share": 9.75609756097561,
+      "red_zone_target_share": 9.30232558139535,
       "red_zone_rush_share": 0,
       "weekly": [
         {
@@ -27487,6 +27587,16 @@
           "receptions": 2,
           "red_zone_targets": 2,
           "red_zone_target_share": 20.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 1,
+          "target_share": 3.8,
+          "carries": 0,
+          "receptions": 1,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
           "red_zone_carries": 0
         }
       ]
@@ -27703,23 +27813,23 @@
       "carries": 2,
       "rushing_yards": 6,
       "rushing_tds": 0,
-      "targets": 11,
-      "receptions": 5,
-      "receiving_yards": 114,
+      "targets": 15,
+      "receptions": 7,
+      "receiving_yards": 144,
       "receiving_tds": 1,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 5.699481865284974,
+      "target_share": 6.8493150684931505,
       "red_zone_rushes": 1,
-      "red_zone_targets": 0,
-      "red_zone_receptions": 0,
-      "red_zone_receiving_yards": 0,
+      "red_zone_targets": 1,
+      "red_zone_receptions": 1,
+      "red_zone_receiving_yards": 5,
       "red_zone_receiving_touchdowns": 0,
       "red_zone_pass_attempts": 0,
       "red_zone_pass_touchdowns": 0,
       "red_zone_carries": 1,
-      "red_zone_target_share": 0,
-      "red_zone_rush_share": 2,
+      "red_zone_target_share": 3.7037037037037033,
+      "red_zone_rush_share": 1.9607843137254901,
       "weekly": [
         {
           "week": 1,
@@ -27779,6 +27889,16 @@
           "receptions": 1,
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 4,
+          "target_share": 15.4,
+          "carries": 0,
+          "receptions": 2,
+          "red_zone_targets": 1,
+          "red_zone_target_share": 50.0,
           "red_zone_carries": 0
         }
       ]
@@ -35832,26 +35952,26 @@
       "passing_yards": 0,
       "passing_tds": 0,
       "interceptions": 0,
-      "carries": 52,
-      "rushing_yards": 138,
+      "carries": 78,
+      "rushing_yards": 245,
       "rushing_tds": 2,
-      "targets": 7,
-      "receptions": 7,
-      "receiving_yards": 67,
+      "targets": 11,
+      "receptions": 10,
+      "receiving_yards": 84,
       "receiving_tds": 1,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 2.2950819672131146,
-      "red_zone_rushes": 9,
-      "red_zone_targets": 1,
+      "target_share": 3.3232628398791544,
+      "red_zone_rushes": 12,
+      "red_zone_targets": 2,
       "red_zone_receptions": 1,
       "red_zone_receiving_yards": 7,
       "red_zone_receiving_touchdowns": 1,
       "red_zone_pass_attempts": 0,
       "red_zone_pass_touchdowns": 0,
-      "red_zone_carries": 9,
-      "red_zone_target_share": 2.4390243902439024,
-      "red_zone_rush_share": 25,
+      "red_zone_carries": 12,
+      "red_zone_target_share": 4.651162790697675,
+      "red_zone_rush_share": 30.76923076923077,
       "weekly": [
         {
           "week": 1,
@@ -35902,6 +36022,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 1
+        },
+        {
+          "week": 11,
+          "targets": 4,
+          "target_share": 15.4,
+          "carries": 26,
+          "receptions": 3,
+          "red_zone_targets": 1,
+          "red_zone_target_share": 50.0,
+          "red_zone_carries": 3
         }
       ]
     },
@@ -36661,31 +36791,31 @@
       "name": "Daniel Jones",
       "position": "QB",
       "team": "IND",
-      "attempts": 324,
-      "completions": 193,
-      "passing_yards": 1830,
+      "attempts": 351,
+      "completions": 205,
+      "passing_yards": 1974,
       "passing_tds": 7,
       "interceptions": 0,
-      "carries": 33,
-      "rushing_yards": 95,
+      "carries": 34,
+      "rushing_yards": 98,
       "rushing_tds": 1,
       "targets": 0,
       "receptions": 0,
       "receiving_yards": 0,
       "receiving_tds": 0,
-      "completion_pct": 59.5679012345679,
-      "yards_per_attempt": 5.648148148148148,
+      "completion_pct": 58.4045584045584,
+      "yards_per_attempt": 5.6239316239316235,
       "target_share": 0,
       "red_zone_rushes": 5,
       "red_zone_targets": 0,
       "red_zone_receptions": 0,
       "red_zone_receiving_yards": 0,
       "red_zone_receiving_touchdowns": 0,
-      "red_zone_pass_attempts": 30,
+      "red_zone_pass_attempts": 32,
       "red_zone_pass_touchdowns": 7,
       "red_zone_carries": 5,
       "red_zone_target_share": 0,
-      "red_zone_rush_share": 10,
+      "red_zone_rush_share": 9.803921568627452,
       "weekly": [
         {
           "week": 1,
@@ -36782,6 +36912,16 @@
           "targets": 0,
           "target_share": 0.0,
           "carries": 5,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 1,
           "receptions": 0,
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
@@ -39931,7 +40071,7 @@
       "receiving_tds": 0,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 1.0362694300518136,
+      "target_share": 0.91324200913242,
       "red_zone_rushes": 0,
       "red_zone_targets": 0,
       "red_zone_receptions": 0,
@@ -40792,16 +40932,16 @@
       "passing_yards": 0,
       "passing_tds": 0,
       "interceptions": 0,
-      "carries": 177,
-      "rushing_yards": 739,
+      "carries": 188,
+      "rushing_yards": 760,
       "rushing_tds": 8,
-      "targets": 40,
-      "receptions": 28,
-      "receiving_yards": 240,
+      "targets": 45,
+      "receptions": 32,
+      "receiving_yards": 246,
       "receiving_tds": 0,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 20.72538860103627,
+      "target_share": 20.54794520547945,
       "red_zone_rushes": 34,
       "red_zone_targets": 2,
       "red_zone_receptions": 1,
@@ -40810,8 +40950,8 @@
       "red_zone_pass_attempts": 0,
       "red_zone_pass_touchdowns": 0,
       "red_zone_carries": 34,
-      "red_zone_target_share": 7.6923076923076925,
-      "red_zone_rush_share": 68,
+      "red_zone_target_share": 7.4074074074074066,
+      "red_zone_rush_share": 66.66666666666666,
       "weekly": [
         {
           "week": 1,
@@ -40912,6 +41052,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 2
+        },
+        {
+          "week": 11,
+          "targets": 5,
+          "target_share": 19.2,
+          "carries": 11,
+          "receptions": 4,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
         }
       ]
     },
@@ -42317,6 +42467,50 @@
           "target_share": 0.0,
           "carries": 0,
           "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        }
+      ]
+    },
+    {
+      "player_id": "00-0036271",
+      "player_name": "Quez Watkins",
+      "name": "Quez Watkins",
+      "position": "WR",
+      "team": "IND",
+      "attempts": 0,
+      "completions": 0,
+      "passing_yards": 0,
+      "passing_tds": 0,
+      "interceptions": 0,
+      "carries": 0,
+      "rushing_yards": 0,
+      "rushing_tds": 0,
+      "targets": 3,
+      "receptions": 1,
+      "receiving_yards": 26,
+      "receiving_tds": 0,
+      "completion_pct": 0,
+      "yards_per_attempt": 0,
+      "target_share": 1.36986301369863,
+      "red_zone_rushes": 0,
+      "red_zone_targets": 0,
+      "red_zone_receptions": 0,
+      "red_zone_receiving_yards": 0,
+      "red_zone_receiving_touchdowns": 0,
+      "red_zone_pass_attempts": 0,
+      "red_zone_pass_touchdowns": 0,
+      "red_zone_carries": 0,
+      "red_zone_target_share": 0,
+      "red_zone_rush_share": 0,
+      "weekly": [
+        {
+          "week": 11,
+          "targets": 3,
+          "target_share": 11.5,
+          "carries": 0,
+          "receptions": 1,
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
@@ -49963,13 +50157,13 @@
       "carries": 2,
       "rushing_yards": 12,
       "rushing_tds": 0,
-      "targets": 55,
-      "receptions": 37,
-      "receiving_yards": 478,
-      "receiving_tds": 5,
+      "targets": 60,
+      "receptions": 40,
+      "receiving_yards": 536,
+      "receiving_tds": 6,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 18.0327868852459,
+      "target_share": 18.12688821752266,
       "red_zone_rushes": 1,
       "red_zone_targets": 7,
       "red_zone_receptions": 5,
@@ -49978,8 +50172,8 @@
       "red_zone_pass_attempts": 0,
       "red_zone_pass_touchdowns": 0,
       "red_zone_carries": 1,
-      "red_zone_target_share": 17.073170731707318,
-      "red_zone_rush_share": 2.7777777777777777,
+      "red_zone_target_share": 16.27906976744186,
+      "red_zone_rush_share": 2.564102564102564,
       "weekly": [
         {
           "week": 1,
@@ -50049,6 +50243,16 @@
           "receptions": 9,
           "red_zone_targets": 1,
           "red_zone_target_share": 33.3,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 5,
+          "target_share": 19.2,
+          "carries": 0,
+          "receptions": 3,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
           "red_zone_carries": 0
         }
       ]
@@ -50197,7 +50401,7 @@
       "receiving_tds": 0,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 0.6557377049180327,
+      "target_share": 0.6042296072507553,
       "red_zone_rushes": 0,
       "red_zone_targets": 0,
       "red_zone_receptions": 0,
@@ -52276,6 +52480,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
         }
       ]
     },
@@ -53639,6 +53853,16 @@
         },
         {
           "week": 9,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
@@ -55847,6 +56071,16 @@
         },
         {
           "week": 10,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
@@ -62878,6 +63112,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
         }
       ]
     },
@@ -63993,6 +64237,16 @@
         },
         {
           "week": 10,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
@@ -66070,6 +66324,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
         }
       ]
     },
@@ -66751,6 +67015,16 @@
         },
         {
           "week": 10,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
@@ -69569,7 +69843,7 @@
       "receiving_tds": 0,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 3.6269430051813467,
+      "target_share": 3.1963470319634704,
       "red_zone_rushes": 0,
       "red_zone_targets": 1,
       "red_zone_receptions": 1,
@@ -69578,7 +69852,7 @@
       "red_zone_pass_attempts": 0,
       "red_zone_pass_touchdowns": 0,
       "red_zone_carries": 0,
-      "red_zone_target_share": 3.8461538461538463,
+      "red_zone_target_share": 3.7037037037037033,
       "red_zone_rush_share": 0,
       "weekly": [
         {
@@ -69647,6 +69921,16 @@
           "target_share": 9.5,
           "carries": 0,
           "receptions": 1,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
@@ -69931,6 +70215,50 @@
           "receptions": 2,
           "red_zone_targets": 1,
           "red_zone_target_share": 25.0,
+          "red_zone_carries": 0
+        }
+      ]
+    },
+    {
+      "player_id": "00-0037305",
+      "player_name": "Luke Tenuta",
+      "name": "Luke Tenuta",
+      "position": "OT",
+      "team": "IND",
+      "attempts": 0,
+      "completions": 0,
+      "passing_yards": 0,
+      "passing_tds": 0,
+      "interceptions": 0,
+      "carries": 0,
+      "rushing_yards": 0,
+      "rushing_tds": 0,
+      "targets": 0,
+      "receptions": 0,
+      "receiving_yards": 0,
+      "receiving_tds": 0,
+      "completion_pct": 0,
+      "yards_per_attempt": 0,
+      "target_share": 0,
+      "red_zone_rushes": 0,
+      "red_zone_targets": 0,
+      "red_zone_receptions": 0,
+      "red_zone_receiving_yards": 0,
+      "red_zone_receiving_touchdowns": 0,
+      "red_zone_pass_attempts": 0,
+      "red_zone_pass_touchdowns": 0,
+      "red_zone_carries": 0,
+      "red_zone_target_share": 0,
+      "red_zone_rush_share": 0,
+      "weekly": [
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
           "red_zone_carries": 0
         }
       ]
@@ -71237,6 +71565,16 @@
         },
         {
           "week": 10,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
@@ -73574,6 +73912,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
         }
       ]
     },
@@ -73721,7 +74069,7 @@
       "receiving_tds": 0,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 3.6269430051813467,
+      "target_share": 3.1963470319634704,
       "red_zone_rushes": 0,
       "red_zone_targets": 1,
       "red_zone_receptions": 1,
@@ -73730,7 +74078,7 @@
       "red_zone_pass_attempts": 0,
       "red_zone_pass_touchdowns": 0,
       "red_zone_carries": 0,
-      "red_zone_target_share": 3.8461538461538463,
+      "red_zone_target_share": 3.7037037037037033,
       "red_zone_rush_share": 0,
       "weekly": [
         {
@@ -75917,6 +76265,16 @@
       "weekly": [
         {
           "week": 10,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
@@ -80286,6 +80644,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
         }
       ]
     },
@@ -81605,7 +81973,7 @@
       "receiving_tds": 0,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 4.66321243523316,
+      "target_share": 4.10958904109589,
       "red_zone_rushes": 0,
       "red_zone_targets": 1,
       "red_zone_receptions": 0,
@@ -81614,7 +81982,7 @@
       "red_zone_pass_attempts": 0,
       "red_zone_pass_touchdowns": 0,
       "red_zone_carries": 0,
-      "red_zone_target_share": 3.8461538461538463,
+      "red_zone_target_share": 3.7037037037037033,
       "red_zone_rush_share": 0,
       "weekly": [
         {
@@ -83819,6 +84187,16 @@
         },
         {
           "week": 10,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
@@ -87998,6 +88376,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
         }
       ]
     },
@@ -88371,13 +88759,13 @@
       "carries": 0,
       "rushing_yards": 0,
       "rushing_tds": 0,
-      "targets": 29,
-      "receptions": 19,
-      "receiving_yards": 319,
-      "receiving_tds": 2,
+      "targets": 31,
+      "receptions": 21,
+      "receiving_yards": 359,
+      "receiving_tds": 3,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 9.508196721311474,
+      "target_share": 9.365558912386707,
       "red_zone_rushes": 0,
       "red_zone_targets": 4,
       "red_zone_receptions": 2,
@@ -88386,7 +88774,7 @@
       "red_zone_pass_attempts": 0,
       "red_zone_pass_touchdowns": 0,
       "red_zone_carries": 0,
-      "red_zone_target_share": 9.75609756097561,
+      "red_zone_target_share": 9.30232558139535,
       "red_zone_rush_share": 0,
       "weekly": [
         {
@@ -88475,6 +88863,16 @@
           "target_share": 2.8,
           "carries": 0,
           "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 2,
+          "target_share": 7.7,
+          "carries": 0,
+          "receptions": 2,
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
@@ -88717,13 +89115,13 @@
       "carries": 4,
       "rushing_yards": 16,
       "rushing_tds": 0,
-      "targets": 54,
-      "receptions": 28,
-      "receiving_yards": 345,
+      "targets": 57,
+      "receptions": 30,
+      "receiving_yards": 358,
       "receiving_tds": 3,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 17.704918032786885,
+      "target_share": 17.220543806646525,
       "red_zone_rushes": 2,
       "red_zone_targets": 5,
       "red_zone_receptions": 3,
@@ -88732,8 +89130,8 @@
       "red_zone_pass_attempts": 0,
       "red_zone_pass_touchdowns": 0,
       "red_zone_carries": 2,
-      "red_zone_target_share": 12.195121951219512,
-      "red_zone_rush_share": 5.555555555555555,
+      "red_zone_target_share": 11.627906976744185,
+      "red_zone_rush_share": 5.128205128205128,
       "weekly": [
         {
           "week": 1,
@@ -88823,6 +89221,16 @@
           "receptions": 4,
           "red_zone_targets": 1,
           "red_zone_target_share": 33.3,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 3,
+          "target_share": 11.5,
+          "carries": 0,
+          "receptions": 2,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
           "red_zone_carries": 0
         }
       ]
@@ -90376,16 +90784,16 @@
       "passing_yards": 0,
       "passing_tds": 0,
       "interceptions": 0,
-      "carries": 18,
-      "rushing_yards": 47,
+      "carries": 23,
+      "rushing_yards": 80,
       "rushing_tds": 0,
-      "targets": 4,
-      "receptions": 2,
-      "receiving_yards": 7,
+      "targets": 6,
+      "receptions": 4,
+      "receiving_yards": 3,
       "receiving_tds": 0,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 1.3114754098360655,
+      "target_share": 1.812688821752266,
       "red_zone_rushes": 3,
       "red_zone_targets": 0,
       "red_zone_receptions": 0,
@@ -90436,6 +90844,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 1
+        },
+        {
+          "week": 11,
+          "targets": 2,
+          "target_share": 7.7,
+          "carries": 5,
+          "receptions": 2,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
         }
       ]
     },
@@ -90750,7 +91168,7 @@
       "red_zone_pass_attempts": 0,
       "red_zone_pass_touchdowns": 0,
       "red_zone_carries": 0,
-      "red_zone_target_share": 2.4390243902439024,
+      "red_zone_target_share": 2.3255813953488373,
       "red_zone_rush_share": 0,
       "weekly": [
         {
@@ -93797,13 +94215,13 @@
       "carries": 2,
       "rushing_yards": 2,
       "rushing_tds": 0,
-      "targets": 14,
-      "receptions": 8,
-      "receiving_yards": 169,
+      "targets": 18,
+      "receptions": 11,
+      "receiving_yards": 196,
       "receiving_tds": 1,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 4.590163934426229,
+      "target_share": 5.438066465256798,
       "red_zone_rushes": 0,
       "red_zone_targets": 1,
       "red_zone_receptions": 0,
@@ -93812,7 +94230,7 @@
       "red_zone_pass_attempts": 0,
       "red_zone_pass_touchdowns": 0,
       "red_zone_carries": 0,
-      "red_zone_target_share": 2.4390243902439024,
+      "red_zone_target_share": 2.3255813953488373,
       "red_zone_rush_share": 0,
       "weekly": [
         {
@@ -93840,6 +94258,16 @@
           "targets": 4,
           "target_share": 11.1,
           "carries": 1,
+          "receptions": 3,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 4,
+          "target_share": 15.4,
+          "carries": 0,
           "receptions": 3,
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
@@ -94634,8 +95062,8 @@
       "red_zone_pass_attempts": 0,
       "red_zone_pass_touchdowns": 0,
       "red_zone_carries": 1,
-      "red_zone_target_share": 26.923076923076923,
-      "red_zone_rush_share": 2,
+      "red_zone_target_share": 25.925925925925924,
+      "red_zone_rush_share": 1.9607843137254901,
       "weekly": [
         {
           "week": 1,
@@ -95817,6 +96245,16 @@
         },
         {
           "week": 10,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
@@ -98378,6 +98816,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
         }
       ]
     },
@@ -100319,31 +100767,31 @@
       "name": "C.J. Stroud",
       "position": "QB",
       "team": "HOU",
-      "attempts": 320,
-      "completions": 201,
-      "passing_yards": 2462,
-      "passing_tds": 19,
+      "attempts": 347,
+      "completions": 222,
+      "passing_yards": 2656,
+      "passing_tds": 22,
       "interceptions": 0,
-      "carries": 23,
-      "rushing_yards": 120,
+      "carries": 29,
+      "rushing_yards": 147,
       "rushing_tds": 1,
       "targets": 0,
       "receptions": 0,
       "receiving_yards": 0,
       "receiving_tds": 0,
-      "completion_pct": 62.81250000000001,
-      "yards_per_attempt": 7.69375,
+      "completion_pct": 63.976945244956774,
+      "yards_per_attempt": 7.654178674351585,
       "target_share": 0,
       "red_zone_rushes": 1,
       "red_zone_targets": 0,
       "red_zone_receptions": 0,
       "red_zone_receiving_yards": 0,
       "red_zone_receiving_touchdowns": 0,
-      "red_zone_pass_attempts": 47,
-      "red_zone_pass_touchdowns": 16,
+      "red_zone_pass_attempts": 49,
+      "red_zone_pass_touchdowns": 17,
       "red_zone_carries": 1,
       "red_zone_target_share": 0,
-      "red_zone_rush_share": 2.7777777777777777,
+      "red_zone_rush_share": 2.564102564102564,
       "weekly": [
         {
           "week": 1,
@@ -100434,6 +100882,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 6,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
         }
       ]
     },
@@ -100443,20 +100901,20 @@
       "name": "Anthony Richardson",
       "position": "QB",
       "team": "IND",
-      "attempts": 2,
+      "attempts": 4,
       "completions": 2,
       "passing_yards": 8,
       "passing_tds": 0,
       "interceptions": 0,
-      "carries": 2,
-      "rushing_yards": 4,
+      "carries": 3,
+      "rushing_yards": 6,
       "rushing_tds": 0,
       "targets": 0,
       "receptions": 0,
       "receiving_yards": 0,
       "receiving_tds": 0,
-      "completion_pct": 100,
-      "yards_per_attempt": 4,
+      "completion_pct": 50,
+      "yards_per_attempt": 2,
       "target_share": 0,
       "red_zone_rushes": 0,
       "red_zone_targets": 0,
@@ -100474,6 +100932,16 @@
           "targets": 0,
           "target_share": 0.0,
           "carries": 2,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 1,
           "receptions": 0,
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
@@ -101055,6 +101523,16 @@
         },
         {
           "week": 10,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
@@ -103010,6 +103488,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
         }
       ]
     },
@@ -103837,7 +104325,7 @@
       "receiving_tds": 0,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 0.9836065573770493,
+      "target_share": 0.906344410876133,
       "red_zone_rushes": 0,
       "red_zone_targets": 2,
       "red_zone_receptions": 1,
@@ -103846,7 +104334,7 @@
       "red_zone_pass_attempts": 0,
       "red_zone_pass_touchdowns": 0,
       "red_zone_carries": 0,
-      "red_zone_target_share": 4.878048780487805,
+      "red_zone_target_share": 4.651162790697675,
       "red_zone_rush_share": 0,
       "weekly": [
         {
@@ -106201,7 +106689,7 @@
       "receiving_tds": 0,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 0.32786885245901637,
+      "target_share": 0.3021148036253776,
       "red_zone_rushes": 2,
       "red_zone_targets": 0,
       "red_zone_receptions": 0,
@@ -106211,7 +106699,7 @@
       "red_zone_pass_touchdowns": 0,
       "red_zone_carries": 2,
       "red_zone_target_share": 0,
-      "red_zone_rush_share": 5.555555555555555,
+      "red_zone_rush_share": 5.128205128205128,
       "weekly": [
         {
           "week": 6,
@@ -108811,6 +109299,16 @@
         },
         {
           "week": 10,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
@@ -114207,13 +114705,13 @@
       "carries": 0,
       "rushing_yards": 0,
       "rushing_tds": 0,
-      "targets": 5,
-      "receptions": 3,
-      "receiving_yards": 44,
+      "targets": 8,
+      "receptions": 5,
+      "receiving_yards": 92,
       "receiving_tds": 0,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 2.5906735751295336,
+      "target_share": 3.65296803652968,
       "red_zone_rushes": 0,
       "red_zone_targets": 0,
       "red_zone_receptions": 0,
@@ -114289,6 +114787,16 @@
           "week": 10,
           "targets": 4,
           "target_share": 19.0,
+          "carries": 0,
+          "receptions": 2,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 3,
+          "target_share": 11.5,
           "carries": 0,
           "receptions": 2,
           "red_zone_targets": 0,
@@ -115530,6 +116038,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
         }
       ]
     },
@@ -116117,7 +116635,7 @@
       "receiving_tds": 2,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 7.868852459016394,
+      "target_share": 7.250755287009064,
       "red_zone_rushes": 0,
       "red_zone_targets": 4,
       "red_zone_receptions": 3,
@@ -124641,13 +125159,13 @@
       "carries": 4,
       "rushing_yards": 9,
       "rushing_tds": 1,
-      "targets": 56,
-      "receptions": 40,
-      "receiving_yards": 276,
+      "targets": 61,
+      "receptions": 41,
+      "receiving_yards": 298,
       "receiving_tds": 2,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 29.015544041450774,
+      "target_share": 27.85388127853881,
       "red_zone_rushes": 1,
       "red_zone_targets": 5,
       "red_zone_receptions": 3,
@@ -124656,8 +125174,8 @@
       "red_zone_pass_attempts": 0,
       "red_zone_pass_touchdowns": 0,
       "red_zone_carries": 1,
-      "red_zone_target_share": 19.230769230769234,
-      "red_zone_rush_share": 2,
+      "red_zone_target_share": 18.51851851851852,
+      "red_zone_rush_share": 1.9607843137254901,
       "weekly": [
         {
           "week": 1,
@@ -124735,6 +125253,16 @@
           "target_share": 14.3,
           "carries": 1,
           "receptions": 2,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 5,
+          "target_share": 19.2,
+          "carries": 0,
+          "receptions": 1,
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
@@ -125559,7 +126087,7 @@
       "receiving_tds": 2,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 7.540983606557377,
+      "target_share": 6.948640483383686,
       "red_zone_rushes": 0,
       "red_zone_targets": 4,
       "red_zone_receptions": 4,
@@ -125568,7 +126096,7 @@
       "red_zone_pass_attempts": 0,
       "red_zone_pass_touchdowns": 0,
       "red_zone_carries": 0,
-      "red_zone_target_share": 9.75609756097561,
+      "red_zone_target_share": 9.30232558139535,
       "red_zone_rush_share": 0,
       "weekly": [
         {
@@ -125747,6 +126275,16 @@
         },
         {
           "week": 10,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
@@ -126553,6 +127091,16 @@
         },
         {
           "week": 2,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
@@ -129000,16 +129548,16 @@
       "passing_yards": 0,
       "passing_tds": 0,
       "interceptions": 0,
-      "carries": 6,
-      "rushing_yards": 43,
+      "carries": 7,
+      "rushing_yards": 48,
       "rushing_tds": 0,
-      "targets": 0,
-      "receptions": 0,
-      "receiving_yards": 0,
+      "targets": 1,
+      "receptions": 1,
+      "receiving_yards": 11,
       "receiving_tds": 0,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 0,
+      "target_share": 0.45662100456621,
       "red_zone_rushes": 0,
       "red_zone_targets": 0,
       "red_zone_receptions": 0,
@@ -129027,6 +129575,16 @@
           "target_share": 0.0,
           "carries": 6,
           "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 1,
+          "target_share": 3.8,
+          "carries": 1,
+          "receptions": 1,
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
@@ -130846,6 +131404,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
         }
       ]
     },
@@ -132149,6 +132717,16 @@
         },
         {
           "week": 10,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
@@ -134327,6 +134905,16 @@
       "weekly": [
         {
           "week": 8,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
@@ -137315,7 +137903,7 @@
       "receiving_tds": 0,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 7.213114754098362,
+      "target_share": 6.646525679758309,
       "red_zone_rushes": 19,
       "red_zone_targets": 4,
       "red_zone_receptions": 3,
@@ -137324,8 +137912,8 @@
       "red_zone_pass_attempts": 0,
       "red_zone_pass_touchdowns": 0,
       "red_zone_carries": 19,
-      "red_zone_target_share": 9.75609756097561,
-      "red_zone_rush_share": 52.77777777777778,
+      "red_zone_target_share": 9.30232558139535,
+      "red_zone_rush_share": 48.717948717948715,
       "weekly": [
         {
           "week": 1,
@@ -139491,6 +140079,16 @@
         },
         {
           "week": 10,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
@@ -144828,6 +145426,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
         }
       ]
     },
@@ -144915,6 +145523,16 @@
         },
         {
           "week": 10,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
@@ -148272,6 +148890,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
         }
       ]
     },
@@ -150318,6 +150946,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
         }
       ]
     },
@@ -150777,6 +151415,16 @@
         },
         {
           "week": 10,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
@@ -153300,6 +153948,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
         }
       ]
     },
@@ -154644,6 +155302,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
         }
       ]
     },
@@ -155112,26 +155780,26 @@
       "passing_yards": 0,
       "passing_tds": 0,
       "interceptions": 0,
-      "carries": 55,
-      "rushing_yards": 285,
+      "carries": 58,
+      "rushing_yards": 292,
       "rushing_tds": 2,
-      "targets": 6,
-      "receptions": 5,
-      "receiving_yards": 9,
+      "targets": 7,
+      "receptions": 6,
+      "receiving_yards": 10,
       "receiving_tds": 0,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 3.1088082901554404,
-      "red_zone_rushes": 8,
+      "target_share": 3.1963470319634704,
+      "red_zone_rushes": 9,
       "red_zone_targets": 0,
       "red_zone_receptions": 0,
       "red_zone_receiving_yards": 0,
       "red_zone_receiving_touchdowns": 0,
       "red_zone_pass_attempts": 0,
       "red_zone_pass_touchdowns": 0,
-      "red_zone_carries": 8,
+      "red_zone_carries": 9,
       "red_zone_target_share": 0,
-      "red_zone_rush_share": 16,
+      "red_zone_rush_share": 17.647058823529413,
       "weekly": [
         {
           "week": 1,
@@ -155232,6 +155900,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 2
+        },
+        {
+          "week": 11,
+          "targets": 1,
+          "target_share": 3.8,
+          "carries": 3,
+          "receptions": 1,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 1
         }
       ]
     },
@@ -155427,13 +156105,13 @@
       "carries": 3,
       "rushing_yards": 21,
       "rushing_tds": 0,
-      "targets": 11,
+      "targets": 14,
       "receptions": 6,
       "receiving_yards": 60,
       "receiving_tds": 0,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 5.699481865284974,
+      "target_share": 6.392694063926941,
       "red_zone_rushes": 0,
       "red_zone_targets": 0,
       "red_zone_receptions": 0,
@@ -155519,6 +156197,16 @@
           "week": 10,
           "targets": 2,
           "target_share": 9.5,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 3,
+          "target_share": 11.5,
           "carries": 0,
           "receptions": 0,
           "red_zone_targets": 0,
@@ -157035,6 +157723,16 @@
         },
         {
           "week": 10,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
@@ -159348,6 +160046,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
         }
       ]
     },
@@ -160500,6 +161208,16 @@
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
           "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
         }
       ]
     },
@@ -160617,7 +161335,7 @@
       "receiving_tds": 0,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 0.32786885245901637,
+      "target_share": 0.3021148036253776,
       "red_zone_rushes": 0,
       "red_zone_targets": 0,
       "red_zone_receptions": 0,
@@ -161017,22 +161735,22 @@
       "carries": 0,
       "rushing_yards": 0,
       "rushing_tds": 0,
-      "targets": 1,
-      "receptions": 1,
-      "receiving_yards": 16,
-      "receiving_tds": 0,
+      "targets": 5,
+      "receptions": 5,
+      "receiving_yards": 40,
+      "receiving_tds": 1,
       "completion_pct": 0,
       "yards_per_attempt": 0,
-      "target_share": 0.32786885245901637,
+      "target_share": 1.5105740181268883,
       "red_zone_rushes": 0,
-      "red_zone_targets": 0,
-      "red_zone_receptions": 0,
-      "red_zone_receiving_yards": 0,
-      "red_zone_receiving_touchdowns": 0,
+      "red_zone_targets": 1,
+      "red_zone_receptions": 1,
+      "red_zone_receiving_yards": 13,
+      "red_zone_receiving_touchdowns": 1,
       "red_zone_pass_attempts": 0,
       "red_zone_pass_touchdowns": 0,
       "red_zone_carries": 0,
-      "red_zone_target_share": 0,
+      "red_zone_target_share": 2.3255813953488373,
       "red_zone_rush_share": 0,
       "weekly": [
         {
@@ -161043,6 +161761,16 @@
           "receptions": 1,
           "red_zone_targets": 0,
           "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
+          "targets": 4,
+          "target_share": 15.4,
+          "carries": 0,
+          "receptions": 4,
+          "red_zone_targets": 1,
+          "red_zone_target_share": 50.0,
           "red_zone_carries": 0
         }
       ]
@@ -162907,6 +163635,16 @@
         },
         {
           "week": 10,
+          "targets": 0,
+          "target_share": 0.0,
+          "carries": 0,
+          "receptions": 0,
+          "red_zone_targets": 0,
+          "red_zone_target_share": 0.0,
+          "red_zone_carries": 0
+        },
+        {
+          "week": 11,
           "targets": 0,
           "target_share": 0.0,
           "carries": 0,
